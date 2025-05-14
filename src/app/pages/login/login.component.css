@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::ng-deep * {
+
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(45deg, #37bd8a, #83c1b2, #34a289, #57deaa, #aeffec);
+    background-size: 300% 300%;
+
+    animation: slide-in 15s infinite;
+
+}
+
+main {
+    width: 1000px;
+    height: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.formulaireInscription {
+    display: none;
+}
+
+.connexion,
+.formulaireInscription {
+    width: 100%;
+    max-width: 700px;
+    height: auto;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fdfffe;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: opacity 0.5s ease-in-out;
+}
+
+h2 {
+    text-align: center;
+}
+
+h4 {
+    margin-left: 15%;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.connexion a {
+    cursor: pointer;
+    font-weight: 500;
+    margin-left: 40%;
+    color: #838483;
+}
+
+.connexion a:hover {
+    color: #3f5c51;
+    text-decoration: underline;
+}
+
+.nameGroup,
+.passwordGroup,
+.email {
+    margin-top: 20px;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.nameGroup i,
+.passwordGroup i,
+.email i {
+    position: absolute;
+    margin-left: 17%;
+    top: 75%;
+    transform: translateY(-50%);
+    color: gray;
+}
+
+input {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-left: 15%;
+}
+
+.connexion button,
+.formulaireInscription button {
+    font-size: 20px;
+    border-radius: 30px;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    margin-left: 40%;
+    color: white;
+    border: none;
+    padding: 13px;
+    background: linear-gradient(45deg, #37bd8a, #83c1b2, #34a289, #57deaa, #aeffec);
+    display: flex;
+    background-size: 300% 300%;
+    animation: slide-in 15s infinite;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
+
+}
+
+.connexion button:hover,
+.formulaireInscription button:hover {
+    background-color: #0b2922;
+}
+
+.none {
+    display: none;
+    transition: transform 0.5s
+}
+
+.show {
+    display: block;
+    opacity: 1;
+}
