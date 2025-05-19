@@ -1,0 +1,43 @@
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Connexion/Inscription</title>
+</head>
+
+<body>
+    <main>
+        <section class="all">
+            <section class="connexion">
+                <h2>Se connecter:</h2>
+                <p>Veuillez entrer les informations requises:</p>
+                <form #loginForm="ngForm" (submit)="login()">
+                    <div class="emailGroup">
+                        <h4>Email</h4>
+                        <label for="email"></label>
+                        <input class="form-control" id="email" name="email" [(ngModel)]="email">
+                    </div>
+                    <div class="passwordGroup">
+                        <h4>Mot de passe</h4>
+                        <label for="password"></label>
+                        <input class="form-control" type="password" id="password" name="password" [(ngModel)]="password" />
+                    </div>
+                    <button type="submit"> Se connecter</button>
+                    <div class="forgotPassword">
+                        <a href="#">Mot de passe oublié ?</a>
+                    </div>
+                </form>
+            </section>
+            <section class="inscription">
+                <h2>Vous n'avez pas de compte ?</h2>
+                <button (click)="inscription()">S'inscrire</button>
+            </section>
+        </section>
+    </main>  
+</body>
+
+        

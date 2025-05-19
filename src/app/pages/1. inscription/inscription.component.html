@@ -1,0 +1,63 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Connexion/Inscription</title>
+</head>
+
+<body>
+    <main>
+        <section class="all">
+            <section class="inscription" (submit)="inscription()">
+                <h2>S'inscrire:</h2>
+                <p>Veuillez entrer les informations requises:</p>
+                <form #loginForm="ngForm" >
+                    <div class="nameGroug">
+                        <h4>Nom*</h4>
+                        <label for="name"></label>
+                        <input class="form-control" id="name" name="name" [(ngModel)]="name">
+                    </div>
+                    <div class="emailGroup">
+                        <h4>Email*</h4>
+                        <label for="email"></label>
+                        <input class="form-control" id="email" name="email" [(ngModel)]="email">
+                    </div>
+                    <div class="phone">
+                        <h4>Téléphone</h4>
+                        <label for="phone"></label>
+                        <input class="form-control" id="phone" name="phone" [(ngModel)]="phone">
+                    </div>
+                    <div class="address">
+                        <h4>Adresse*</h4>
+                        <label for="address"></label>
+                        <input class="form-control" id="address" name="address" [(ngModel)]="address">
+                    </div>
+                    <div class="city">
+                        <h4>Ville*</h4>
+                        <label for="city"></label>
+                        <input class="form-control" id="city" name="city" [(ngModel)]="city">
+                    </div>
+                    <div class="postalCode">
+                        <h4>Code postal*</h4>
+                        <label for="postalCode"></label>
+                        <input class="form-control" id="postalCode" name="postalCode" [(ngModel)]="postalCode">
+                    </div>
+                    <div class="passwordGroup">
+                        <h4>Mot de passe*</h4>
+                        <label for="password"></label>
+                        <input class="form-control" type="password" id="password" name="password"
+                            [(ngModel)]="password" />
+                    </div>
+                    <button type="submit"> S'inscrire</button>
+                </form>
+            </section>
+            <section class="connexion">
+                <h2>Vous avez déjà compte ?</h2>
+                <button (click)="login()">Se connecter</button>
+            </section>
+        </section>
+    </main>
+</body>

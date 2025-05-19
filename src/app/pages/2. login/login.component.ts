@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Component } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import { User } from '../../modules/User';
 
 @Component({
   selector: 'app-login',
@@ -12,23 +13,38 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  pseudo: string = "";
+  name: string = "";
   email: string = "";
   password: string = "";
+  emailList: User[] = [];
       
   constructor(private router: Router, private httpTestService: ApiService) { }
 
+  ngOnInit() {
+    //On reprend la liste des pseudos 
+    this.httpTestService.getUser().subscribe(email =>{
+      this.emailList = email
+      console.log(this.emailList);
+    });
+  }
+
+
+
   login() {
-    const authBody = { pseudo: this.pseudo, password: this.password };
+    const authBody = { email: this.email, password: this.password };
 
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
         localStorage.setItem('token', response.token); 
-        this.router.navigate(['/accueil']);
+        
       },
       error: () => {
         alert('Pseudo ou mot de passe invalide');
       }
     });
+  }
+
+  inscription() {
+    this.router.navigate(['/inscription']);
   }
 }
