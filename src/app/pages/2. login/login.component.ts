@@ -36,7 +36,7 @@ export class LoginComponent {
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
         localStorage.setItem('token', response.token); 
-        
+        this.router.navigate(['/accueil']);
       },
       error: () => {
         alert('Pseudo ou mot de passe invalide');

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../modules/User';
+import { Book } from '../modules/Book';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class ApiService {
 
   inscription(body: any): Observable<any> {
     return this.http.post<any>(`${this.api_url}/api/auth/register`, body, { withCredentials: true });
+  }
+
+  getBooksActive() {
+    return this.http.get<Book[]>(`${this.api_url}/api/books/active`, { withCredentials: true });
   }
 }

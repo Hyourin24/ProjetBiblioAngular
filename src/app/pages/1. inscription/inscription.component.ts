@@ -38,6 +38,11 @@ export class InscriptionComponent {
      console.log("Body envoyé :", inscriptionBody);
 
     this.httpTestService.inscription(inscriptionBody).subscribe({
+      next: response => {
+        localStorage.setItem('token', response.token); 
+        alert('Inscription réussie');
+        this.router.navigate(['/login']);
+      },
       error: () => {
         if (!this.name || !this.email || !this.password || !this.address || !this.city || !this.postalCode ) {
           alert("Veuillez remplir tous les champs avec un asterisk (*)");

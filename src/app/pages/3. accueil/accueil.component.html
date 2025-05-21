@@ -1,0 +1,70 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Connexion/Inscription</title>
+</head>
+<body>
+    
+    <header>
+        <section class="banner">
+            <img  alt="Les lumières d'Ukraine">
+            <div class="userParam">
+                <button>Se déconnecter</button>
+                <button><i class="fas fa-user"></i></button>
+            </div>
+        </section>
+        <section class="search">
+            <input type="text" placeholder="Rechercher un produit">
+            <button class="btnSearch"><i class="fas fa-search"></i></button>
+            <div class="tri">
+                <select name="triGenre" id="triGenre">
+                    <option value="genre">Genre</option>
+                    <option value="date">Date</option>
+                    <option value="popularite">Langage</option>
+                </select>
+                <select name="triLanguage" id="triLanguage">
+                    <option value="language">Language</option>
+                    <option value="français">Français</option>
+                    <option value="anglais">Anglais</option>
+                    <option value="ukrainien">Ukrainien</option>
+                </select>
+                <select name="triEtat" id="triEtat">
+                    <option value="etat">Etat</option>
+                    <option value="neuf">Neuf</option>
+                    <option value="bon">Bon</option>
+                    <option value="usé">Usé</option>
+                </select>
+            </div>
+        </section>
+    </header>
+
+    <main>
+        <section class="link">
+            <div class="linkEvent">
+                <h3>Vous souhaitez voir les derniers évènements ?</h3>
+                <button>Evènements</button>
+            </div>
+            <div class="linkPost">
+                <h3>Vous souhaitez poster votre livre ?</h3>
+                <button>Poster</button>
+            </div>
+        </section>
+        <section class="listBook">
+            <div class="book" *ngFor="let book of bookList">
+                <img [src]="book.images" alt="Image du livre" style="width: 200px;">
+
+                <h2>{{book.title}}</h2>
+                <p>{{book.description}}</p>
+                <p>Ecrit par: {{book.author}}</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <h3>Les lumières d'Ukraine - 2024</h3>
+        
+    </footer>
+</body>
