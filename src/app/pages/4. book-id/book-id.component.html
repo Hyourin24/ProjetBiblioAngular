@@ -63,8 +63,17 @@
                 <button>Poster</button>
             </div>
         </section>
-        <section class="listBook">
-            
+        <section class="UniqueBook" >
+            <h3>Détails du livre:</h3>
+            <img [src]="images" alt="Image du livre" style="width: 200px;">
+            <h2>Titre: {{title}}</h2>
+            <p>Description: {{description}}</p>
+            <p>Genre: {{genre}}</p>
+            <p>Auteur: {{author}}</p>
+            <p>Année de publication: {{publishedYear}}</p>
+            <p>Langue: {{language}}</p>
+            <p>Etat: {{state}}</p>
+            <button>Réserver le livre</button>
         </section>
     </main>
     <footer>
@@ -72,4 +81,3 @@
 
     </footer>
 </body>
-

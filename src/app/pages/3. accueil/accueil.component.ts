@@ -57,9 +57,7 @@ export class AccueilComponent {
     console.log("Book cliqué :", book._id); // ou book.id
     this.httpTestService.getBooksById(book._id).subscribe(bookDetails => {
       console.log("📚 Détails du livre :", bookDetails);
-      this.bookService.setSelectedBookId(book._id);
-      this.bookService.setSelectedBookId(book.description);
-      this.bookService.setSelectedBookId(book.title);
+      this.bookService.setSelectedBook(bookDetails);
       this.router.navigate(['/book'])
     });
   }

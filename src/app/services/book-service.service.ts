@@ -1,22 +1,23 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Book } from '../modules/Book';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookServiceService {
 
-  private selectedBookIdSubject = new BehaviorSubject<string | null>(null);
-  selectedBookId$ = this.selectedBookIdSubject.asObservable();
-
-  setSelectedBookId(id: string) {
-    this.selectedBookIdSubject.next(id);
+  private selectedBookSubject = new BehaviorSubject<Book | null>(null);
+  selectedBook$ = this.selectedBookSubject.asObservable();
+  
+  setSelectedBook(bookResponse: any) {
+    this.selectedBookSubject.next(bookResponse.data);
   }
-
-  getSelectedBookId(): string | null {
-    return this.selectedBookIdSubject.getValue();
+  
+  getSelectedBook(): Book | null {
+    return this.selectedBookSubject.getValue();
   }
-
+  
 
   
 }

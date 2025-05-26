@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BookServiceService } from '../../services/book-service.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-book-id',
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './book-id.component.html',
   styleUrl: './book-id.component.css'
 })
@@ -23,12 +25,20 @@ export class BookIdComponent {
   constructor(private bookService: BookServiceService) {}
 
   ngOnInit() {
-    const id = this.bookService.getSelectedBookId();
-    console.log("ID reçu dans le composant B :", id);
-    return {
-      
-  
-    }
+    this.bookService.selectedBook$.subscribe(book => {
+      if (book) {
+        this.title = book.title;
+        this.description = book.description;
+        this.genre = book.genre;
+        this.author = book.author;
+        this.publishedYear = book.publishedYear;
+        this.language = book.language;
+        this.state = book.state;
+        this.images = book.images ?? []
+      }
+      console.log("Book details:", book);
+      console.log("Title:", this.title);
+    });
   }
 
   clickMenu() {
