@@ -8,7 +8,7 @@ import { BookIdComponent } from './pages/4. book-id/book-id.component';
 
 export const routes: Routes = [{
     path: '',
-    redirectTo: "login",
+    redirectTo: "accueil",
     pathMatch: 'full'
 
 },{
