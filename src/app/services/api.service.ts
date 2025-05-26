@@ -26,4 +26,8 @@ export class ApiService {
   getBooksActive() {
     return this.http.get<Book[]>(`${this.api_url}/api/books/active`, { withCredentials: true });
   }
+
+  getBooksById(bookId: string) {
+    return this.http.get<Book>(`${this.api_url}/api/books/${bookId}`, { withCredentials: true });
+  }
 }

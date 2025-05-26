@@ -71,9 +71,10 @@ header {
     padding: 10px 15px;
     border-radius: 5px;
     border: 2px solid #fcfcf0;
-    color:#fcfcf0 ;
+    color: #fcfcf0;
     cursor: pointer;
 }
+
 .userProfile {
     margin-right: 8px;
     background-color: #88875b00;
@@ -81,7 +82,7 @@ header {
     padding: 10px 15px;
     border-radius: 5px;
     border: 2px solid #fcfcf0;
-    color:#fcfcf0 ;
+    color: #fcfcf0;
     cursor: pointer;
 }
 
@@ -255,28 +256,7 @@ main {
     transform: translateY(-5px);
 }
 
-.book img {
-    width: 100%;
-    max-width: 180px;
-    height: auto;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    object-fit: cover;
-}
 
-.book h2 {
-    font-size: 20px;
-    margin: 10px 0 5px;
-    color: #333;
-    text-align: center;
-}
-
-.book p {
-    margin: 2px 0;
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-}
 
 /* ---- Footer ---- */
 footer {

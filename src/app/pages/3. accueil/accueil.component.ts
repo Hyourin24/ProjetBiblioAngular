@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Book } from '../../modules/Book';
+import { BookServiceService } from '../../services/book-service.service';
 
 @Component({
   selector: 'app-accueil',
@@ -12,7 +13,7 @@ import { Book } from '../../modules/Book';
   styleUrl: './accueil.component.css'
 })
 export class AccueilComponent {
-
+  bookId: string = "";
   title: string = "";
   description: string = "";
   genre: string = "";
@@ -25,10 +26,13 @@ export class AccueilComponent {
   ownerActive: boolean = true;
 
   bookList: Book[] = [];
+  bookClick = ""
   book = new Array<Book>();
-   constructor(private router: Router, private httpTestService: ApiService) { }
+   constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
 
    ngOnInit() {
+    
+
     this.httpTestService.getBooksActive().subscribe(books => {
       this.bookList = books
       console.log(this.bookList);
@@ -47,5 +51,35 @@ export class AccueilComponent {
         }
       });
     });
+  }
+
+  clickBook(book: Book) {
+    console.log("Book cliqué :", book._id); // ou book.id
+    this.httpTestService.getBooksById(book._id).subscribe(bookDetails => {
+      console.log("📚 Détails du livre :", bookDetails);
+      this.bookService.setSelectedBookId(book._id);
+      this.bookService.setSelectedBookId(book.description);
+      this.bookService.setSelectedBookId(book.title);
+      this.router.navigate(['/book'])
+    });
+  }
+  
+
+
+  clickMenu() {
+    const hamburger = document.getElementById("hamburger") as HTMLElement;
+    const aside = document.querySelector(".menuAside") as HTMLElement;
+    const cross = document.getElementById("cross") as HTMLElement;
+    aside.style.display = "block";
+    hamburger.style.display = "none";
+    cross.style.display = "block";
+  }
+  crossMenu() {
+    const cross = document.getElementById("cross") as HTMLElement;
+    const aside = document.querySelector(".menuAside") as HTMLElement;
+    const hamburger = document.getElementById("hamburger") as HTMLElement;
+    hamburger.style.display = "block";
+    aside.style.display = "none";
+    cross.style.display = "none";
   }
 }
