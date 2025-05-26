@@ -20,9 +20,19 @@
                 <button class="userProfile"><i class="fas fa-user"></i></button>
             </div>
         </section>
+        
+    </header>
+    <aside class="menuAside">
+        <section class="category">
+            <li><a>Accueil</a></li>
+            <li><a>Mes livres</a></li>
+            <li><a>Evènements</a></li>
+        </section>
+    </aside>
+    <main>
         <section class="search">
-            <input type="text" placeholder="Rechercher un produit">
-            <button class="btnSearch"><i class="fas fa-search"></i></button>
+            <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="rechercheResult()">
+            <button class="btnSearch" (click)="rechercheResult()"><i class="fas fa-search"></i></button>
             <div class="tri">
                 <select name="triGenre" id="triGenre">
                     <option value="genre">Genre</option>
@@ -43,15 +53,6 @@
                 </select>
             </div>
         </section>
-    </header>
-    <aside class="menuAside">
-        <section class="category">
-            <li><a>Accueil</a></li>
-            <li><a>Mes livres</a></li>
-            <li><a>Evènements</a></li>
-        </section>
-    </aside>
-    <main>
         <section class="link">
             <div class="linkEvent">
                 <h3>Vous souhaitez voir les derniers évènements ?</h3>
@@ -63,7 +64,7 @@
             </div>
         </section>
         <section class="listBook">
-            <div class="book" *ngFor="let book of bookList" (click)="clickBook(book)">
+            <div class="book" *ngFor="let book of resultatsFiltres" (click)="clickBook(book)">
                 <img [src]="book.images" alt="Image du livre" style="width: 200px;">
 
                 <h2>{{book.title}}</h2>

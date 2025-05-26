@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Book } from '../../modules/Book';
 import { BookServiceService } from '../../services/book-service.service';
+import { User } from '../../modules/User';
 
 @Component({
   selector: 'app-accueil',
@@ -28,13 +29,17 @@ export class AccueilComponent {
   bookList: Book[] = [];
   bookClick = ""
   book = new Array<Book>();
+
+  resultatsFiltres: Book[] = [];
+  recherche: string = '';
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
 
    ngOnInit() {
     
-
+    
     this.httpTestService.getBooksActive().subscribe(books => {
       this.bookList = books
+      this.resultatsFiltres = books; // 👈 Ajout essentiel
       console.log(this.bookList);
     
       this.bookList.forEach(book => {
@@ -62,6 +67,12 @@ export class AccueilComponent {
     });
   }
   
+  rechercheResult(): void {
+    const term = this.recherche?.toLowerCase().trim() || '';
+    this.resultatsFiltres = this.bookList.filter(book =>
+      book.title.toLowerCase().startsWith(term)
+    );
+  }
 
 
   clickMenu() {
