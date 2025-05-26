@@ -6,7 +6,7 @@ import { AccueilComponent } from './pages/3. accueil/accueil.component';
 
 export const routes: Routes = [{
     path: '',
-    redirectTo: "login",
+    redirectTo: "accueil",
     pathMatch: 'full'
 
 },{
