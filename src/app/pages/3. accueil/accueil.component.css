@@ -64,7 +64,7 @@ header {
     gap: 10px;
 }
 
-.logout {
+.logout, .login, .register {
     margin-right: 20px;
     background-color: #88875b00;
     border: none;
