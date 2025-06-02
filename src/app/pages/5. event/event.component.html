@@ -1,0 +1,47 @@
+<p>event works!</p>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <title>Evènements</title>
+</head>
+
+<body>
+    <header>
+        <section class="banner">
+            <div class="font">
+                <i class="fas fa-bars" id="hamburger" (click)="clickMenu()"></i>
+                <i class="fas fa-times" id="cross" (click)="crossMenu()"></i>
+            </div>
+            <img alt="Les lumières d'Ukraine">
+            <div class="userParam">
+                <button class="logout" (click)="clickLogout()">Se déconnecter</button>
+                <button class="userProfile"><i class="fas fa-user"></i></button>
+            </div>
+        </section>
+    </header>
+    <aside class="menuAside">
+        <section class="category">
+            <li><a (click)="goToAccueil()">Accueil</a></li>
+            <li><a (click)="goToMesLivres()">Mes livres</a></li>
+            <li><a (click)="goToEvenements()">Evènements</a></li>
+        </section>
+    </aside>
+    <main>
+        <section class="listEvent">
+            <div class="event" *ngFor="let event of resultatsFiltres">
+               <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
+                <h2>{{event.title}}</h2>
+                <p>{{event.description}}</p>
+                <p>{{event.language}}</p>
+                <p *ngIf="event.eventStartDate">Début: {{event.eventStartDate | date}}</p>
+                <p *ngIf="event.eventEndDate">Fin: {{event.eventEndDate | date}}</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <h3>Les lumières d'Ukraine - 2024</h3>
+    </footer>
+</body>

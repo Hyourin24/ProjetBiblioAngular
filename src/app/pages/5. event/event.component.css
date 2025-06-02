@@ -1,0 +1,189 @@
+/* ---- Fond général ---- */
+body,
+html {
+    height: 100%;
+    background: linear-gradient(180deg, #31312d, #5b5b44, #88875b, #31312d);
+    background-size: 400% 400%;
+    animation: slide-in 15s infinite;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #1f1f1f;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---- Header / Bannière ---- */
+header {
+    width: 100%;
+}
+
+.banner {
+    background: linear-gradient(to right, #f5f5dc, #d5d87c);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.banner #hamburger,
+.banner #cross {
+    font-size: 30px;
+    color: #88875b;
+    cursor: pointer;
+}
+
+.banner #cross {
+    margin-left: 200px;
+    display: none;
+}
+
+.banner img {
+    height: 50px;
+}
+
+.userParam {
+    display: flex;
+    gap: 10px;
+}
+
+.logout, .userProfile {
+    margin-right: 8px;
+    background-color: #88875b00;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid #fcfcf0;
+    color: #fcfcf0;
+    cursor: pointer;
+}
+
+.userParam button:hover {
+    background-color: #88875bc5;
+}
+
+/* ---- Sidebar ---- */
+aside {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 50px;
+    width: 200px;
+    background: linear-gradient(to bottom, #2f2f2fe4, #3d3b2fe3);
+    color: white;
+    padding-top: 100px;
+    padding-left: 20px;
+}
+
+.category {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.category li {
+    list-style: none;
+    border-bottom: 1px solid #666;
+    padding-bottom: 10px;
+}
+
+.category a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.category a:hover {
+    text-decoration: underline;
+}
+
+/* ---- Contenu principal ---- */
+main {
+    padding: 20px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+}
+
+/* ---- Liste des évènements ---- */
+.listEvent {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 30px;
+    padding: 40px 60px;
+    background-color: #f6f6f6;
+}
+
+.event {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.event:hover {
+    transform: translateY(-5px);
+}
+
+.event img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
+
+.event h2 {
+    font-size: 20px;
+    margin: 10px 0 5px;
+    color: #333;
+    text-align: center;
+}
+
+.event p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+
+/* ---- Footer ---- */
+footer {
+    background: linear-gradient(to top, #2f2f2f, #3d3b2f);
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Animation */
+@keyframes slide-in {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}

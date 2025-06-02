@@ -32,4 +32,8 @@ export class ApiService {
   getBooksById(bookId: string) {
     return this.http.get<Book>(`${this.api_url}/api/books/${bookId}`, { withCredentials: true });
   }
+
+  getEvent(): Observable<any> {
+    return this.http.get<any>(`${this.api_url}/api/events`, { withCredentials: true });
+  }
 }

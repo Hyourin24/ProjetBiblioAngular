@@ -4,6 +4,7 @@ import { InscriptionComponent } from './pages/1. inscription/inscription.compone
 import { AccueilComponent } from './pages/3. accueil/accueil.component';
 import { BookServiceService } from './services/book-service.service';
 import { BookIdComponent } from './pages/4. book-id/book-id.component';
+import { EventComponent } from './pages/5. event/event.component';
 
 
 export const routes: Routes = [{
@@ -26,4 +27,9 @@ export const routes: Routes = [{
 {
     path: "book",
     component: BookIdComponent
-}];
+}
+,{
+    path: "event",
+    component: EventComponent
+}
+];
