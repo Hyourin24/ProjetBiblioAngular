@@ -18,7 +18,9 @@ export class ApiService {
    connexion(body: any): Observable<any> {
     return this.http.post<any>(`${this.api_url}/api/auth/login`, body, { withCredentials: true });
   }
-
+  deconnexion(): Observable<any> {
+    return this.http.post<any>(`${this.api_url}/api/auth/logout`, {}, { withCredentials: true });
+  }
   inscription(body: any): Observable<any> {
     return this.http.post<any>(`${this.api_url}/api/auth/register`, body, { withCredentials: true });
   }

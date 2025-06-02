@@ -16,9 +16,12 @@
             </div>
             <img  alt="Les lumières d'Ukraine">
             <div class="userParam">
-                <button class="logout">Se déconnecter</button>
-                <button class="userProfile"><i class="fas fa-user"></i></button>
-            </div>
+  <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
+  <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
+  
+  <button class="logout" *ngIf="isLoggedIn" (click)="clickLogout()">Se déconnecter</button>
+  <button class="userProfile" *ngIf="isLoggedIn"><i class="fas fa-user"></i></button>
+</div>
         </section>
         
     </header>

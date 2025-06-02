@@ -34,11 +34,11 @@ export class AccueilComponent {
 
   resultatsFiltres: Book[] = [];
   recherche: string = '';
+  isLoggedIn: boolean = false;
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
 
    ngOnInit() {
-    
-    
+    this.checkAuth();
     this.httpTestService.getBooksActive().subscribe(books => {
       this.bookList = books
       this.resultatsFiltres = books; // 👈 Ajout essentiel
@@ -59,6 +59,27 @@ export class AccueilComponent {
           isActive: book.isActive,
         }
       });
+    });
+  }
+clickLogin() {
+      this.router.navigate(['/login']);
+}
+
+clickRegister(){
+      this.router.navigate(['/inscription']);
+    
+  }
+
+  clickLogout() {
+    this.httpTestService.deconnexion().subscribe({
+      next: () => {
+        console.log("Déconnexion réussie");
+        localStorage.removeItem('token');
+        this.isLoggedIn = false;
+      },
+      error: (error) => {
+        console.error("Erreur lors de la déconnexion :", error);
+      }
     });
   }
 
@@ -116,4 +137,8 @@ export class AccueilComponent {
     aside.style.display = "none";
     cross.style.display = "none";
   }
+  checkAuth(): void {
+  const token = localStorage.getItem('token'); // ou autre nom utilisé
+  this.isLoggedIn = !!token;
+}
 }
