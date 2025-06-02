@@ -15,6 +15,8 @@ export class EventComponent {
 
   eventList: any[] = [];
   resultatsFiltres: any[] = [];
+  
+  recherche: string = '';
   isLoggedIn: boolean = false;
 
   constructor(private router: Router, private eventService: ApiService) { }
@@ -81,7 +83,12 @@ export class EventComponent {
   goToEvenements() {
     this.router.navigate(['/event']);
   }
-
+  rechercheResult(): void {
+    const term = this.recherche?.toLowerCase().trim() || '';
+    this.resultatsFiltres = this.eventList.filter(event =>
+      event.title.toLowerCase().startsWith(term)
+    );
+  }
   checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;

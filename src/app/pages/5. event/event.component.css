@@ -78,6 +78,39 @@ header {
     background-color: #88875bc5;
 }
 
+/* ---- Barre de recherche ---- */
+.search {
+    background-color: #efefef;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.search input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btnSearch {
+    background-color: #ccc;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.tri select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    margin-right: 5px;
+}
+
 /* ---- Sidebar ---- */
 aside {
     display: none;
@@ -123,6 +156,44 @@ main {
     background-color: #f4f4f4;
 }
 
+/* ---- Section lien accueil ---- */
+.link {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.linkHome {
+    background: #fffbe6;
+    border-radius: 8px;
+    padding: 18px 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.linkHome h3 {
+    color: #88875b;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
+.linkHome button {
+    background-color: #88875b;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s;
+}
+
+.linkHome button:hover {
+    background-color: #5b5b44;
+}
+
 /* ---- Liste des évènements ---- */
 .listEvent {
     display: grid;
@@ -130,6 +201,7 @@ main {
     gap: 30px;
     padding: 40px 60px;
     background-color: #f6f6f6;
+    border-radius: 12px;
 }
 
 .event {

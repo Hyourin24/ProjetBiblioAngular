@@ -1,4 +1,3 @@
-<p>event works!</p>
 <html lang="en">
 
 <head>
@@ -30,6 +29,29 @@
         </section>
     </aside>
     <main>
+         <section class="search">
+            <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="rechercheResult()">
+            <button class="btnSearch" (click)="rechercheResult()"><i class="fas fa-search"></i></button>
+            <div class="tri">
+                <select name="triGenre" id="triGenre">
+                    <option value="titre">Titre</option>
+                    <option value="date">Date</option>
+                    <option value="popularite">Popularité</option>
+                </select>
+                <select name="triLanguage" id="triLanguage">
+                    <option value="language">Language</option>
+                    <option value="français">Français</option>
+                    <option value="anglais">Anglais</option>
+                    <option value="ukrainien">Ukrainien</option>
+                </select>
+            </div>
+        </section>
+        <section class="link">
+            <div class="linkHome">
+                <h3>Retourner voir les livres disponible ?</h3>
+                <button (click)="goToAccueil()" >Accueil</button>
+            </div>
+        </section>
         <section class="listEvent">
             <div class="event" *ngFor="let event of resultatsFiltres">
                <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
