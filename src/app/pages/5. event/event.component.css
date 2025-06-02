@@ -241,7 +241,16 @@ main {
     color: #555;
     text-align: center;
 }
-
+.event button {
+    background-color: #88875b;
+    color: #ffffff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: background 0.2s;
+}
 /* ---- Footer ---- */
 footer {
     background: linear-gradient(to top, #2f2f2f, #3d3b2f);
