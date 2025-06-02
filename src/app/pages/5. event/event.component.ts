@@ -89,6 +89,18 @@ export class EventComponent {
       event.title.toLowerCase().startsWith(term)
     );
   }
+  translateLanguage(lang: string): string {
+  switch (lang?.toLowerCase()) {
+    case 'french':
+      return 'Français';
+    case 'english':
+      return 'Anglais';
+    case 'ukrainian':
+      return 'Ukrainien';
+    default:
+      return lang;
+  }
+}
   checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;

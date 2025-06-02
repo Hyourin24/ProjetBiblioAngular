@@ -57,7 +57,7 @@
                <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
                 <h2>{{event.title}}</h2>
                 <p>Description: {{event.description}}</p>
-                <p>Langue: {{event.language}}</p>
+                <p>Langue: {{ translateLanguage(event.language) }}</p>
                 <p *ngIf="event.eventStartDate">Début: {{event.eventStartDate | date}}</p>
                 <p *ngIf="event.eventEndDate">Fin: {{event.eventEndDate | date}}</p>
                 <button (click)="(event.id)">M'y inscrire</button>
