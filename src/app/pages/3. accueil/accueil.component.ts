@@ -20,8 +20,10 @@ export class AccueilComponent {
   genre: string = "";
   author: string = "";
   publishedYear: number = 0;
-  language: "french" | "ukrainian" | "english" = "french";
+  language: 'french' | 'ukrainian' | 'english' | '' = '';
+  languages: ('french' | 'ukrainian' | 'english')[] = [];
   state: "new" | "good" | "used" = "new"; 
+  states: ("new" | "good" | "used")[] = [];
   images: string[] = [];
   isActive: boolean = true;
   ownerActive: boolean = true;
@@ -40,6 +42,8 @@ export class AccueilComponent {
     this.httpTestService.getBooksActive().subscribe(books => {
       this.bookList = books
       this.resultatsFiltres = books; // 👈 Ajout essentiel
+      this.languages = [...new Set(books.map(book => book.language))] as ('french' | 'ukrainian' | 'english')[];
+      this.states = [...new Set(books.map(book => book.state))] as ("new" | "good" | "used")[];
       console.log(this.bookList);
     
       this.bookList.forEach(book => {
@@ -73,6 +77,27 @@ export class AccueilComponent {
       book.title.toLowerCase().startsWith(term)
     );
   }
+  filtrerParLangue(): void {
+    const langue = this.language;
+    if (!langue) {
+      this.resultatsFiltres = this.bookList; // toutes les langues
+      return;
+    }
+    this.resultatsFiltres = this.bookList.filter(book =>
+      book.language === langue
+    );
+  }
+  filtrerParEtat(): void {
+    const etat = this.state;
+    if (!etat) {
+      this.resultatsFiltres = this.bookList; // tous les états
+      return;
+    }
+    this.resultatsFiltres = this.bookList.filter(book =>
+      book.state === etat
+    );
+  }
+  
 
 
   clickMenu() {

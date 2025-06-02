@@ -39,17 +39,13 @@
                     <option value="date">Date</option>
                     <option value="popularite">Langage</option>
                 </select>
-                <select name="triLanguage" id="triLanguage">
+                <select name="triLanguage" id="triLanguage" [(ngModel)]="language" (change)="filtrerParLangue()">
                     <option value="language">Language</option>
-                    <option value="français">Français</option>
-                    <option value="anglais">Anglais</option>
-                    <option value="ukrainien">Ukrainien</option>
+                    <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
                 </select>
                 <select name="triEtat" id="triEtat">
                     <option value="etat">Etat</option>
-                    <option value="neuf">Neuf</option>
-                    <option value="bon">Bon</option>
-                    <option value="usé">Usé</option>
+                    <option *ngFor="let et of states" [value]="et">{{et}}</option>
                 </select>
             </div>
         </section>
