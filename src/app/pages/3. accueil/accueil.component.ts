@@ -156,8 +156,6 @@ clickEvent() {
     );
   }
   
-<<<<<<< HEAD
-=======
 
 
   clickMenu() {
@@ -249,7 +247,6 @@ translateGenre(genre: string): string {
   }
 }
 
->>>>>>> 26e5d3862848ed6f3111e82bc0b287ff26271204
   checkAuth(): void {
   const token = localStorage.getItem('token'); // ou autre nom utilisé
   this.isLoggedIn = !!token;
