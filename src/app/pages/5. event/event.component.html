@@ -10,24 +10,13 @@
 <body>
     <header>
         <section class="banner">
-            <div class="font">
-                <i class="fas fa-bars" id="hamburger" (click)="clickMenu()"></i>
-                <i class="fas fa-times" id="cross" (click)="crossMenu()"></i>
-            </div>
-            <img alt="Les lumières d'Ukraine">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
             <div class="userParam">
                 <button class="logout" (click)="clickLogout()">Se déconnecter</button>
                 <button class="userProfile"><i class="fas fa-user"></i></button>
             </div>
         </section>
     </header>
-    <aside class="menuAside">
-        <section class="category">
-            <li><a (click)="goToAccueil()">Accueil</a></li>
-            <li><a (click)="goToMesLivres()">Mes livres</a></li>
-            <li><a (click)="goToEvenements()">Evènements</a></li>
-        </section>
-    </aside>
     <main>
         <section class="link">
             <div class="linkHome">

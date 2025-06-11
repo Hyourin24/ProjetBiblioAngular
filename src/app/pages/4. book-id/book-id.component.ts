@@ -9,6 +9,7 @@ import { User } from '../../modules/User';
 import { CommentBook } from '../../modules/CommentBook'
 import { CommentWithUser } from '../../modules/CommentBook';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class BookIdComponent {
   utilisateurClicke: User | null = null;
   
 
-  constructor(private bookService: BookServiceService, private route: ActivatedRoute, private httpTestService: ApiService ) {}
+  constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService ) {}
 
   ngOnInit() {
     const bookId = this.route.snapshot.paramMap.get('id');
@@ -132,25 +133,9 @@ export class BookIdComponent {
       });
   }
 
- 
-
-  clickMenu() {
-    const hamburger = document.getElementById("hamburger") as HTMLElement;
-    const aside = document.querySelector(".menuAside") as HTMLElement;
-    const cross = document.getElementById("cross") as HTMLElement;
-    aside.style.display = "block";
-    hamburger.style.display = "none";
-    cross.style.display = "block";
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
   }
-  crossMenu() {
-    const cross = document.getElementById("cross") as HTMLElement;
-    const aside = document.querySelector(".menuAside") as HTMLElement;
-    const hamburger = document.getElementById("hamburger") as HTMLElement;
-    hamburger.style.display = "block";
-    aside.style.display = "none";
-    cross.style.display = "none";
-  }
-
   clickComment() {
     const postComment = document.querySelector(".postComment") as HTMLElement;
     postComment.style.display = "block";

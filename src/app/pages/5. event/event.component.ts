@@ -83,6 +83,10 @@ export class EventComponent {
   goToEvenements() {
     this.router.navigate(['/event']);
   }
+
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
   rechercheResult(): void {
     const term = this.recherche?.toLowerCase().trim() || '';
     this.resultatsFiltres = this.eventList.filter(event =>

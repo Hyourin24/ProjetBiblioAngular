@@ -10,11 +10,7 @@
 <body>
     <header>
         <section class="banner">
-            <div class="font">
-                <i class="fas fa-bars" id="hamburger" (click)="clickMenu()"></i>
-                <i class="fas fa-times" id="cross" (click)="crossMenu()"></i>
-            </div>
-            <img  alt="Les lumières d'Ukraine">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine">
             <div class="userParam">
                 <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
                 <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
@@ -25,13 +21,6 @@
         </section>
         
     </header>
-    <aside class="menuAside">
-        <section class="category">
-            <li><a>Accueil</a></li>
-            <li><a>Mes livres</a></li>
-            <li><a>Evènements</a></li>
-        </section>
-    </aside>
     <main>
         <section class="search">
             <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="rechercheResult()">

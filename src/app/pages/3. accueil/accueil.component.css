@@ -41,22 +41,9 @@ header {
     padding: 10px 20px;
 }
 
-.banner #hamburger {
-    font-size: 30px;
-    color: #88875b;
-    cursor: pointer;
-}
-
-.banner #cross {
-    font-size: 30px;
-    color: #88875b;
-    cursor: pointer;
-    margin-left: 200px;
-    display: none;
-}
-
 .banner img {
     height: 50px;
+    cursor: pointer;
 }
 
 .userParam {
@@ -114,44 +101,6 @@ header {
  
     margin-right: 15px;
 }
-
-/* ---- Sidebar ---- */
-aside {
-    display: none;
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 50px;
-    width: 200px;
-    background: linear-gradient(to bottom, #2f2f2fe4, #3d3b2fe3);
-    color: white;
-    padding-top: 100px;
-    padding-left: 20px;
-}
-
-.category {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-}
-
-.category li {
-    list-style: none;
-    border-bottom: 1px solid #666;
-    padding-bottom: 10px;
-}
-
-.category a {
-    color: white;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.category a:hover {
-    text-decoration: underline;
-}
-
 /* ---- Contenu principal ---- */
 main {
     padding: 20px;
@@ -170,12 +119,21 @@ main {
 
 .linkEvent,
 .linkPost {
-    background-color: #d3d3a4;
+    background: #fffbe6;
     padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
     flex: 1;
     border-radius: 10px;
     text-align: center;
 }
+
+.linkEvent h3,
+ .linkPost h3{
+    color: #88875b;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
 
 .link button {
     margin-top: 10px;
@@ -183,7 +141,7 @@ main {
     color: white;
     border: none;
     padding: 10px 20px;
-    border-radius: 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
