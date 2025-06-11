@@ -78,38 +78,6 @@ header {
     background-color: #88875bc5;
 }
 
-/* ---- Barre de recherche ---- */
-.search {
-    background-color: #efefef;
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    border-radius: 8px;
-}
-
-.search input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.btnSearch {
-    background-color: #ccc;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-left: 10px;
-}
-
-.tri select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    margin-right: 5px;
-}
 
 /* ---- Sidebar ---- */
 aside {

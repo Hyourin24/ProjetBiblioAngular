@@ -78,6 +78,9 @@ clickProfil() {
   this.router.navigate(["/profil"])
 }
 
+clickEvent() {
+  this.router.navigate(['/event']);
+}
   clickLogout() {
     this.httpTestService.deconnexion().subscribe({
       next: () => {
