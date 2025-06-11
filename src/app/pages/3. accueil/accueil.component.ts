@@ -78,6 +78,10 @@ clickProfil() {
   this.router.navigate(["/profil"])
 }
 
+clickAccueil() {
+  this.router.navigate(['/accueil']);
+}
+
 clickEvent() {
   this.router.navigate(['/event']);
 }
@@ -152,24 +156,6 @@ clickEvent() {
     );
   }
   
-
-
-  clickMenu() {
-    const hamburger = document.getElementById("hamburger") as HTMLElement;
-    const aside = document.querySelector(".menuAside") as HTMLElement;
-    const cross = document.getElementById("cross") as HTMLElement;
-    aside.style.display = "block";
-    hamburger.style.display = "none";
-    cross.style.display = "block";
-  }
-  crossMenu() {
-    const cross = document.getElementById("cross") as HTMLElement;
-    const aside = document.querySelector(".menuAside") as HTMLElement;
-    const hamburger = document.getElementById("hamburger") as HTMLElement;
-    hamburger.style.display = "block";
-    aside.style.display = "none";
-    cross.style.display = "none";
-  }
   checkAuth(): void {
   const token = localStorage.getItem('token'); // ou autre nom utilisé
   this.isLoggedIn = !!token;
