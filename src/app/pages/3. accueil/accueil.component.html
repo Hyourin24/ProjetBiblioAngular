@@ -43,15 +43,15 @@
                 </select>
                 <select name="triGenre" id="triGenre" [(ngModel)]="genre" (change)="filtrerParGenre()">
                     <option value="Genre">Genre</option>
-                    <option *ngFor="let gen of genres" [value]="gen">{{ gen }}</option>
+                    <option *ngFor="let gen of genres" [value]="gen">{{ translateGenre(gen) }}</option>
                 </select>
                 <select name="triLanguage" id="triLanguage" [(ngModel)]="language" (change)="filtrerParLangue()">
                     <option value="Language">Language</option>
-                    <option *ngFor="let lang of languages" [value]="lang">{{ lang }}</option>
+                    <option *ngFor="let lang of languages" [value]="lang">{{ translateLanguage(lang) }}</option>
                 </select>
                 <select name="triEtat" id="triEtat" [(ngModel)]="state" (change)="filtrerParEtat()">
                     <option value="Etat">Etat</option>
-                    <option *ngFor="let et of states" [value]="et">{{et}}</option>
+                    <option *ngFor="let et of states" [value]="et">{{ translateState(et) }}</option>
                 </select>
             </div>
         </section>

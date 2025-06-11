@@ -46,11 +46,11 @@
             <p>Appartient à : {{ book?.user?.name || 'Inconnu' }}</p>
 
             <p>Description: {{description}}</p>
-            <p>Genre: {{genre}}</p>
+            <p>Genre: {{translateGenre(genre)}}</p>
             <p>Auteur: {{author}}</p>
             <p>Année de publication: {{publishedYear}}</p>
-            <p>Langue: {{language}}</p>
-            <p>Etat: {{state}}</p>
+            <p>Langue: {{translateLanguage(language)}}</p>
+            <p>Etat: {{translateState(state)}}</p>
             <p>Posté le: {{addedAt | date:'dd/MM/yyyy'}}</p>
             <button>Réserver le livre</button>
         </section>
