@@ -25,6 +25,15 @@
         <section class="search">
             <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="rechercheResult()">
             <div class="tri">
+                <select [(ngModel)]="selectedDepartement" (change)="filtrerParDepartement()">
+                <option value="">Département</option>
+                <option *ngFor="let dep of departementList" [value]="dep">
+                    {{ dep }}
+                </option>
+                </select>
+
+
+
                 <select name="triDate" id="triDate" [(ngModel)]="date" (change)="filtrerParDate()">
                     <option value="Date">Date</option>
                     <option value="recent">Trier aux plus récents</option>

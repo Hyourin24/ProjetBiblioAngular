@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Book } from '../../modules/Book';
 import { BookServiceService } from '../../services/book-service.service';
-import { User } from '../../modules/User';
 
 @Component({
   selector: 'app-accueil',
@@ -14,6 +13,8 @@ import { User } from '../../modules/User';
   styleUrl: './accueil.component.css'
 })
 export class AccueilComponent {
+  usersById: { [id: string]: any } = {};
+
   bookId: string = "";
   title: string = "";
   description: string = "";
@@ -34,38 +35,44 @@ export class AccueilComponent {
   ownerActive: boolean = true;
   addedAt: Date = new Date();
 
+departementList: string[] = Array.from({ length: 95 }, (_, i) =>
+  (i + 1).toString().padStart(2, '0')
+);
+
+selectedDepartement: string = '';
+
+
+
   bookList: Book[] = [];
   bookClick = ""
   book = new Array<Book>();
 
   resultatsFiltres: Book[] = [];
+  
   recherche: string = '';
   isLoggedIn: boolean = false;
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
 
-   ngOnInit() {
-    this.checkAuth();
-    this.httpTestService.getBooksActive().subscribe(books => {
-      this.bookList = books
-      this.resultatsFiltres = books; 
-      console.log(this.bookList);
-    
-      this.bookList.forEach(book => {
-        return {
-          title: book.title,
-          description: book.description,
-          genre: book.genre,
-          author: book.author,
-          publishedYear: book.publishedYear,
-          language: book.language,
-          state: book.state,
-          imageCouverture: book.imageCouverture,
-          isActive: book.isActive,
-          addedAt: book.addedAt,
-        }
-      });
-    });
-  }
+resultatsFiltresVille: any[] = [];
+cityList: any[] = [];
+
+ngOnInit() {
+  this.checkAuth();
+  this.httpTestService.getBooksActive().subscribe(books => {
+    this.bookList = books;
+    this.resultatsFiltres = books;
+    console.log(this.bookList);
+  });
+
+  // Charger les utilisateurs une seule fois
+  this.httpTestService.getUser().subscribe(users => {
+    for (let user of users) {
+      this.usersById[user._id] = user;
+    }
+  });
+}
+
+
 clickLogin() {
   this.router.navigate(['/login']);
 }
@@ -111,6 +118,22 @@ clickEvent() {
       book.title.toLowerCase().startsWith(term)
     );
   }
+  filtrerParDepartement(): void {
+  if (!this.selectedDepartement) {
+    this.resultatsFiltres = this.bookList;
+    return;
+  }
+
+  this.resultatsFiltres = this.bookList.filter(book => {
+    const user = this.usersById[book.owner];
+    if (!user || !user.postalCode) return false;
+
+    const code = user.postalCode.toString().substring(0, 2);
+    return code === this.selectedDepartement;
+  });
+}
+
+
   filtrerParDate(): void {
     const date = this.date;
     if (!date || date === 'Date') {
