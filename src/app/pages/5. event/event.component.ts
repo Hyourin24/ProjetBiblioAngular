@@ -101,6 +101,7 @@ export class EventComponent {
       return lang;
   }
 }
+
   checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;

@@ -41,8 +41,9 @@
                 <h2>{{event.title}}</h2>
                 <p>Description: {{event.description}}</p>
                 <p>Langue: {{ translateLanguage(event.language) }}</p>
-                <p *ngIf="event.eventStartDate">Début: {{event.eventStartDate | date}}</p>
-                <p *ngIf="event.eventEndDate">Fin: {{event.eventEndDate | date}}</p>
+                <p *ngIf="event.eventStartDate">Début : {{ event.eventStartDate | date:'d MMMM y' }}</p>
+                <p *ngIf="event.eventEndDate">Fin : {{ event.eventEndDate | date:'d MMMM y' }}</p>
+
                 <button (click)="(event.id)">M'y inscrire</button>
             </div>
         </section>
