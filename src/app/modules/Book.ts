@@ -1,19 +1,25 @@
+import { User } from "./User";
+
 export interface Book {
-    data // Indique si le propriétaire du livre est actif ou non
-      (data: any): unknown;
     _id: string;
     title : string;
     description: string;
-    genre: string;
+    genre: "fantasy" | "science-fiction" | "romance" | "mystery" | "non-fiction" | "historical" | "thriller" | "horror" | "biography" | "self-help" | "children's" | "young adult" | "poetry" | "classics" | "manga" | "comics" | "adventure" | "educative" | "cookbook" | "travel" | "humor" ;
     author: string;
     publishedYear: number;
     language: "french" | "ukrainian" | "english";
-    state: "new"| "good" | "used"; // État du livre (neuf, bon état, usé, etc.)
-    images?: string[] | undefined;
-    readBy: string[]; // Tableau d'IDs de livres lus
+    state: "new"| "good" | "used"; 
+    imageCouverture?: string | undefined;
+    imageBack?: string | undefined;
+    imageInBook?: string | undefined;
+    readBy: string[]; 
     owner: string;
     isActive: boolean;
-    ownerActive: boolean; // Indique si le propriétaire du livre est actif ou non
-    alreadyLoaned: boolean; // Indique si le livre est déjà emprunté
+    ownerActive: boolean; 
+    alreadyLoaned: boolean; 
     addedAt: Date;
+}
+
+export interface BookWithUser extends Book {
+    user?: User;
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { User } from '../modules/User';
 import { Book } from '../modules/Book';
+import { CommentBook } from '../modules/CommentBook';
 
 @Injectable({
   providedIn: 'root'
@@ -29,11 +30,18 @@ export class ApiService {
     return this.http.get<Book[]>(`${this.api_url}/api/books/active`, { withCredentials: true });
   }
 
-  getBooksById(bookId: string) {
+  getBooksById(bookId: any) {
     return this.http.get<Book>(`${this.api_url}/api/books/${bookId}`, { withCredentials: true });
   }
 
   getEvent(): Observable<any> {
     return this.http.get<any>(`${this.api_url}/api/events`, { withCredentials: true });
+  }
+  getCommentsByBook(bookId: string) {
+    return this.http.get<CommentBook[]>(`${this.api_url}/api/comments/${bookId}`, { withCredentials: true });
+  }
+
+  postCommentBook(bookId: string, body: any) {
+    return this.http.post<CommentBook[]>(`${this.api_url}/api/comments/${bookId}`, body, { withCredentials: true })
   }
 }

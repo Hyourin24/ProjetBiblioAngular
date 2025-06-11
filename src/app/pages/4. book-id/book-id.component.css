@@ -90,36 +90,6 @@ header {
     background-color: #88875bc5;
 }
 
-/* ---- Barre de recherche ---- */
-.search {
-    background-color: #efefef;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    gap: 10px;
-}
-
-.search input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.btnSearch {
-    background-color: #ccc;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.tri select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #aaa;
-    margin-right: 5px;
-}
 
 /* ---- Sidebar ---- */
 aside {
@@ -164,6 +134,7 @@ main {
     flex: 1;
     overflow-y: auto;
     background-color: #f4f4f4;
+    position: relative;
 }
 
 /* Section liens d’action */
@@ -200,13 +171,22 @@ main {
 /* ---- Liste des livres ---- */
 
 .UniqueBook {
-    max-width: 600px;
+    max-width: 800px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: #f8f9fa;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Segoe UI', sans-serif;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+}
+.secondaryImage {
+    display: flex;
+    
 }
 
 .UniqueBook h3 {
@@ -269,4 +249,150 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+
+/* ---- Commentaires ---- */
+
+.commentsSection {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.noComment {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+    margin-top: 20px;
+}
+
+.commentTitle {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: #444;
+}
+
+.commentCard {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease;
+}
+
+.commentHeader {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 12px;
+}
+
+.commentAuthor {
+    font-weight: bold;
+    color: #555;
+}
+
+.commentTitleText {
+    font-style: italic;
+    color: #88875b;
+}
+
+.commentBody {
+    color: #333;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.commentsSection button {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    padding: 0.6rem 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+}
+
+.commentsSection button:hover {
+    background-color: #0056b3;
+}
+
+/* ---- Commentaires Create ---- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* assombri */
+    z-index: 999; }
+
+.postComment {
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.postComment i {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: #88875b;
+    cursor: pointer;
+}
+
+.postComment label {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+}
+
+.postComment input,
+.postComment textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.postComment button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.postComment button:hover {
+    background-color: #0056b3;
 }

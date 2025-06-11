@@ -1,0 +1,67 @@
+body,
+html {
+    height: 100%;
+    background: linear-gradient(to right, #e6e6d8, #fcfcf0);
+    background-size: 400% 400%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.menuAside {
+    background-color: #d5d87c;
+    padding: 30px 20px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #c0c077;
+}
+
+
+.otherpageList {
+    padding: 50px;
+    background-color: #fff;
+}
+
+.otherpageList h2 {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 30px;
+}
+
+.otherpageList ul li {
+    padding: 15px 20px;
+    font-size: 16px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s ease;
+}
+
+.otherpageList ul li:hover {
+    background-color: #f0f0d0;
+}
+
+.otherpageList i {
+    color: #88875b;
+}

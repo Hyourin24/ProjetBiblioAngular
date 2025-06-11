@@ -1,4 +1,5 @@
 export interface User {
+    _id: string;
     admin : boolean;
     name: string;
     phone: string;
@@ -12,3 +13,4 @@ export interface User {
     isActive: boolean;
     addedAt: Date;
 }
+
