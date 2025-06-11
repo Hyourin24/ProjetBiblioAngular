@@ -17,16 +17,22 @@ export class AccueilComponent {
   bookId: string = "";
   title: string = "";
   description: string = "";
-  genre: string = "";
+  genre: "fantasy" | "science-fiction" | "romance" | "mystery" | "non-fiction" | "historical" | "thriller" | "horror" | "biography" | "self-help" | "children's" | "young adult" | "poetry" | "classics" | "manga" | "comics" | "adventure" | "educative" | "cookbook" | "travel" | "humor" | "Genre" = "Genre";
+  genres: ("fantasy" | "science-fiction" | "romance" | "mystery" | "non-fiction" | "historical" | "thriller" | "horror" | "biography" | "self-help" | "children's" | "young adult" | "poetry" | "classics" | "manga" | "comics" | "adventure" | "educative" | "cookbook" | "travel" | "humor")[] = [
+    "fantasy", "science-fiction", "romance", "mystery", "non-fiction", "historical", "thriller", "horror", "biography",
+    "self-help", "children's", "young adult", "poetry", "classics", "manga", "comics", "adventure", "educative", "cookbook", "travel", "humor"
+  ];
   author: string = "";
   publishedYear: number = 0;
-  language: 'french' | 'ukrainian' | 'english' | '' = '';
-  languages: ('french' | 'ukrainian' | 'english')[] = [];
-  state: "new" | "good" | "used" = "new"; 
-  states: ("new" | "good" | "used")[] = [];
-  images: string[] = [];
+  date: "recent" | "ancien" | "Date" = "Date";
+  language: "french" | "ukrainian" | "english" | "Language" = "Language";
+  languages: ('french' | 'ukrainian' | 'english')[] = ["french", "ukrainian", "english"];
+  state: "new" | "good" | "used" | "Etat" = "Etat";
+  states: ("new" | "good" | "used")[] = ["new", "good", "used"];
+  imageCouverture: string = ""
   isActive: boolean = true;
   ownerActive: boolean = true;
+  addedAt: Date = new Date();
 
   bookList: Book[] = [];
   bookClick = ""
@@ -41,9 +47,7 @@ export class AccueilComponent {
     this.checkAuth();
     this.httpTestService.getBooksActive().subscribe(books => {
       this.bookList = books
-      this.resultatsFiltres = books; // 👈 Ajout essentiel
-      this.languages = [...new Set(books.map(book => book.language))] as ('french' | 'ukrainian' | 'english')[];
-      this.states = [...new Set(books.map(book => book.state))] as ("new" | "good" | "used")[];
+      this.resultatsFiltres = books; 
       console.log(this.bookList);
     
       this.bookList.forEach(book => {
@@ -55,25 +59,29 @@ export class AccueilComponent {
           publishedYear: book.publishedYear,
           language: book.language,
           state: book.state,
-          images: book.images,
+          imageCouverture: book.imageCouverture,
           isActive: book.isActive,
+          addedAt: book.addedAt,
         }
       });
     });
   }
 clickLogin() {
-      this.router.navigate(['/login']);
+  this.router.navigate(['/login']);
 }
 
 clickRegister(){
-      this.router.navigate(['/inscription']);
-    
-  }
+  this.router.navigate(['/inscription']);
+}
+
+clickProfil() {
+  this.router.navigate(["/profil"])
+}
 
   clickLogout() {
     this.httpTestService.deconnexion().subscribe({
       next: () => {
-        console.log("Déconnexion réussie");
+        alert("Déconnexion réussie");
         localStorage.removeItem('token');
         this.isLoggedIn = false;
       },
@@ -83,14 +91,12 @@ clickRegister(){
     });
   }
 
-  clickBook(book: Book) {
-    console.log("Book cliqué :", book._id); // ou book.id
-    this.httpTestService.getBooksById(book._id).subscribe(bookDetails => {
-      console.log("📚 Détails du livre :", bookDetails);
-      this.bookService.setSelectedBook(bookDetails);
-      this.router.navigate(['/book'])
-    });
+  clickBook(bookId: string) {
+    console.log("Book cliqué :", bookId);
+    // this.bookService.setSelectedBook(book);
+    this.router.navigate(['/book', bookId]);
   }
+  
   
   rechercheResult(): void {
     const term = this.recherche?.toLowerCase().trim() || '';
@@ -98,9 +104,21 @@ clickRegister(){
       book.title.toLowerCase().startsWith(term)
     );
   }
+  filtrerParDate(): void {
+    const date = this.date;
+    if (!date || date === 'Date') {
+      this.resultatsFiltres = this.bookList; // toutes les dates
+      return;
+    }
+    if (date === 'recent') {
+      this.resultatsFiltres = this.bookList.sort((a, b) => b.publishedYear - a.publishedYear);
+    } else if (date === 'ancien') {
+      this.resultatsFiltres = this.bookList.sort((a, b) => a.publishedYear - b.publishedYear);
+    }
+  }
   filtrerParLangue(): void {
     const langue = this.language;
-    if (!langue) {
+    if (!langue || langue === 'Language') {
       this.resultatsFiltres = this.bookList; // toutes les langues
       return;
     }
@@ -108,14 +126,26 @@ clickRegister(){
       book.language === langue
     );
   }
+  
   filtrerParEtat(): void {
     const etat = this.state;
-    if (!etat) {
+    if (!etat || etat === 'Etat') {
       this.resultatsFiltres = this.bookList; // tous les états
       return;
     }
     this.resultatsFiltres = this.bookList.filter(book =>
       book.state === etat
+    );
+  }
+
+  filtrerParGenre(): void {
+    const genre = this.genre;
+    if (!genre || genre === 'Genre') {
+      this.resultatsFiltres = this.bookList; // tous les genres
+      return;
+    }
+    this.resultatsFiltres = this.bookList.filter(book =>
+      book.genre === genre
     );
   }
   

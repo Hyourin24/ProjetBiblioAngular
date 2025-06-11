@@ -4,11 +4,12 @@ import { InscriptionComponent } from './pages/1. inscription/inscription.compone
 import { AccueilComponent } from './pages/3. accueil/accueil.component';
 import { BookServiceService } from './services/book-service.service';
 import { BookIdComponent } from './pages/4. book-id/book-id.component';
+import { ProfilComponent } from './pages/section profil/1. profil/profil.component';
 
 
 export const routes: Routes = [{
     path: '',
-    redirectTo: "accueil",
+    redirectTo: "login",
     pathMatch: 'full'
 
 },{
@@ -24,6 +25,10 @@ export const routes: Routes = [{
     component: AccueilComponent
 },
 {
-    path: "book",
+    path: "book/:id",
     component: BookIdComponent
+},
+{
+    path: "profil",
+    component: ProfilComponent
 }];

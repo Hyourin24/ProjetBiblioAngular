@@ -33,19 +33,59 @@
     <main>
         <section class="UniqueBook" >
             <h3>Détails du livre:</h3>
-            <img [src]="images" alt="Image du livre" style="width: 200px;">
+            <div class="image">
+                <img [src]="imageCouverture" alt="Image du livre de couverture" style="width: 350px;" height="200px">
+                <div class="secondaryImage">
+                    <img [src]="imageBack" alt="Image du livre" style="width: 150px;" height="100px">
+                    <img [src]="imageInBook" alt="Image du livre" style="width: 150px;" height="100px">
+                </div>
+            </div>
+            
+
             <h2>Titre: {{title}}</h2>
+            <p>Appartient à : {{ book?.user?.name || 'Inconnu' }}</p>
+
             <p>Description: {{description}}</p>
             <p>Genre: {{genre}}</p>
             <p>Auteur: {{author}}</p>
             <p>Année de publication: {{publishedYear}}</p>
             <p>Langue: {{language}}</p>
             <p>Etat: {{state}}</p>
+            <p>Posté le: {{addedAt | date:'dd/MM/yyyy'}}</p>
             <button>Réserver le livre</button>
         </section>
+        <section class="commentsSection">
+            <h2 class="commentTitle">Commentaires</h2>
+            <div *ngIf="commentList.length === 0" class="noComment">
+                <p>Aucun commentaire.</p>     
+            </div>
+        
+            <div class="commentCard" *ngFor="let com of commentList">
+                <div class="commentHeader">
+                    <span class="commentAuthor">{{ com.user?.name || 'Utilisateur inconnu' }}</span>
+                    <span class="commentTitleText">{{ com.title }}</span>
+                </div>
+                <p class="commentBody">{{ com.comment }}</p>
+                
+            </div>
+            <button class="postButton" (click)="clickComment()">Poster un commentaire</button>
+        </section>
+        <div class="modal-overlay" *ngIf="popupVisible"></div>
+        <section class="postComment">
+            <i class="fas fa-times" (click)="clickCrossComment()"></i>
+            <h2>Poster un commentaire</h2>
+            <form (ngSubmit)="createComment()">
+                <label for="commentTitle">Titre:</label>
+                <input type="text" id="commentTitle" [(ngModel)]="nouveauComment.title" name="title" required placeholder="Titre...">
+                
+                
+                <label for="commentBody">Commentaire:</label>
+                <textarea id="commentBody" [(ngModel)]="nouveauComment.comment" name="comment" required placeholder="Votre commentaire..."></textarea>
+                
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+          
     </main>
-    <footer>
-        <h3>Les lumières d'Ukraine - 2024</h3>
-
-    </footer>
+    
 </body>
