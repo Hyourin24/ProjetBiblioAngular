@@ -51,26 +51,4 @@ export class ApiService {
   postCommentBook(bookId: string, body: any) {
     return this.http.post<CommentBook[]>(`${this.api_url}/api/comments/${bookId}`, body, { withCredentials: true })
   }
-
-  postReservedBook(bookId: string, userId: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('Token not found in localStorage');
-    }
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.post<Book>(`${this.api_url}/api/users/${userId}/reservedBooks/${bookId}`, { headers }, { withCredentials: true});
-  }
-
-  postEventBook(eventId: string, userId: string): Observable<any> {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('Token not found in localStorage');
-    }
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.post<Event>(`${this.api_url}/api/users/${userId}/reservedEvents/${eventId}`, { headers }, { withCredentials: true });
-  }
 }
