@@ -6,6 +6,7 @@ import { BookServiceService } from './services/book-service.service';
 import { BookIdComponent } from './pages/4. book-id/book-id.component';
 import { ProfilComponent } from './pages/section profil/1. profil/profil.component';
 import { EventComponent } from './pages/5. event/event.component';
+import { HistoriqueComponent } from './pages/section profil/2. historique/historique.component';
 
 
 export const routes: Routes = [{
@@ -30,12 +31,15 @@ export const routes: Routes = [{
     component: BookIdComponent
 },
 {
-    path: "profil",
-    component: ProfilComponent
-
-}
-,{
     path: "event",
     component: EventComponent
+},
+{
+    path: "profil",
+    component: ProfilComponent
+},
+{
+    path: "profil/historique",
+    component: HistoriqueComponent
 }
 ];

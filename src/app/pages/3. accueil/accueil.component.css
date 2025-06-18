@@ -167,12 +167,7 @@ main {
     text-align: center;
 }
 
-.bookCard img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 5px;
-}
+
 
 .bookCard h4 {
     margin-top: 10px;
@@ -210,8 +205,8 @@ main {
 
 .book img {
     width: 100%;
-    max-width: 180px;
-    height: auto;
+    max-width: 400px;
+    height: 300px;
     border-radius: 8px;
     margin-bottom: 15px;
     object-fit: cover;

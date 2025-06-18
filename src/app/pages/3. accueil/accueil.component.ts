@@ -85,18 +85,19 @@ clickAccueil() {
 clickEvent() {
   this.router.navigate(['/event']);
 }
-  clickLogout() {
-    this.httpTestService.deconnexion().subscribe({
-      next: () => {
-        alert("Déconnexion réussie");
-        localStorage.removeItem('token');
-        this.isLoggedIn = false;
-      },
-      error: (error) => {
-        console.error("Erreur lors de la déconnexion :", error);
-      }
-    });
-  }
+clickLogout() {
+  this.httpTestService.deconnexion().subscribe({
+    next: () => {
+      alert("Déconnexion réussie");
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      this.isLoggedIn = false;
+    },
+    error: (error) => {
+      console.error("Erreur lors de la déconnexion :", error);
+    }
+  });
+}
 
   clickBook(bookId: string) {
     console.log("Book cliqué :", bookId);

@@ -24,4 +24,7 @@ export class ProfilComponent {
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }
+  clickHistorique() {
+    this.router.navigate(['/profil/historique']);
+  }
 }

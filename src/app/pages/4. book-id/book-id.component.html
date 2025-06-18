@@ -41,7 +41,8 @@
             <p>Langue: {{translateLanguage(language)}}</p>
             <p>Etat: {{translateState(state)}}</p>
             <p>Posté le: {{addedAt | date:'dd/MM/yyyy'}}</p>
-            <button>Réserver le livre</button>
+            <button *ngIf="!isReserved" (click)="clickDemandReserve()">Réserver le livre</button>
+            <button *ngIf="isReserved" class="reservedButton"><i class="fas fa-check"></i> Livre réservé</button>
         </section>
         <section class="commentsSection">
             <h2 class="commentTitle">Commentaires</h2>
@@ -60,6 +61,19 @@
             <button class="postButton" (click)="clickComment()">Poster un commentaire</button>
         </section>
         <div class="modal-overlay" *ngIf="popupVisible"></div>
+        <section class="demandReserve">
+            <i class="fas fa-times" (click)="clickCrossDemandReserve()"></i>
+            <h2>Souhaitez-vous réserver ce livre ?</h2>
+            <button (click)="reserveBook()" *ngIf="!isReserved">Réserver le livre</button>
+            <button *ngIf="isReserved == true"><i class="fas fa-check"></i></button>
+        </section>
+
+        <section class="bookReserved" *ngIf="isReserved">
+            <h2>Réservation réussie !</h2>
+            <p>Vous avez réservé le livre avec succès. La demande a bien été envoyée au loueur.</p>
+            <button (click)="clickCrossDemandReserve()">Fermer</button>
+        </section>
+
         <section class="postComment">
             <i class="fas fa-times" (click)="clickCrossComment()"></i>
             <h2>Poster un commentaire</h2>

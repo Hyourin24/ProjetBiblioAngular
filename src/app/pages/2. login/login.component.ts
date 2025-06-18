@@ -35,6 +35,7 @@ export class LoginComponent {
 
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
+        localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('token', response.token); 
         this.router.navigate(['/accueil']);
       },

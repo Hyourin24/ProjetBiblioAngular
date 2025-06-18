@@ -56,7 +56,7 @@
         </section>
         <section class="listBook">
             <div class="book" *ngFor="let book of resultatsFiltres" (click)="clickBook(book._id)">
-                <img [src]="book.imageCouverture" alt="Image du livre" style="width: 300px;">
+                <img [src]="book.imageCouverture" alt="Image du livre">
 
                 <h2>{{book.title}}</h2>
                 <p>{{book.description}}</p>

@@ -10,6 +10,7 @@ import { CommentBook } from '../../modules/CommentBook'
 import { CommentWithUser } from '../../modules/CommentBook';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class BookIdComponent {
   bookList: Book[] = [];
   bookClick = ""
   book: BookWithUser | null = null;
-
+  
+  userId: string = "";
   bookId: string = "";
   title: string = "";
   description: string = "";
@@ -47,21 +49,35 @@ export class BookIdComponent {
   user: User | null = null
 
   popupVisible: boolean = false;
+  isReserved: boolean = false;
   
   idClick: string | null = null;
-  utilisateurClicke: User | null = null;
   
 
-  constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService ) {}
+  constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService,  private cdRef: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    const bookId = this.route.snapshot.paramMap.get('id');
+    const bookIdReserved = this.route.snapshot.paramMap.get('id');
     this.idClick = this.route.snapshot.paramMap.get('id');
-    console.log("ID livre dans l'URL :", bookId);
+    const userData = localStorage.getItem('user');
+    
+    if (bookIdReserved) {
+      this.bookId = bookIdReserved;
+    }
+  
+    if (userData && this.bookId) {
+      const userParsed = JSON.parse(userData);
+      this.userId = userParsed._id;
+
+  
+      if (userParsed.bookReserved?.includes(this.bookId)) {
+        this.isReserved = true;
+      }
+    }
+
 
     if (this.idClick) {
       this.httpTestService.getBooksById(this.idClick).subscribe(book => {
-        console.log("📘 Détails du livre :", book);
         // assignation de toutes les valeurs à tes propriétés ici
         if (this.idClick) {
           this.bookId = this.idClick;
@@ -120,18 +136,36 @@ export class BookIdComponent {
 
       this.httpTestService.postCommentBook(this.bookId, newComment).subscribe({
         next: (response) => {
-          console.log("Comment crée", response);
           this.nouveauComment.title = "";
           this.nouveauComment.comment = "";
-          console.log("Commentaire ajouté avec succès", this.nouveauComment);
           window.location.reload(); 
         },
         error: (error) => {
-          console.error("Erreur création :", error);
+          console.error("❌ Erreur lors de la création du commentaire :", error);
           alert("Le titre et la description du commentaire sont requis.");
         }
       });
   }
+
+  reserveBook() {
+    if (!this.userId) {
+      alert("Utilisateur non identifié.");
+      return;
+    }
+    this.httpTestService.postReservedBook(this.bookId, this.userId).subscribe({
+      next: res => {
+
+        this.isReserved = true;
+        this.popupVisible = true;
+        this.cdRef.detectChanges();
+      },
+      error: err => {
+        console.error("❌ Erreur réservation :", err);
+        alert(err.error?.message || "Erreur lors de la réservation.");
+      }
+    });
+  }
+  
 
   clickAccueil() {
     this.router.navigate(['/accueil']);
@@ -145,6 +179,20 @@ export class BookIdComponent {
   clickCrossComment() {
     const postComment = document.querySelector(".postComment") as HTMLElement;
     postComment.style.display = "none";
+    this.popupVisible = false;
+  }
+
+  clickDemandReserve() {
+    const demandReserve = document.querySelector(".demandReserve") as HTMLElement;
+    demandReserve.style.display = "block";
+    this.popupVisible = true;
+  }
+
+  clickCrossDemandReserve() {
+     const demandReserve = document.querySelector(".demandReserve") as HTMLElement;
+    const bookReserved = document.querySelector(".bookReserved") as HTMLElement;
+    demandReserve.style.display = "none";
+    bookReserved.style.display = "none";
     this.popupVisible = false;
   }
     translateLanguage(lang: string): string {

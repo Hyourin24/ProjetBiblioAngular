@@ -33,8 +33,15 @@
                 <p *ngIf="event.eventStartDate">Début : {{ event.eventStartDate | date:'d MMMM y' }}</p>
                 <p *ngIf="event.eventEndDate">Fin : {{ event.eventEndDate | date:'d MMMM y' }}</p>
 
-                <button (click)="(event.id)">M'y inscrire</button>
+                <button (click)="reserveEvent(event._id)">M'y inscrire</button>
             </div>
+        </section>
+        <div class="modal-overlay" *ngIf="popupVisible"></div>
+        
+        <section class="eventReserved" *ngIf="isReserved">
+            <h2>Réservation réussie !</h2>
+            <p>Vous avez réservé le livre avec succès. La demande a bien été envoyée au loueur.</p>
+            <button (click)="clickCrossDemandReserve()">Fermer</button>
         </section>
     </main>
     <footer>
