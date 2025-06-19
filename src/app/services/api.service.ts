@@ -85,4 +85,7 @@ export class ApiService {
     return this.http.post<Book>(`${this.api_url}/api/books`, body, { headers, withCredentials: true });
   }
   
+  updateUser(userId: string, body: any): Observable<any> {
+    return this.http.put(`/api/users/${userId}`, body);
+  }
 }

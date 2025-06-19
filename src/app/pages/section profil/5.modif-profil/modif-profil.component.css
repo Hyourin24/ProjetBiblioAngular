@@ -1,0 +1,131 @@
+/* ---- Fond général ---- */
+body,
+html {
+    height: 100%;
+    background: linear-gradient(180deg, #31312d, #5b5b44, #88875b, #31312d);
+    background-size: 400% 400%;
+    animation: slide-in 15s infinite;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #1f1f1f;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* ---- Header / Bannière ---- */
+header {
+    width: 100%;
+}
+
+.banner {
+    background: linear-gradient(to right, #f5f5dc, #d5d87c);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.banner img {
+    height: 50px;
+    cursor: pointer;
+}
+
+/* ---- Contenu principal ---- */
+main.modif-profil {
+    padding: 40px 20px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+main.modif-profil h2 {
+    color: #88875b;
+    margin-bottom: 30px;
+    font-size: 26px;
+    text-align: center;
+}
+
+form {
+    background: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    min-width: 320px;
+    max-width: 400px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: 600;
+    color: #88875b;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #f9f9f9;
+    color: #333;
+}
+
+input[disabled] {
+    background: #e0e0e0;
+    color: #888;
+}
+
+button[type="submit"],
+button[type="button"] {
+    background-color: #88875b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #6c6b4a;
+}
+
+/* Animation */
+@keyframes slide-in {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}

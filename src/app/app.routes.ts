@@ -8,6 +8,7 @@ import { ProfilComponent } from './pages/section profil/1. profil/profil.compone
 import { EventComponent } from './pages/5. event/event.component';
 import { HistoriqueComponent } from './pages/section profil/2. historique/historique.component';
 import { PosterComponent } from './pages/section profil/3. poster/poster.component';
+import { ModifProfilComponent } from './pages/section profil/5.modif-profil/modif-profil.component';
 
 
 export const routes: Routes = [{
@@ -46,5 +47,9 @@ export const routes: Routes = [{
 {
     path: "profil/poster",
     component: PosterComponent
+},
+{
+    path: "profil/modifier",
+    component: ModifProfilComponent
 }
 ];

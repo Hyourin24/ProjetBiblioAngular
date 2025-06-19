@@ -27,14 +27,20 @@ body {
 
 .menuAside {
     background-color: #d5d87c;
-    padding: 30px 20px;
+    padding: 50px 20px;
     color: #333;
     display: flex;
     align-items: center;
-    justify-content: center;
     border-right: 2px solid #c0c077;
+    flex-direction: column;
+    
 }
+.menuAside span{
+    
 
+    padding: 5px;
+    
+}
 
 .otherpageList {
     padding: 50px;

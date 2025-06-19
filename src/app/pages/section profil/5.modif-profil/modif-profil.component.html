@@ -1,0 +1,47 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Modifier Profil</title>
+</head>
+<body>
+    <header>
+        <section class="banner">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine">
+        </section>   
+    </header>
+    <main class="modif-profil">
+        <h2>Modifier mes informations</h2>
+        <form (ngSubmit)="onSubmit()" *ngIf="user">
+            <div>
+                <label>Nom :</label>
+                <input type="text" [value]="user.name" disabled>
+            </div>
+            <div>
+                <label>Email :</label>
+                <input type="email" [value]="user.email" disabled>
+            </div>
+            <div>
+                <label>Adresse :</label>
+                <input type="text" [(ngModel)]="user.address" name="address" required>
+            </div>
+            <div>
+                <label>Ville :</label>
+                <input type="text" [(ngModel)]="user.city" name="city" required>
+            </div>
+            <div>
+                <label>Code Postal :</label>
+                <input type="text" [(ngModel)]="user.postalCode" name="postalCode" required>
+            </div>
+            <div>
+                <label>Téléphone :</label>
+                <input type="text" [(ngModel)]="user.phone" name="phone" required>
+            </div>
+            <button type="submit">Enregistrer les modifications</button>
+            <button type="button" (click)="annuler()">Annuler</button>
+        </form>
+    </main>
+</body>
