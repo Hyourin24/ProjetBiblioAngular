@@ -1,56 +1,72 @@
-<aside class="menuAside">
-    <!-- Tu peux ajouter un menu ici -->
-</aside>
+<html lang="en">
 
-<main class="historiqueContainer">
-    <section class="historiqueSection">
-        <h2>📚 Livres réservés</h2>
-        <div class="cardContainer" *ngIf="bookReserved.length > 0; else aucunLivreReserve">
-            <div class="card" *ngFor="let book of bookReserved" (click)="clickBook(book._id)">
-                <img [src]="book.imageCouverture" *ngIf="book.imageCouverture">
-                <div class="cardContent">
-                    <h3>{{ book.title }}</h3>
-                    <p>{{ book.description }}</p>
-                    <p class="author">Auteur : {{ book.author }}</p>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Connexion/Inscription</title>
+</head>
+<body>
+    <header>
+        <section class="banner">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine">
+        </section>   
+    </header>
+
+    <aside class="menuAside">
+        <!-- Tu peux ajouter un menu ici -->
+    </aside>
+
+    <main class="historiqueContainer">
+        <section class="historiqueSection">
+            <h2>📚 Livres réservés</h2>
+            <div class="cardContainer" *ngIf="bookReserved.length > 0; else aucunLivreReserve">
+                <div class="card" *ngFor="let book of bookReserved" (click)="clickBook(book._id)">
+                    <img [src]="book.imageCouverture" *ngIf="book.imageCouverture">
+                    <div class="cardContent">
+                        <h3>{{ book.title }}</h3>
+                        <p>{{ book.description }}</p>
+                        <p class="author">Auteur : {{ book.author }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <ng-template #aucunLivreReserve>
-            <p>Aucun livre réservé</p>
-        </ng-template>
-    </section>
+            <ng-template #aucunLivreReserve>
+                <p>Aucun livre réservé</p>
+            </ng-template>
+        </section>
 
-    <section class="historiqueSection">
-        <h2>📘 Livres en ma possession</h2>
-        <div class="cardContainer" *ngIf="bookRead.length > 0; else aucunLivreLu">
-            <div class="card" *ngFor="let book of bookRead"  (click)="clickBook(book._id)">
-                <img [src]="book.imageCouverture" *ngIf="book.imageCouverture">
-                <div class="cardContent">
-                    <h3>{{ book.title }}</h3>
-                    <p>{{ book.description }}</p>
-                    <p class="author">Auteur : {{ book.author }}</p>
+        <section class="historiqueSection">
+            <h2>📘 Livres en ma possession</h2>
+            <div class="cardContainer" *ngIf="bookRead.length > 0; else aucunLivreLu">
+                <div class="card" *ngFor="let book of bookRead"  (click)="clickBook(book._id)">
+                    <img [src]="book.imageCouverture" *ngIf="book.imageCouverture">
+                    <div class="cardContent">
+                        <h3>{{ book.title }}</h3>
+                        <p>{{ book.description }}</p>
+                        <p class="author">Auteur : {{ book.author }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <ng-template #aucunLivreLu>
-            <p>Aucun livre en possession</p>
-        </ng-template>
-    </section>
+            <ng-template #aucunLivreLu>
+                <p>Aucun livre en possession</p>
+            </ng-template>
+        </section>
 
-    <section class="historiqueSection">
-        <h2>📅 Évènements réservés</h2>
-        <div class="cardContainer" *ngIf="eventReserved.length > 0; else aucunEvent">
-            <div class="card" *ngFor="let event of eventReserved">
-                <img [src]="event.images" *ngIf="event.images">
-                <div class="cardContent">
-                    <h3>{{ event.title }}</h3>
-                    <p>{{ event.description }}</p>
+        <section class="historiqueSection">
+            <h2>📅 Évènements réservés</h2>
+            <div class="cardContainer" *ngIf="eventReserved.length > 0; else aucunEvent">
+                <div class="card" *ngFor="let event of eventReserved">
+                    <img [src]="event.images" *ngIf="event.images">
+                    <div class="cardContent">
+                        <h3>{{ event.title }}</h3>
+                        <p>{{ event.description }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <ng-template #aucunEvent>
-            <p>Aucun évènement réservé</p>
-        </ng-template>
-    </section>
-</main>
-  
+            <ng-template #aucunEvent>
+                <p>Aucun évènement réservé</p>
+            </ng-template>
+        </section>
+    </main>
+</body>

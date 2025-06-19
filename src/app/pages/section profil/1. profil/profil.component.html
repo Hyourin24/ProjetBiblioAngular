@@ -9,7 +9,13 @@
 </head>
 <body>
     <aside class="menuAside">
-        
+        <span>Nom: {{ user?.name }}<br></span>
+        <span>Email: {{ user?.email }}<br></span>
+        <span>Adresse: {{ user?.address }}<br></span>
+        <span>Ville: {{ user?.city }}<br></span>
+        <span>Code Postal: {{ user?.postalCode }}<br></span>
+        <span>Téléphone: {{ user?.phone }}<br></span>
+        <span>Date Création du compte: {{ user?.addedAt | date:'dd/MM/yyyy' }}<br></span>
     </aside>
 
     <main class="otherpageList">
@@ -18,7 +24,7 @@
             <li (click)="clickHistorique()"><i class="fas fa-book"></i> Historique</li>
             <li (click)="clickPoster()"><i class="fas fa-calendar-check"></i>Poster mon livre</li>
             <li><i class="fas fa-book-reader"></i> Livres que je loue</li>
-            <li><i class="fas fa-user-edit"></i> Modifier mes informations</li>
+            <li (click)="clickModifier()"><i class="fas fa-user-edit"></i> Modifier mes informations</li>
             <li (click)="clickAccueil()"><i class="fas fa-home"></i> Retour à l'accueil</li>
         </ul>
     </main>
