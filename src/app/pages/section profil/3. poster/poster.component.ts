@@ -72,4 +72,7 @@ export class PosterComponent {
         }
       });
   }
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
 }

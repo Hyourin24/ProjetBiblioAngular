@@ -83,7 +83,9 @@ export class HistoriqueComponent {
       return;
     }
   }
-  
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
 }
 
   
