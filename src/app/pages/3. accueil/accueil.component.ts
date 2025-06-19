@@ -291,4 +291,52 @@ translateGenre(genre: string): string {
   const token = localStorage.getItem('token'); // ou autre nom utilisé
   this.isLoggedIn = !!token;
 }
+
+appliquerFiltres(): void {
+  let result = this.bookList;
+
+  // Filtre recherche
+  const term = this.recherche?.toLowerCase().trim() || '';
+  if (term) {
+    result = result.filter(book =>
+      book.title.toLowerCase().startsWith(term)
+    );
+  }
+
+  // Filtre département
+  if (this.selectedDepartement) {
+    result = result.filter(book => {
+      const user = this.usersById[book.owner];
+      if (!user || !user.postalCode) return false;
+      const code = user.postalCode.toString().substring(0, 2);
+      return code === this.selectedDepartement;
+    });
+  }
+
+  // Filtre date
+  if (this.date && this.date !== 'Date') {
+    result = [...result].sort((a, b) =>
+      this.date === 'recent'
+        ? b.publishedYear - a.publishedYear
+        : a.publishedYear - b.publishedYear
+    );
+  }
+
+  // Filtre langue
+  if (this.language && this.language !== 'Language') {
+    result = result.filter(book => book.language === this.language);
+  }
+
+  // Filtre état
+  if (this.state && this.state !== 'Etat') {
+    result = result.filter(book => book.state === this.state);
+  }
+
+  // Filtre genre
+  if (this.genre && this.genre !== 'Genre') {
+    result = result.filter(book => book.genre === this.genre);
+  }
+
+  this.resultatsFiltres = result;
+}
 }
