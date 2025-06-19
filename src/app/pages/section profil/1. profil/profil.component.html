@@ -9,7 +9,13 @@
 </head>
 <body>
     <aside class="menuAside">
-        
+        Nom: {{ user?.name }}<br>
+        Email: {{ user?.email }}<br>
+        Adresse: {{ user?.address }}<br>
+        Ville: {{ user?.city }}<br>
+        Code Postal: {{ user?.postalCode }}<br>
+        Téléphone: {{ user?.phone }}<br>
+        Date Création du compte: {{ user?.addedAt | date:'dd/MM/yyyy' }}<br>
     </aside>
 
     <main class="otherpageList">
