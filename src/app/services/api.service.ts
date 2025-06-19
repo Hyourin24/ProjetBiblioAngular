@@ -17,7 +17,9 @@ export class ApiService {
   }
 
   getUserById(userId: string) {
-    return this.http.get<User>(`${this.api_url}/api/users/${userId}`, { withCredentials: true });
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.get<User>(`${this.api_url}/api/users/${userId}`, { headers, withCredentials: true });
   }
 
    connexion(body: any): Observable<any> {

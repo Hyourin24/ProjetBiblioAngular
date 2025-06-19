@@ -54,77 +54,77 @@ export class BookIdComponent {
   idClick: string | null = null;
   isLoggedIn: boolean = false;
   lougoutVisible: boolean = false;
+  apiService: any;
   
 
   constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService,  private cdRef: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    const bookIdReserved = this.route.snapshot.paramMap.get('id');
-    this.idClick = this.route.snapshot.paramMap.get('id');
-    const userData = localStorage.getItem('user');
+    let UId = localStorage.getItem('user');
+    this.userId = UId ?? "";
+    this.bookId = this.route.snapshot.paramMap.get('id') || '';
     this.checkAuth();
+
+    this.checkAuth();
+  
+    const userId = localStorage.getItem('user');
+    if (!userId) {
+      console.error('❌ Pas dID utilisateur trouvé dans le localStorage.');
+      return;
+    }
+  
+    this.userId = userId;
+  
+    this.httpTestService.getUserById(this.userId).subscribe(user => {
+      console.log(user)
+      const reservedBooks = user.bookReserved || [];
+      const readBooks = user.booksRead || [];
+      const reservedEvents = user.eventReserved || [];
+      console.log('livres réservés: ', reservedBooks)
+      console.log('livres lu', user.booksRead)
+    })
     
-    if (bookIdReserved) {
-      this.bookId = bookIdReserved;
-    }
-  
-    if (userData && this.bookId) {
-      const userParsed = JSON.parse(userData);
-      this.userId = userParsed._id;
-
-  
-      if (userParsed.bookReserved?.includes(this.bookId)) {
-        this.isReserved = true;
-      }
-    }
-
-
-    if (this.idClick) {
-      this.httpTestService.getBooksById(this.idClick).subscribe(book => {
-        // assignation de toutes les valeurs à tes propriétés ici
-        if (this.idClick) {
-          this.bookId = this.idClick;
-          this.title = book.title;
-          this.description = book.description;
-          this.genre = book.genre;
-          this.author = book.author;
-          this.publishedYear = book.publishedYear;
-          this.language = book.language;
-          this.state = book.state;
-          this.imageCouverture = book.imageCouverture ?? "";
-          this.imageBack = book.imageBack ?? "";
-          this.imageInBook = book.imageInBook ?? "";
-          this.addedAt = book.addedAt;
-        }
-        forkJoin({
-          commentJoin: this.httpTestService.getCommentsByBook(this.bookId),
-          userJoin: this.httpTestService.getUser()
-        }).subscribe(({ commentJoin, userJoin }) => {
-          this.userList = userJoin;
-          this.commentList = commentJoin.map(comment => {
-            const userMap = this.userList.find(user => user._id === comment.owner);
-            return {
-              ...comment,
-              user: userMap
-            };
-          });
-        });
-        forkJoin({
-          bookJoin: this.httpTestService.getBooksById(this.bookId),
-          userJoin: this.httpTestService.getUser()
-        }).subscribe(({ bookJoin, userJoin }) => {
-          this.userList = userJoin;
-          this.book = bookJoin
-          const userMap = this.userList.find(user => user._id === bookJoin.owner);
-          this.book = {
-            ...bookJoin,
-            user: userMap
-          };
-        });
+    
+    this.httpTestService.getBooksById(this.bookId).subscribe(book => {
+        this.title = book.title;
+        this.description = book.description;
+        this.genre = book.genre;
+        this.author = book.author;
+        this.publishedYear = book.publishedYear;
+        this.language = book.language;
+        this.state = book.state;
+        this.imageCouverture = book.imageCouverture ?? "";
+        this.imageBack = book.imageBack ?? "";
+        this.imageInBook = book.imageInBook ?? "";
+        this.addedAt = book.addedAt;
+      })
+    forkJoin({
+      commentJoin: this.httpTestService.getCommentsByBook(this.bookId),
+      userJoin: this.httpTestService.getUser()
+    }).subscribe(({ commentJoin, userJoin }) => {
+      this.userList = userJoin;
+      this.commentList = commentJoin.map(comment => {
+        const userMap = this.userList.find(user => user._id === comment.owner);
+        return {
+          ...comment,
+          user: userMap
+        };
       });
-    }
-
-  }
+    });
+    forkJoin({
+      bookJoin: this.httpTestService.getBooksById(this.bookId),
+      userJoin: this.httpTestService.getUser()
+    }).subscribe(({ bookJoin, userJoin }) => {
+      this.userList = userJoin;
+      this.book = bookJoin
+      const userMap = this.userList.find(user => user._id === bookJoin.owner);
+      this.book = {
+        ...bookJoin,
+        user: userMap
+      };
+    });
+  };
+  
         
   clickLogin() {
     this.router.navigate(['/login']);

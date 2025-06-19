@@ -9,7 +9,7 @@ export interface User {
     email: string;
     booksOwned: string[];
     booksRead: string[];
-    booksReserved: string[];
+    bookReserved: string[];
     eventReserved: string[];
     hashedPassword: string;
     isActive: boolean;

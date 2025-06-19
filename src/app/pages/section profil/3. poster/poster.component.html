@@ -13,16 +13,16 @@
             <h2>Poster un livre</h2>
             <form (ngSubmit)="postBook()">
                 <label for="commentTitle">Titre:</label>
-                <input type="text" id="bookTitle" [(ngModel)]="nouveauBook.title" name="title" required
+                <input type="text" id="bookTitle" [(ngModel)]="title" name="title" required
                     placeholder="Titre...">
         
         
                 <label for="commentBody">Commentaire:</label>
-                <textarea id="commentBody" [(ngModel)]="nouveauBook.description" name="description" required
+                <textarea id="commentBody" [(ngModel)]="description" name="description" required
                     placeholder="Votre description..."></textarea>
 
                 <label for="genre">Genre:</label>
-                <select id="genre" [(ngModel)]="nouveauBook.genre" name="genre" required>
+                <select id="genre" [(ngModel)]="genre" name="genre" required>
                     <option value="fantasy">Fantasy</option>
                     <option value="science-fiction">Science-fiction</option>
                     <option value="romance">Romance</option>
@@ -33,15 +33,15 @@
                 </select>
 
                 <label for="author">Auteur:</label>
-                <input type="text" id="author" [(ngModel)]="nouveauBook.author" name="author" required
+                <input type="text" id="author" [(ngModel)]="author" name="author" required
                     placeholder="Auteur...">
                 
                 <label for="publishedYear">Année de publication:</label>
-                <input type="number" id="publishedYear" [(ngModel)]="nouveauBook.publishedYear" name="publishedYear"
+                <input type="number" id="publishedYear" [(ngModel)]="publishedYear" name="publishedYear"
                     required placeholder="Année de publication...">
                 
                 <label for="language">Langue:</label>
-                <select id="language" [(ngModel)]="nouveauBook.language" name="language" required>
+                <select id="language" [(ngModel)]="language" name="language" required>
                     <option value="fr">Français</option>
                     <option value="en">Anglais</option>
                     <option value="uk">Ukrainien</option>

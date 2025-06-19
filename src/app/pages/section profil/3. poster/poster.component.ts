@@ -32,37 +32,37 @@ export class PosterComponent {
     imageBack: string = ""
     imageInBook: string = ""
 
-    nouveauBook: {title: string, description: string, genre: string, author: string,
-    publishedYear: number, language: string, state: string, imageCouverture: string, imageBack: string, imageInBook: string} = 
-    { title: '', description: '', genre: 'fantasy', author: '', publishedYear: 0, language: 'french', state: 'new', 
-    imageCouverture: '', imageBack: '', imageInBook: '' };
+    // nouveauBook: {title: string, description: string, genre: string, author: string,
+    // publishedYear: number, language: string, state: string, imageCouverture: string, imageBack: string, imageInBook: string} = 
+    // { title: '', description: '', genre: 'fantasy', author: '', publishedYear: 0, language: 'french', state: 'new', 
+    // imageCouverture: '', imageBack: '', imageInBook: '' };
 
     postBook() {
       const newComment = {
-        title: this.nouveauBook.title,
-        description: this.nouveauBook.description,
-        genre: this.nouveauBook.genre,
-        author: this.nouveauBook.author,
-        publishedYear: this.nouveauBook.publishedYear,
-        language: this.nouveauBook.language,
-        state: this.nouveauBook.state,
-        imageVouverture: this.nouveauBook.imageCouverture,
-        imageBack: this.nouveauBook.imageBack,
-        imageInBook: this.nouveauBook.imageInBook
+        title: this.title,
+        description: this.description,
+        genre: this.genre,
+        author: this.author,
+        publishedYear: this.publishedYear,
+        language: this.language,
+        state: this.state,
+        imageVouverture: this.imageCouverture,
+        imageBack: this.imageBack,
+        imageInBook: this.imageInBook
       };
 
       this.httpTestService.postCommentBook(this.bookId, newComment).subscribe({
         next: (response) => {
-          this.nouveauBook.title = '';
-          this.nouveauBook.description = '';
-          this.nouveauBook.genre = 'fantasy';
-          this.nouveauBook.author = '';
-          this.nouveauBook.publishedYear = 0;
-          this.nouveauBook.language = 'french';
-          this.nouveauBook.state = 'new';
-          this.nouveauBook.imageCouverture = '';
-          this.nouveauBook.imageBack = '';
-          this.nouveauBook.imageInBook = '';
+          this.title = '';
+          this.description = '';
+          this.genre = 'fantasy';
+          this.author = '';
+          this.publishedYear = 0;
+          this.language = 'french';
+          this.state = 'new';
+          this.imageCouverture = '';
+          this.imageBack = '';
+          this.imageInBook = '';
           console.log("✅ Book créé avec succès :", response);
           window.location.reload(); 
         },
