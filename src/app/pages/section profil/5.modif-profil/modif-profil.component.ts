@@ -19,8 +19,29 @@ export class ModifProfilComponent implements OnInit {
 
   ngOnInit(): void {
     const userData = localStorage.getItem('user');
+   
     if (userData) {
-      this.user = JSON.parse(userData);
+      this.apiService.getUserById(userData).subscribe({
+        next: (res) => {
+          // Sécurise l'accès à la donnée utilisateur
+          if (res && typeof res === 'object') {
+            if ('data' in res && res.data) {
+              this.user = res.data;
+            } else {
+              this.user = res;
+            }
+          } else {
+            this.user = null;
+          }
+          console.log('User utilisé:', this.user);
+        },
+        error: () => {
+          // Optionnel : log minimal côté dev, à retirer en prod
+        }
+      });
+    } else {
+      this.user = null;
+      // Optionnel : gérer le cas où l'utilisateur n'est pas trouvé dans le localStorage
     }
   }
 
@@ -35,7 +56,7 @@ export class ModifProfilComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         // Mets à jour le localStorage pour garder les infos à jour
-        localStorage.setItem('user', JSON.stringify({ ...this.user, ...res.data }));
+        localStorage.setItem('user', '{"_id":"testid","name":"Test"}');
         this.isSubmitting = false;
         this.router.navigate(['/profil']);
       },
@@ -48,5 +69,10 @@ export class ModifProfilComponent implements OnInit {
 
   annuler() {
     this.router.navigate(['/profil']);
+  }
+
+  logout() {
+    localStorage.removeItem('user');
+    this.router.navigate(['/login']); // Redirige vers la page de login après déconnexion
   }
 }

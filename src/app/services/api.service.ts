@@ -88,6 +88,13 @@ export class ApiService {
   }
   
   updateUser(userId: string, body: any): Observable<any> {
-    return this.http.put(`/api/users/${userId}`, body);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token not found in localStorage');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.put<any>(`${this.api_url}/api/users/${userId}`, body, { headers, withCredentials: true });
   }
 }

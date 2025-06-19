@@ -17,28 +17,29 @@ export class ProfilComponent implements OnInit {
 
   ngOnInit(): void {
     const userData = localStorage.getItem('user');
+   
     if (userData) {
-      const userParsed = JSON.parse(userData);
-      if (userParsed && userParsed._id) {
-        this.apiService.getUserById(userParsed._id).subscribe({
-          next: (res) => {
-            // Sécurise l'accès à la donnée utilisateur
-            if (res && typeof res === 'object') {
-              if ('data' in res && res.data) {
-                this.user = res.data;
-              } else {
-                this.user = res;
-              }
+      this.apiService.getUserById(userData).subscribe({
+        next: (res) => {
+          // Sécurise l'accès à la donnée utilisateur
+          if (res && typeof res === 'object') {
+            if ('data' in res && res.data) {
+              this.user = res.data;
             } else {
-              this.user = null;
+              this.user = res;
             }
-            console.log('User utilisé:', this.user);
-          },
-          error: (err) => {
-            // Optionnel : log minimal côté dev, à retirer en prod
+          } else {
+            this.user = null;
           }
-        });
-      }
+          console.log('User utilisé:', this.user);
+        },
+        error: (err) => {
+          // Optionnel : log minimal côté dev, à retirer en prod
+        }
+      });
+    } else {
+      this.user = null;
+      // Optionnel : gérer le cas où l'utilisateur n'est pas trouvé dans le localStorage
     }
   }
 
