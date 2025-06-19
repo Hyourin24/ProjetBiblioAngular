@@ -56,7 +56,6 @@ export class ModifProfilComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         // Mets à jour le localStorage pour garder les infos à jour
-        localStorage.setItem('user', '{"_id":"testid","name":"Test"}');
         this.isSubmitting = false;
         this.router.navigate(['/profil']);
       },
