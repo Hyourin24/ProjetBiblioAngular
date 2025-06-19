@@ -27,4 +27,7 @@ export class ProfilComponent {
   clickHistorique() {
     this.router.navigate(['/profil/historique']);
   }
+  clickPoster() {
+    this.router.navigate(['/profil/poster']);
+  }
 }

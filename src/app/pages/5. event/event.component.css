@@ -52,7 +52,20 @@ header {
     gap: 10px;
 }
 
-.logout, .userProfile {
+.logout,
+.login,
+.register {
+    margin-right: 20px;
+    background-color: #88875b00;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: 2px solid #fcfcf0;
+    color: #fcfcf0;
+    cursor: pointer;
+}
+
+.userProfile {
     margin-right: 8px;
     background-color: #88875b00;
     border: none;
@@ -66,7 +79,6 @@ header {
 .userParam button:hover {
     background-color: #88875bc5;
 }
-
 
 /* ---- Contenu principal ---- */
 main {
@@ -201,7 +213,8 @@ footer {
 }
 
 
-.eventReserved {
+.eventReserved,
+.deconnexion {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -215,6 +228,10 @@ footer {
     max-width: 500px;
     max-height: 90vh;
     overflow-y: auto;
+}
+
+.deconnexion {
+    display: none;
 }
 
 .eventReserved h2 {
@@ -232,7 +249,13 @@ footer {
     cursor: pointer;
 }
 
-.eventReserved button {
+.validation {
+    display: flex;
+    justify-content: center;
+}
+
+.eventReserved button,
+.validation button {
     background-color: #007bff;
     color: white;
     padding: 10px 20px;
@@ -243,4 +266,7 @@ footer {
     margin: 0 auto;
     margin-top: 15px;
     transition: background-color 0.3s ease;
+}
+.validation button:hover {
+    background-color: #0056b3;
 }

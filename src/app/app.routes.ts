@@ -7,6 +7,7 @@ import { BookIdComponent } from './pages/4. book-id/book-id.component';
 import { ProfilComponent } from './pages/section profil/1. profil/profil.component';
 import { EventComponent } from './pages/5. event/event.component';
 import { HistoriqueComponent } from './pages/section profil/2. historique/historique.component';
+import { PosterComponent } from './pages/section profil/3. poster/poster.component';
 
 
 export const routes: Routes = [{
@@ -41,5 +42,9 @@ export const routes: Routes = [{
 {
     path: "profil/historique",
     component: HistoriqueComponent
+},
+{
+    path: "profil/poster",
+    component: PosterComponent
 }
 ];

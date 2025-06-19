@@ -226,13 +226,54 @@ main {
     text-align: center;
 }
 
-/* ---- Footer ---- */
-footer {
-    background: linear-gradient(to top, #2f2f2f, #3d3b2f);
-    color: white;
-    text-align: center;
-    padding: 15px;
+/* ---- Deconnexion ---- */
+
+.modal-overlay {
     position: fixed;
-    bottom: 0;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    /* assombri */
+    z-index: 999;
+}
+
+.deconnexion {
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.validation{
+    display: flex;
+    justify-content: center;
+}
+
+.validation button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    margin-top: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.validation button:hover {
+    background-color: #0056b3;
 }

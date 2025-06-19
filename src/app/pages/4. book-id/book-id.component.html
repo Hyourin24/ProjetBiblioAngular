@@ -13,8 +13,11 @@
         <section class="banner">
             <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
             <div class="userParam">
-                <button class="logout">Se déconnecter</button>
-                <button class="userProfile"><i class="fas fa-user"></i></button>
+                <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
+                <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
+                
+                <button class="logout" *ngIf="isLoggedIn" (click)="clickLougout()">Se déconnecter</button>
+                <button class="userProfile" *ngIf="isLoggedIn" (click)="clickProfil()"><i class="fas fa-user"></i></button>
             </div>
         </section>
         
@@ -87,6 +90,14 @@
                 
                 <button type="submit">Envoyer</button>
             </form>
+        </section>
+        <div class="modal-overlay" *ngIf="lougoutVisible"></div>
+        <section class="deconnexion">
+            <h2>Souhaitez-vous vous déconnecter ?</h2>
+            <div class="validation">
+                <button (click)="logout()">Oui</button>
+                <button (click)="clickCrossLougout()">Non</button>
+            </div>
         </section>
           
     </main>

@@ -52,6 +52,8 @@ export class BookIdComponent {
   isReserved: boolean = false;
   
   idClick: string | null = null;
+  isLoggedIn: boolean = false;
+  lougoutVisible: boolean = false;
   
 
   constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService,  private cdRef: ChangeDetectorRef ) {}
@@ -60,6 +62,7 @@ export class BookIdComponent {
     const bookIdReserved = this.route.snapshot.paramMap.get('id');
     this.idClick = this.route.snapshot.paramMap.get('id');
     const userData = localStorage.getItem('user');
+    this.checkAuth();
     
     if (bookIdReserved) {
       this.bookId = bookIdReserved;
@@ -123,10 +126,22 @@ export class BookIdComponent {
 
   }
         
+  clickLogin() {
+    this.router.navigate(['/login']);
+  }
   
+  clickRegister(){
+    this.router.navigate(['/inscription']);
+  }
+  
+  clickProfil() {
+    this.router.navigate(["/profil"])
+  }
+  
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
       
-    
-    
         
   createComment() {
       const newComment = {
@@ -166,10 +181,6 @@ export class BookIdComponent {
     });
   }
   
-
-  clickAccueil() {
-    this.router.navigate(['/accueil']);
-  }
   clickComment() {
     const postComment = document.querySelector(".postComment") as HTMLElement;
     postComment.style.display = "block";
@@ -194,6 +205,33 @@ export class BookIdComponent {
     demandReserve.style.display = "none";
     bookReserved.style.display = "none";
     this.popupVisible = false;
+  }
+
+  clickLougout() {
+    const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+    deconnexion.style.display = "block";
+    this.lougoutVisible = true;
+  }
+  
+  clickCrossLougout() {
+    const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+    deconnexion.style.display = "none";
+    this.lougoutVisible = false;
+  }
+  
+  logout() {
+    this.httpTestService.deconnexion().subscribe({
+      next: () => {
+        alert("Déconnexion réussie");
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.isLoggedIn = false;
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error("Erreur lors de la déconnexion :", error);
+      }
+    });
   }
     translateLanguage(lang: string): string {
   switch (lang?.toLowerCase()) {
@@ -266,6 +304,11 @@ translateGenre(genre: string): string {
     default:
       return genre;
   }
+}
+
+checkAuth(): void {
+  const token = localStorage.getItem('token');
+  this.isLoggedIn = !!token;
 }
     
 }

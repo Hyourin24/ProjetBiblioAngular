@@ -24,6 +24,7 @@ export class EventComponent {
   idClick: string | null = null;
   recherche: string = '';
   isLoggedIn: boolean = false;
+  lougoutVisible: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private eventService: ApiService) { }
 
@@ -54,6 +55,49 @@ export class EventComponent {
     });
   }
 
+  clickLogin() {
+    this.router.navigate(['/login']);
+  }
+  
+  clickRegister(){
+    this.router.navigate(['/inscription']);
+  }
+  
+  clickProfil() {
+    this.router.navigate(["/profil"])
+  }
+  
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
+
+  clickLougout() {
+    const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+    deconnexion.style.display = "block";
+    this.lougoutVisible = true;
+  }
+  
+  clickCrossLougout() {
+    const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+    deconnexion.style.display = "none";
+    this.lougoutVisible = false;
+  }
+  
+  logout() {
+    this.eventService.deconnexion().subscribe({
+      next: () => {
+        alert("Déconnexion réussie");
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        this.isLoggedIn = false;
+        window.location.reload();
+      },
+      error: (error) => {
+        console.error("Erreur lors de la déconnexion :", error);
+      }
+    });
+  }
+
   clickMenu() {
     const hamburger = document.getElementById("hamburger") as HTMLElement;
     const aside = document.querySelector(".menuAside") as HTMLElement;
@@ -70,20 +114,6 @@ export class EventComponent {
     hamburger.style.display = "block";
     aside.style.display = "none";
     cross.style.display = "none";
-  }
-
-  clickLogout() {
-    this.eventService.deconnexion().subscribe({
-      next: () => {
-        console.log("Déconnexion réussie");
-        localStorage.removeItem('token');
-        this.isLoggedIn = false;
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        console.error("Erreur lors de la déconnexion :", error);
-      }
-    });
   }
 
   reserveEvent(eventId: string) {
@@ -108,23 +138,7 @@ export class EventComponent {
       }
     });
   }
-  
 
-  goToAccueil() {
-    this.router.navigate(['/accueil']);
-  }
-
-  goToMesLivres() {
-    this.router.navigate(['/mes-livres']);
-  }
-
-  goToEvenements() {
-    this.router.navigate(['/event']);
-  }
-
-  clickAccueil() {
-    this.router.navigate(['/accueil']);
-  }
 
   clickCrossDemandReserve() {
     const eventReserved = document.querySelector(".eventReserved") as HTMLElement;

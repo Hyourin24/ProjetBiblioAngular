@@ -12,8 +12,11 @@
         <section class="banner">
             <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
             <div class="userParam">
-                <button class="logout" (click)="clickLogout()">Se déconnecter</button>
-                <button class="userProfile"><i class="fas fa-user"></i></button>
+                <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
+                <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
+                
+                <button class="logout" *ngIf="isLoggedIn" (click)="clickLougout()">Se déconnecter</button>
+                <button class="userProfile" *ngIf="isLoggedIn" (click)="clickProfil()"><i class="fas fa-user"></i></button>
             </div>
         </section>
     </header>
@@ -21,7 +24,7 @@
         <section class="link">
             <div class="linkHome">
                 <h3>Retourner voir les livres disponible ?</h3>
-                <button (click)="goToAccueil()" >Accueil</button>
+                <button (click)="clickAccueil()" >Accueil</button>
             </div>
         </section>
         <section class="listEvent">
@@ -43,8 +46,13 @@
             <p>Vous avez réservé le livre avec succès. La demande a bien été envoyée au loueur.</p>
             <button (click)="clickCrossDemandReserve()">Fermer</button>
         </section>
+        <div class="modal-overlay" *ngIf="lougoutVisible"></div>
+        <section class="deconnexion">
+            <h2>Souhaitez-vous vous déconnecter ?</h2>
+            <div class="validation">
+                <button (click)="logout()">Oui</button>
+                <button (click)="clickCrossLougout()">Non</button>
+            </div>
+        </section>
     </main>
-    <footer>
-        <h3>Les lumières d'Ukraine - 2024</h3>
-    </footer>
 </body>

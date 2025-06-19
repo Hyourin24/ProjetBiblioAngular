@@ -34,6 +34,7 @@ export class AccueilComponent {
   isActive: boolean = true;
   ownerActive: boolean = true;
   addedAt: Date = new Date();
+  
 
 departementList: string[] = Array.from({ length: 95 }, (_, i) =>
   (i + 1).toString().padStart(2, '0')
@@ -51,6 +52,7 @@ selectedDepartement: string = '';
   
   recherche: string = '';
   isLoggedIn: boolean = false;
+  lougoutVisible: boolean = false;
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
 
 resultatsFiltresVille: any[] = [];
@@ -92,13 +94,27 @@ clickAccueil() {
 clickEvent() {
   this.router.navigate(['/event']);
 }
-clickLogout() {
+
+clickLougout() {
+  const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+  deconnexion.style.display = "block";
+  this.lougoutVisible = true;
+}
+
+clickCrossLougout() {
+  const deconnexion = document.querySelector(".deconnexion") as HTMLElement;
+  deconnexion.style.display = "none";
+  this.lougoutVisible = false;
+}
+
+logout() {
   this.httpTestService.deconnexion().subscribe({
     next: () => {
       alert("Déconnexion réussie");
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       this.isLoggedIn = false;
+      window.location.reload();
     },
     error: (error) => {
       console.error("Erreur lors de la déconnexion :", error);
