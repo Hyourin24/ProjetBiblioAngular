@@ -40,13 +40,10 @@ export class PosterComponent {
 
     isLoggedIn: boolean = false;
 
-    // nouveauBook: {title: string, description: string, genre: string, author: string,
-    // publishedYear: number, language: string, state: string, imageCouverture: string, imageBack: string, imageInBook: string} = 
-    // { title: '', description: '', genre: 'fantasy', author: '', publishedYear: 0, language: 'french', state: 'new', 
-    // imageCouverture: '', imageBack: '', imageInBook: '' };
 
     ngOnInit() {
-     
+    
+    this.checkAuth();
   
     const userId = localStorage.getItem('user');
     if (!userId) {
@@ -82,28 +79,33 @@ export class PosterComponent {
       });
     }
 
-    postBook() {
-      const formData = new FormData();
-      formData.append('title', this.title);
-      formData.append('description', this.description);
-      formData.append('genre', this.genre);
-      formData.append('author', this.author);
-      formData.append('publishedYear', this.publishedYear.toString());
-      formData.append('language', this.language);
-      formData.append('state', this.state);
+    async postBook() {
 
-      formData.append('imageCouverture', this.selectedImages['imageCouverture']);   
-      formData.append('imageBack', this.selectedImages['imageBack']);
-      formData.append('imageInBook', this.selectedImages['imageInBook']);
-      
-      console.log("📤 Données envoyées :", formData);
-      console.log("📤 Données envoyées :");
-      for (let pair of formData.entries()) {
-        console.log(`✅ ${pair[0]}:`, pair[1]);
-      }
-      
 
-      this.httpTestService.postBook(formData).subscribe({
+      let CouvertureBase64 = null;
+      let InbookBase64 = null;
+      let BackBase64 = null;
+
+    if (this.selectedImages) {
+      CouvertureBase64 = await this.convertFileToBase64(this.selectedImages['imageCouverture']);
+      InbookBase64 = await this.convertFileToBase64(this.selectedImages['imageInBook']);
+      BackBase64 = await this.convertFileToBase64(this.selectedImages['imageBack']);
+    }
+    
+    const postBody = {
+      title: this.title,
+      description: this.description,
+      genre: this.genre,
+      author: this.author,
+      publishedYear: this.publishedYear,
+      language: this.language,
+      state: this.state,
+      imageCouverture: CouvertureBase64,
+      imageBack: BackBase64,
+      imageInBook: InbookBase64,
+    };
+      
+      this.httpTestService.postBook(postBody).subscribe({
         next: (response) => {
           this.title = '';
           this.description = '';
@@ -117,8 +119,95 @@ export class PosterComponent {
         },
         error: (error) => {
           console.error("❌ Erreur lors de la création du livre :", error);
-          alert("Tous les champs sont requis");
+          alert("Tous les champs sont requis, ou l'une des images est trop volumineuse. Veuillez réessayer.");
         }
       });
+  }
+
+  checkAuth(): void {
+    const token = localStorage.getItem('token');
+    this.isLoggedIn = !!token;
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      console.log('⛔ Pas de token ou user, accès refusé');
+      return;
+    }
+  }
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
+
+  translateLanguage(lang: string): string {
+    switch (lang?.toLowerCase()) {
+      case 'french':
+        return 'Français';
+      case 'english':
+        return 'Anglais';
+      case 'ukrainian':
+        return 'Ukrainien';
+      default:
+        return lang;
+    }
+  }
+    translateState(et: string): string {
+    switch (et?.toLowerCase()) {
+      case 'new':
+        return 'Neuf';
+      case 'good':
+        return 'Bon état';
+      case 'used':
+        return 'Usé';
+      default:
+        return et;
+    }
+  }
+  translateGenre(genre: string): string {
+    switch (genre?.toLowerCase()) {
+      case 'fantasy':
+        return 'Fantastique';
+      case 'science-fiction':
+        return 'Science-fiction';
+      case 'romance':
+        return 'Romance';
+      case 'mystery':
+        return 'Mystère';
+      case 'non-fiction':
+        return 'Non-fiction';
+      case 'historical':
+        return 'Historique';
+      case 'thriller':
+        return 'Thriller';
+      case 'horror':
+        return 'Horreur';
+      case 'biography':
+        return 'Biographie';
+      case 'self-help':
+        return 'Développement personnel';
+      case "children's":
+        return 'Jeunesse';
+      case 'young adult':
+        return 'Jeunes adultes';
+      case 'poetry':
+        return 'Poésie';
+      case 'classics':
+        return 'Classiques';
+      case 'manga':
+        return 'Manga';
+      case 'comics':
+        return 'Bandes dessinées';
+      case 'adventure':
+        return 'Aventure';
+      case 'educative':
+        return 'Éducatif';
+      case 'cookbook':
+        return 'Livre de cuisine';
+      case 'travel':
+        return 'Voyage';
+      case 'humor':
+        return 'Humour';
+      default:
+        return genre;
+    }
   }
 }

@@ -76,8 +76,8 @@ export class ApiService {
     return this.http.post<Event>(`${this.api_url}/api/users/${userId}/reservedEvents/${eventId}`, { headers }, { withCredentials: true });
   }
 
-  postBook(formData: FormData): Observable<any> {
-    return this.http.post<Book>(`${this.api_url}/api/books`, formData, { withCredentials: true });
+  postBook(body: any): Observable<any> {
+    return this.http.post<Book>(`${this.api_url}/api/books`, body, { withCredentials: true });
   }
   
   updateUser(userId: string, body: any): Observable<any> {
