@@ -10,13 +10,13 @@
 <body>
     <header>
         <section class="banner">
-            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" >
         </section>   
     </header>
     <main>
         <section class="postComment">
             <h2>Poster un livre</h2>
-            <form (ngSubmit)="postBook()">
+            <form #loginForm="ngForm" (ngSubmit)="postBook()">
                 <label for="commentTitle">Titre:</label>
                 <input type="text" id="bookTitle" [(ngModel)]="title" name="title" required
                     placeholder="Titre...">
@@ -28,13 +28,7 @@
 
                 <label for="genre">Genre:</label>
                 <select id="genre" [(ngModel)]="genre" name="genre" required>
-                    <option value="fantasy">Fantasy</option>
-                    <option value="science-fiction">Science-fiction</option>
-                    <option value="romance">Romance</option>
-                    <option value="thriller">Thriller</option>
-                    <option value="historical">Historique</option>
-                    <option value="mystery">Mystère</option>
-                    <option value="horror">Horreur</option>
+                    <option *ngFor="let gen of genres" [value]="gen"></option>
                 </select>
 
                 <label for="author">Auteur:</label>
@@ -47,16 +41,23 @@
                 
                 <label for="language">Langue:</label>
                 <select id="language" [(ngModel)]="language" name="language" required>
-                    <option value="fr">Français</option>
-                    <option value="en">Anglais</option>
-                    <option value="uk">Ukrainien</option>
+                    <option *ngFor="let lang of languages" [value]="lang"></option>
                 </select>
 
-                
-                    
+                <label for="state">Etat du livre:</label>
+                <select id="state" [(ngModel)]="state" name="etat" required>
+                    <option *ngFor="let et of states" [value]="et"></option>
+                </select>
 
+                <label for="image1">Image face avant du livre :</label>
+                <input id="image1" type="file" accept="image/*" (change)="onImageSelected($event, 'imageCouverture')">
                 
-        
+                <label for="image2">Image face arrière du livre :</label>
+                <input id="image2" type="file" accept="image/*" (change)="onImageSelected($event, 'imageBack')">
+                
+                <label for="image3">Image d'intérieur :</label>
+                <input id="image3" type="file" accept="image/*" (change)="onImageSelected($event, 'imageInBook')">
+
                 <button type="submit">Envoyer</button>
             </form>
         </section>

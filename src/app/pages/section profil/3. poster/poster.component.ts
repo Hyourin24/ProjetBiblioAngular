@@ -23,35 +23,87 @@ export class PosterComponent {
     title: string = "";
     description: string = "";
     genre: "fantasy" | "science-fiction" | "romance" | "mystery" | "non-fiction" | "historical" | "thriller" | "horror" | "biography" | "self-help" | "children's" | "young adult" | "poetry" | "classics" | "manga" | "comics" | "adventure" | "educative" | "cookbook" | "travel" | "humor" = "fantasy";
+    genres: ("fantasy" | "science-fiction" | "romance" | "mystery" | "non-fiction" | "historical" | "thriller" | "horror" | "biography" | "self-help" | "children's" | "young adult" | "poetry" | "classics" | "manga" | "comics" | "adventure" | "educative" | "cookbook" | "travel" | "humor")[] = [
+      "fantasy", "science-fiction", "romance", "mystery", "non-fiction", "historical", "thriller", "horror", "biography",
+      "self-help", "children's", "young adult", "poetry", "classics", "manga", "comics", "adventure", "educative", "cookbook", "travel", "humor"
+    ];
     author: string = "";
     publishedYear: number = 0;
     language: "french" | "ukrainian" | "english" = "french";
-    state: "new" | "good" | "used" = "new"; 
+    languages: ('french' | 'ukrainian' | 'english')[] = ["french", "ukrainian", "english"];
+    state: "new" | "good" | "used" = "new";
+    states: ("new" | "good" | "used")[] = ["new", "good", "used"];
     addedAt: Date = new Date();
     imageCouverture: string = ""
     imageBack: string = ""
     imageInBook: string = ""
+
+    isLoggedIn: boolean = false;
 
     // nouveauBook: {title: string, description: string, genre: string, author: string,
     // publishedYear: number, language: string, state: string, imageCouverture: string, imageBack: string, imageInBook: string} = 
     // { title: '', description: '', genre: 'fantasy', author: '', publishedYear: 0, language: 'french', state: 'new', 
     // imageCouverture: '', imageBack: '', imageInBook: '' };
 
-    postBook() {
-      const newComment = {
-        title: this.title,
-        description: this.description,
-        genre: this.genre,
-        author: this.author,
-        publishedYear: this.publishedYear,
-        language: this.language,
-        state: this.state,
-        imageVouverture: this.imageCouverture,
-        imageBack: this.imageBack,
-        imageInBook: this.imageInBook
-      };
+    ngOnInit() {
+     
+  
+    const userId = localStorage.getItem('user');
+    if (!userId) {
+      console.error('❌ Pas dID utilisateur trouvé dans le localStorage.');
+      return;
+    }
+  
+    this.userId = userId;
+  
+    this.httpTestService.getUserById(this.userId).subscribe(user => {
+      console.log(user)
+      const reservedBooks = user.bookReserved || [];
+      console.log('livres réservés: ', reservedBooks)
+      console.log('livres lu', user.booksRead)
+    })
+    }
 
-      this.httpTestService.postCommentBook(this.bookId, newComment).subscribe({
+    selectedImages: { [key: string]: File } = {};
+
+    onImageSelected(event: Event, type: 'imageCouverture' | 'imageBack' | 'imageInBook') {
+      const input = event.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        this.selectedImages[type] = input.files[0];
+        console.log(`${type} sélectionnée :`, this.selectedImages[type]);
+      }
+    }
+    convertFileToBase64(file: File): Promise<string> {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = error => reject(error);
+      });
+    }
+
+    postBook() {
+      const formData = new FormData();
+      formData.append('title', this.title);
+      formData.append('description', this.description);
+      formData.append('genre', this.genre);
+      formData.append('author', this.author);
+      formData.append('publishedYear', this.publishedYear.toString());
+      formData.append('language', this.language);
+      formData.append('state', this.state);
+
+      formData.append('imageCouverture', this.selectedImages['imageCouverture']);   
+      formData.append('imageBack', this.selectedImages['imageBack']);
+      formData.append('imageInBook', this.selectedImages['imageInBook']);
+      
+      console.log("📤 Données envoyées :", formData);
+      console.log("📤 Données envoyées :");
+      for (let pair of formData.entries()) {
+        console.log(`✅ ${pair[0]}:`, pair[1]);
+      }
+      
+
+      this.httpTestService.postBook(formData).subscribe({
         next: (response) => {
           this.title = '';
           this.description = '';
@@ -60,9 +112,6 @@ export class PosterComponent {
           this.publishedYear = 0;
           this.language = 'french';
           this.state = 'new';
-          this.imageCouverture = '';
-          this.imageBack = '';
-          this.imageInBook = '';
           console.log("✅ Book créé avec succès :", response);
           window.location.reload(); 
         },
@@ -71,8 +120,5 @@ export class PosterComponent {
           alert("Tous les champs sont requis");
         }
       });
-  }
-  clickAccueil() {
-    this.router.navigate(['/accueil']);
   }
 }
