@@ -28,14 +28,13 @@ export class LoginComponent {
     });
   }
 
-
-
   login() {
     const authBody = { email: this.email, password: this.password };
 
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
-        localStorage.setItem('user', response.user._id);
+        // Stocke l'objet utilisateur complet, pas juste l'id
+        localStorage.setItem('user', JSON.stringify(response.user));
         localStorage.setItem('token', response.token); 
         this.router.navigate(['/accueil']);
       },

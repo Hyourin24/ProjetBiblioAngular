@@ -14,4 +14,14 @@
         </section>   
     </header>
 
-    Heheh JE SUIS LA PAGE DES LIVRES
+    <section class="mes-livres">
+      <h2>Mes livres</h2>
+      <div *ngIf="mesLivres.length === 0">Vous n'avez pas encore de livres.</div>
+      <div *ngFor="let livre of mesLivres" class="book-card" (click)="clickBook(livre._id)">
+        <img [src]="livre.imageCouverture" alt="Image du livre" />
+        <h3>{{ livre.title }}</h3>
+        <p>{{ livre.description }}</p>
+      </div>
+    </section>
+</body>
+</html>
