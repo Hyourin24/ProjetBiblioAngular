@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <title>Mes Livres</title>
 </head>
 <body>
@@ -17,11 +16,13 @@
     <section class="mes-livres">
       <h2>Mes livres</h2>
       <div *ngIf="mesLivres.length === 0">Vous n'avez pas encore de livres.</div>
-      <div *ngFor="let livre of mesLivres" class="book-card">
-        <img [src]="livre.imageCouverture" alt="Image du livre" />
-        <h3>{{ livre.title }}</h3>
-        <p>{{ livre.description }}</p>
-        <button class="remove-btn" (click)="retirerLivre(livre._id); $event.stopPropagation()">Retirer du site</button>
+      <div class="mes-livres-list">
+        <div *ngFor="let livre of mesLivres" class="book-card">
+          <img [src]="livre.imageCouverture" alt="Image du livre" />
+          <h3>{{ livre.title }}</h3>
+          <p>{{ livre.description }}</p>
+          <button class="remove-btn" (click)="retirerLivre(livre._id); $event.stopPropagation()">Retirer du site</button>
+        </div>
       </div>
     </section>
 </body>
