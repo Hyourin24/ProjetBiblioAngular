@@ -92,6 +92,10 @@ export class ApiService {
   }
 
   deleteBook(bookId: string) {
-    return this.http.delete(`/api/books/${bookId}`);
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.delete(`${this.api_url}/api/books/${bookId}`, { headers, withCredentials: true });
   }
 }
