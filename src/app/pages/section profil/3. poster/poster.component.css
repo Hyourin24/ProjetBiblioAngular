@@ -3,28 +3,20 @@
     padding: 0;
 }
 
-/* Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+header {
+    width: 100%;
 }
 
-body {
-    font-family: "Segoe UI", sans-serif;
-    background: #f5f6f3;
-    color: #222;
-    padding: 0 1rem;
+.banner {
+    background: linear-gradient(to right, #f5f5dc, #d5d87c);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
 }
 
-header .banner {
-    background: linear-gradient(to right, #fefcea, #f1da36);
-    padding: 10px;
-    text-align: center;
-}
-
-header .logo {
-    max-height: 80px;
+.banner img {
+    height: 50px;
     cursor: pointer;
 }
 
