@@ -73,4 +73,15 @@ export class MesLivresComponent implements OnInit {
   clickBook(bookId: string) {
     this.router.navigate(['/book', bookId]);
   }
+
+  retirerLivre(bookId: string) {
+    this.apiService.deleteBook(bookId).subscribe({
+      next: () => {
+        this.mesLivres = this.mesLivres.filter(livre => livre._id !== bookId);
+      },
+      error: () => {
+        alert("Erreur lors de la suppression du livre.");
+      }
+    });
+  }
 }

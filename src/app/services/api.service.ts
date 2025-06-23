@@ -90,4 +90,8 @@ export class ApiService {
     });
     return this.http.put<any>(`${this.api_url}/api/users/${userId}`, body, { headers, withCredentials: true });
   }
+
+  deleteBook(bookId: string) {
+    return this.http.delete(`/api/books/${bookId}`);
+  }
 }
