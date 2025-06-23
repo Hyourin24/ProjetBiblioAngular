@@ -1,67 +1,66 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
-    <title>Connexion/Inscription</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poster un livre</title>
 </head>
+
 <body>
     <header>
-        <section class="banner">
-            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
-        </section>   
+        <div class="banner">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" class="logo" />
+        </div>
     </header>
-    <main>
-        <section class="postComment">
-            <h2>Poster un livre</h2>
-            <form #loginForm="ngForm" (ngSubmit)="postBook()">
-                <label for="commentTitle">Titre:</label>
-                <input type="text" id="bookTitle" [(ngModel)]="title" name="title" required
-                    placeholder="Titre...">
-        
-        
-                <label for="commentBody">Commentaire:</label>
-                <textarea id="commentBody" [(ngModel)]="description" name="description" required
-                    placeholder="Votre description..."></textarea>
 
-                <label for="genre">Genre:</label>
+    <main>
+        <section class="post-container">
+            <h2>Poster un livre</h2>
+            <form (ngSubmit)="postBook()" #loginForm="ngForm">
+                <label for="bookTitle">Titre :</label>
+                <input type="text" id="bookTitle" [(ngModel)]="title" name="title" required />
+
+                <label for="commentBody">Description :</label>
+                <textarea id="commentBody" [(ngModel)]="description" name="description" required></textarea>
+
+                <label for="genre">Genre :</label>
                 <select id="genre" [(ngModel)]="genre" name="genre" required>
                     <option *ngFor="let gen of genres" [value]="gen">{{ translateGenre(gen) }}</option>
                 </select>
 
-                <label for="author">Auteur:</label>
-                <input type="text" id="author" [(ngModel)]="author" name="author" required
-                    placeholder="Auteur...">
-                
-                <label for="publishedYear">Année de publication:</label>
-                <input type="number" id="publishedYear" [(ngModel)]="publishedYear" name="publishedYear"
-                    required placeholder="Année de publication...">
-                
-                <label for="language">Langue:</label>
+                <label for="author">Auteur :</label>
+                <input type="text" id="author" [(ngModel)]="author" name="author" required />
+
+                <label for="publishedYear">Année de publication :</label>
+                <input type="number" id="publishedYear" [(ngModel)]="publishedYear" name="publishedYear" required />
+
+                <label for="language">Langue :</label>
                 <select id="language" [(ngModel)]="language" name="language" required>
                     <option *ngFor="let lang of languages" [value]="lang">{{ translateLanguage(lang) }}</option>
                 </select>
 
-                <label for="state">Etat du livre:</label>
-                <select id="state" [(ngModel)]="state" name="etat" required>
+                <label for="state">État du livre :</label>
+                <select id="state" [(ngModel)]="state" name="state" required>
                     <option *ngFor="let et of states" [value]="et">{{ translateState(et) }}</option>
                 </select>
 
-                <label for="image1">Image face avant du livre :</label>
-                <input id="image1" type="file" accept="image/*" (change)="onImageSelected($event, 'imageCouverture')">
-                
-                <label for="image2">Image face arrière du livre :</label>
-                <input id="image2" type="file" accept="image/*" (change)="onImageSelected($event, 'imageBack')">
-                
-                <label for="image3">Image d'intérieur :</label>
-                <input id="image3" type="file" accept="image/*" (change)="onImageSelected($event, 'imageInBook')"> 
+                <label>Image face avant :</label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'imageCouverture')" />
+
+                <label>Image face arrière :</label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'imageBack')" />
+
+                <label>Image intérieure :</label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'imageInBook')" />
 
                 <button type="submit">Envoyer</button>
             </form>
         </section>
     </main>
 </body>
+
+</html>
+
 
 

@@ -9,7 +9,7 @@ import { Book, BookWithUser } from '../../../modules/Book';
   selector: 'app-poster',
   imports: [FormsModule, CommonModule],
   templateUrl: './poster.component.html',
-  styleUrl: './poster.component.css'
+  styleUrls: ['./poster.component.css']
 })
 export class PosterComponent implements OnInit {
   bookList: Book[] = [];
