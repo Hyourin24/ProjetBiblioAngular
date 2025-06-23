@@ -19,30 +19,40 @@ export class ModifProfilComponent implements OnInit {
 
   ngOnInit(): void {
     const userData = localStorage.getItem('user');
-   
-    if (userData) {
-      this.apiService.getUserById(userData).subscribe({
-        next: (res) => {
-          // Sécurise l'accès à la donnée utilisateur
-          if (res && typeof res === 'object') {
-            if ('data' in res && res.data) {
-              this.user = res.data;
-            } else {
-              this.user = res;
-            }
-          } else {
-            this.user = null;
-          }
-          console.log('User utilisé:', this.user);
-        },
-        error: () => {
-          // Optionnel : log minimal côté dev, à retirer en prod
-        }
-      });
-    } else {
-      this.user = null;
-      // Optionnel : gérer le cas où l'utilisateur n'est pas trouvé dans le localStorage
+    let userParsed: any = null;
+    if (!userData) {
+      this.router.navigate(['/login']);
+      return;
     }
+    // Si userData commence par {, c'est un objet, sinon c'est un id
+    if (userData.trim().startsWith('{')) {
+      try {
+        userParsed = JSON.parse(userData);
+      } catch (e) {
+        localStorage.removeItem('user');
+        this.router.navigate(['/login']);
+        return;
+      }
+    } else {
+      userParsed = { _id: userData };
+    }
+
+    this.apiService.getUserById(userParsed._id).subscribe({
+      next: (res) => {
+        if (res && typeof res === 'object') {
+          if ('data' in res && res.data) {
+            this.user = res.data;
+          } else {
+            this.user = res;
+          }
+        } else {
+          this.user = null;
+        }
+      },
+      error: () => {
+        this.user = null;
+      }
+    });
   }
 
   onSubmit() {
@@ -56,6 +66,9 @@ export class ModifProfilComponent implements OnInit {
     }).subscribe({
       next: (res) => {
         // Mets à jour le localStorage pour garder les infos à jour
+        if (res && res.data) {
+          localStorage.setItem('user', JSON.stringify(res.data));
+        }
         this.isSubmitting = false;
         this.router.navigate(['/profil']);
       },

@@ -19,3 +19,67 @@ header {
     height: 50px;
     cursor: pointer;
 }
+
+.mes-livres {
+    padding: 40px;
+    background-color: #fff;
+    overflow-y: auto;
+}
+
+.mes-livres h2 {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d5d87c;
+    padding-bottom: 10px;
+}
+
+.book-card {
+    background-color: #fdfdf2;
+    border: 1px solid #e3e3c9;
+    border-radius: 10px;
+    width: 280px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.book-card h3 {
+    font-size: 18px;
+    color: #222;
+    margin: 15px 15px 5px 15px;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #666;
+    margin: 0 15px 10px 15px;
+}
+
+/* Pour afficher les livres en grille comme historique */
+.mes-livres {
+    display: flex;
+    flex-direction: column;
+}
+
+.mes-livres > div:not(:first-child) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
