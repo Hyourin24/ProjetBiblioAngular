@@ -10,7 +10,7 @@
 <body>
     <header>
         <section class="banner">
-            <img src="/annonce.jpg" alt="Les lumières d'Ukraine">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" >
         </section>   
     </header>
     <main>
@@ -28,7 +28,7 @@
 
                 <label for="genre">Genre:</label>
                 <select id="genre" [(ngModel)]="genre" name="genre" required>
-                    <option *ngFor="let gen of genres" [value]="gen">{{ translateGenre(gen) }}</option>
+                    <option *ngFor="let gen of genres" [value]="gen"></option>
                 </select>
 
                 <label for="author">Auteur:</label>
@@ -41,12 +41,12 @@
                 
                 <label for="language">Langue:</label>
                 <select id="language" [(ngModel)]="language" name="language" required>
-                    <option *ngFor="let lang of languages" [value]="lang">{{ translateLanguage(lang) }}</option>
+                    <option *ngFor="let lang of languages" [value]="lang"></option>
                 </select>
 
                 <label for="state">Etat du livre:</label>
                 <select id="state" [(ngModel)]="state" name="etat" required>
-                    <option *ngFor="let et of states" [value]="et">{{ translateState(et) }}</option>
+                    <option *ngFor="let et of states" [value]="et"></option>
                 </select>
 
                 <label for="image1">Image face avant du livre :</label>

@@ -1,0 +1,21 @@
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100%;
+}
+
+.banner {
+    background: linear-gradient(to right, #f5f5dc, #d5d87c);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.banner img {
+    height: 50px;
+    cursor: pointer;
+}

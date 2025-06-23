@@ -9,6 +9,7 @@ import { EventComponent } from './pages/5. event/event.component';
 import { HistoriqueComponent } from './pages/section profil/2. historique/historique.component';
 import { PosterComponent } from './pages/section profil/3. poster/poster.component';
 import { ModifProfilComponent } from './pages/section profil/5.modif-profil/modif-profil.component';
+import { MesLivresComponent } from './pages/section profil/4.mes-livres/mes-livres.component';
 
 
 export const routes: Routes = [{
@@ -47,6 +48,10 @@ export const routes: Routes = [{
 {
     path: "profil/poster",
     component: PosterComponent
+},
+{
+    path: "profil/mes-livres",
+    component: MesLivresComponent
 },
 {
     path: "profil/modifier",

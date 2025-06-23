@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <title>Connexion/Inscription</title>
 </head>
 <body>
@@ -14,40 +13,35 @@
             <div class="userParam">
                 <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
                 <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
-                
                 <button class="logout" *ngIf="isLoggedIn" (click)="clickLougout()">Se déconnecter</button>
                 <button class="userProfile" *ngIf="isLoggedIn" (click)="clickProfil()"><i class="fas fa-user"></i></button>
             </div>
         </section>
-        
     </header>
     <main>
         <section class="search">
-            <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="rechercheResult()">
+            <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="appliquerFiltres()">
             <div class="tri">
-                <select [(ngModel)]="selectedDepartement" (change)="filtrerParDepartement()">
-                <option value="">Département</option>
-                <option *ngFor="let dep of departementList" [value]="dep">
-                    {{ dep }}
-                </option>
+                <select [(ngModel)]="selectedDepartement" (change)="appliquerFiltres()">
+                    <option value="">Département</option>
+                    <option *ngFor="let dep of departementList" [value]="dep">
+                        {{ dep }}
+                    </option>
                 </select>
-
-
-
-                <select name="triDate" id="triDate" [(ngModel)]="date" (change)="filtrerParDate()">
+                <select name="triDate" id="triDate" [(ngModel)]="date" (change)="appliquerFiltres()">
                     <option value="Date">Date</option>
                     <option value="recent">Trier aux plus récents</option>
                     <option value="ancien">Trier aux plus anciens</option>
                 </select>
-                <select name="triGenre" id="triGenre" [(ngModel)]="genre" (change)="filtrerParGenre()">
+                <select name="triGenre" id="triGenre" [(ngModel)]="genre" (change)="appliquerFiltres()">
                     <option value="Genre">Genre</option>
                     <option *ngFor="let gen of genres" [value]="gen">{{ translateGenre(gen) }}</option>
                 </select>
-                <select name="triLanguage" id="triLanguage" [(ngModel)]="language" (change)="filtrerParLangue()">
+                <select name="triLanguage" id="triLanguage" [(ngModel)]="language" (change)="appliquerFiltres()">
                     <option value="Language">Language</option>
                     <option *ngFor="let lang of languages" [value]="lang">{{ translateLanguage(lang) }}</option>
                 </select>
-                <select name="triEtat" id="triEtat" [(ngModel)]="state" (change)="filtrerParEtat()">
+                <select name="triEtat" id="triEtat" [(ngModel)]="state" (change)="appliquerFiltres()">
                     <option value="Etat">Etat</option>
                     <option *ngFor="let et of states" [value]="et">{{ translateState(et) }}</option>
                 </select>
@@ -66,7 +60,6 @@
         <section class="listBook">
             <div class="book" *ngFor="let book of resultatsFiltres" (click)="clickBook(book._id)">
                 <img [src]="book.imageCouverture" alt="Image du livre">
-
                 <h2>{{book.title}}</h2>
                 <p>{{book.description}}</p>
                 <p>{{book.author}}</p>
@@ -81,5 +74,5 @@
             </div>
         </section>
     </main>
-    
 </body>
+</html>

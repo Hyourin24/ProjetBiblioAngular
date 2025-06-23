@@ -46,7 +46,7 @@ export class PosterComponent {
     // imageCouverture: '', imageBack: '', imageInBook: '' };
 
     ngOnInit() {
-      this.checkAuth();
+     
   
     const userId = localStorage.getItem('user');
     if (!userId) {
@@ -120,83 +120,5 @@ export class PosterComponent {
           alert("Tous les champs sont requis");
         }
       });
-  }
-
-  translateLanguage(lang: string): string {
-    switch (lang?.toLowerCase()) {
-      case 'french':
-        return 'Français';
-      case 'english':
-        return 'Anglais';
-      case 'ukrainian':
-        return 'Ukrainien';
-      default:
-        return lang;
-    }
-  }
-    translateState(et: string): string {
-    switch (et?.toLowerCase()) {
-      case 'new':
-        return 'Neuf';
-      case 'good':
-        return 'Bon état';
-      case 'used':
-        return 'Usé';
-      default:
-        return et;
-    }
-  }
-  translateGenre(genre: string): string {
-    switch (genre?.toLowerCase()) {
-      case 'fantasy':
-        return 'Fantastique';
-      case 'science-fiction':
-        return 'Science-fiction';
-      case 'romance':
-        return 'Romance';
-      case 'mystery':
-        return 'Mystère';
-      case 'non-fiction':
-        return 'Non-fiction';
-      case 'historical':
-        return 'Historique';
-      case 'thriller':
-        return 'Thriller';
-      case 'horror':
-        return 'Horreur';
-      case 'biography':
-        return 'Biographie';
-      case 'self-help':
-        return 'Développement personnel';
-      case "children's":
-        return 'Jeunesse';
-      case 'young adult':
-        return 'Jeunes adultes';
-      case 'poetry':
-        return 'Poésie';
-      case 'classics':
-        return 'Classiques';
-      case 'manga':
-        return 'Manga';
-      case 'comics':
-        return 'Bandes dessinées';
-      case 'adventure':
-        return 'Aventure';
-      case 'educative':
-        return 'Éducatif';
-      case 'cookbook':
-        return 'Livre de cuisine';
-      case 'travel':
-        return 'Voyage';
-      case 'humor':
-        return 'Humour';
-      default:
-        return genre;
-    }
-  }
-
-  checkAuth(): void {
-    const token = localStorage.getItem('token'); // ou autre nom utilisé
-    this.isLoggedIn = !!token;
   }
 }

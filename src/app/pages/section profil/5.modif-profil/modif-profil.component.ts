@@ -70,8 +70,7 @@ export class ModifProfilComponent implements OnInit {
     this.router.navigate(['/profil']);
   }
 
-  logout() {
-    localStorage.removeItem('user');
-    this.router.navigate(['/login']); // Redirige vers la page de login après déconnexion
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
   }
 }
