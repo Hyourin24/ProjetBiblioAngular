@@ -14,7 +14,7 @@ import { MesLivresComponent } from './pages/section profil/4.mes-livres/mes-livr
 
 export const routes: Routes = [{
     path: '',
-    redirectTo: "login",
+    redirectTo: "accueil",
     pathMatch: 'full'
 
 },{
