@@ -76,15 +76,8 @@ export class ApiService {
     return this.http.post<Event>(`${this.api_url}/api/users/${userId}/reservedEvents/${eventId}`, { headers }, { withCredentials: true });
   }
 
-  postBook(body: any): Observable<any> {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      throw new Error('Token not found in localStorage');
-    }
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
-    });
-    return this.http.post<Book>(`${this.api_url}/api/books`, body, { headers, withCredentials: true });
+  postBook(formData: FormData): Observable<any> {
+    return this.http.post<Book>(`${this.api_url}/api/books`, formData, { withCredentials: true });
   }
   
   updateUser(userId: string, body: any): Observable<any> {
