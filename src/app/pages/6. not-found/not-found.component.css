@@ -1,0 +1,67 @@
+@keyframes slide-in {
+    0% {
+        background-position: 50% 50%;
+    }
+
+    10% {
+        background-position: 50% 40%;
+    }
+
+    50% {
+        background-position: 10% 50%;
+    }
+
+    90% {
+        background-position: 30% 20%;
+    }
+
+    100% {
+        background-position: 50% 50%;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: "Segoe UI", sans-serif;
+    background: linear-gradient(180deg, #31312d, #5b5b44, #88875b, #31312d);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: slide-in 15s infinite;
+}
+
+.not-found-container {
+    text-align: center;
+    padding: 237.5px;
+    overflow: hidden;
+}
+
+.not-found-content h1 {
+    font-size: 8rem;
+    margin: 0;
+    color: #ededed;
+}
+
+.not-found-content p {
+    font-size: 1.5rem;
+    color: #ededed;
+    margin-bottom: 30px;
+}
+

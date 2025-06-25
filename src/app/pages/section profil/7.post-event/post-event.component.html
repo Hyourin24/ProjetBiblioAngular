@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poster un évènement</title>
+</head>
+
+<body>
+    <header>
+        <div class="banner">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" class="logo" />
+        </div>
+    </header>
+
+    <main>
+        <section class="post-container">
+            <h2>Poster un évènement</h2>
+            <form (ngSubmit)="postEvent()" #loginForm="ngForm">
+                <label for="bookTitle">Titre :</label>
+                <input type="text" id="bookTitle" [(ngModel)]="title" name="title" required />
+
+                <label for="commentBody">Description :</label>
+                <textarea id="commentBody" [(ngModel)]="description" name="description" required></textarea>
+
+                <label>Image :</label>
+                <input type="file" accept="image/*" (change)="onImageSelected($event, 'images')" />
+
+                <label for="language">Langue :</label>
+                <select id="language" [(ngModel)]="language" name="language" required>
+                    <option *ngFor="let lang of languages" [value]="lang">{{ translateLanguage(lang) }}</option>
+                </select>
+
+                <label for="start">Date du début:</label>
+                <input type="date" id="begin" [(ngModel)]="eventStartDate" name="begin" required>
+
+                <label for="start">Date de fin:</label>
+                <input type="date" id="end" [(ngModel)]="eventEndDate" name="end" required>
+
+                <button type="submit">Envoyer</button>
+            </form>
+        </section>
+    </main>
+</body>
+
+</html>

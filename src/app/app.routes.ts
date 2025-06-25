@@ -10,6 +10,9 @@ import { HistoriqueComponent } from './pages/section profil/2. historique/histor
 import { PosterComponent } from './pages/section profil/3. poster/poster.component';
 import { ModifProfilComponent } from './pages/section profil/5.modif-profil/modif-profil.component';
 import { MesLivresComponent } from './pages/section profil/4.mes-livres/mes-livres.component';
+import { DashboardComponent } from './pages/section profil/6.dashboard/dashboard.component';
+import { PostEventComponent } from './pages/section profil/7.post-event/post-event.component';
+import { NotFoundComponent } from './pages/6. not-found/not-found.component';
 
 
 export const routes: Routes = [{
@@ -56,5 +59,17 @@ export const routes: Routes = [{
 {
     path: "profil/modifier",
     component: ModifProfilComponent
+},
+{
+    path: "profil/dashboard",
+    component: DashboardComponent
+},
+{
+    path: "profil/post-event",
+    component: PostEventComponent
+},
+{
+    path: "**",
+    component: NotFoundComponent
 }
 ];
