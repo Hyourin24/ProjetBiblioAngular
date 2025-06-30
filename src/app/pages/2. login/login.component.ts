@@ -34,7 +34,7 @@ export class LoginComponent {
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
         // Stocke l'objet utilisateur complet, pas juste l'id
-        localStorage.setItem('user', JSON.stringify(response.user));
+        localStorage.setItem('user',  JSON.stringify(response.user));
         localStorage.setItem('token', response.token); 
         this.router.navigate(['/accueil']);
       },

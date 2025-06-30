@@ -60,30 +60,32 @@ export class BookIdComponent {
   constructor(private bookService: BookServiceService, private router: Router, private route: ActivatedRoute, private httpTestService: ApiService,  private cdRef: ChangeDetectorRef ) {}
 
   ngOnInit() {
-    let UId = localStorage.getItem('user');
-    this.userId = UId ?? "";
-    this.bookId = this.route.snapshot.paramMap.get('id') || '';
-    this.checkAuth();
-
     this.checkAuth();
   
-    const userId = localStorage.getItem('user');
-    if (!userId) {
-      console.error('❌ Pas dID utilisateur trouvé dans le localStorage.');
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      console.error('❌ Pas de données utilisateur trouvées dans le localStorage.');
       return;
     }
   
-    this.userId = userId;
+    try {
+      const parsedUser = JSON.parse(userData);
+      this.userId = parsedUser._id;
+    } catch (e) {
+      console.error('❌ Erreur lors du parsing des données utilisateur du localStorage.');
+      localStorage.removeItem('user');
+      return;
+    }
+  
+    this.bookId = this.route.snapshot.paramMap.get('id') || '';
   
     this.httpTestService.getUserById(this.userId).subscribe(user => {
-      console.log(user)
-      const reservedBooks = user.bookReserved || [];
-      const readBooks = user.booksRead || [];
-      const reservedEvents = user.eventReserved || [];
-      console.log('livres réservés: ', reservedBooks)
-      console.log('livres lu', user.booksRead)
-    })
-    
+      this.user = user;
+
+    // Vérifie si ce livre est dans la liste des livres réservés de l'utilisateur
+    this.isReserved = user.bookReserved?.includes(this.bookId);
+    });
+  
     
     this.httpTestService.getBooksById(this.bookId).subscribe(book => {
         this.title = book.title;

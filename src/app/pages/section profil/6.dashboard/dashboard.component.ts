@@ -12,20 +12,43 @@ import { User } from '../../../modules/User';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  admin: boolean = false;
-  name: string = "";
-  phone: string = "";
-  adress: string = "";
-  city: string = "";
-  postalCode: string = "";
-  email: string = "";
-  
-  
+  userList: User[] = [];
+
   constructor(private router: Router, private httpTestService: ApiService) { }
+
   ngOnInit() {
-    this.httpTestService.getUser().subscribe(email => {
-      
+    this.loadUsers();
+  }
+
+  loadUsers() {
+    this.httpTestService.getUser().subscribe({
+      next: (users) => {
+        this.userList = users;
+      },
+      error: (err) => {
+        console.error("❌ Erreur lors du chargement des utilisateurs :", err);
+        alert("Impossible de charger les utilisateurs.");
+      }
     });
   }
 
+  deleteUser(userId: string) {
+    const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
+    if (!confirmation) return;
+
+    this.httpTestService.deleteUser(userId).subscribe({
+      next: () => {
+        this.userList = this.userList.filter(user => user._id !== userId);
+        alert("Utilisateur supprimé avec succès.");
+      },
+      error: (err) => {
+        console.error("❌ Erreur lors de la suppression :", err);
+        alert("Impossible de supprimer cet utilisateur.");
+      }
+    });
+  }
+
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
 }
