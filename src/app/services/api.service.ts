@@ -98,4 +98,13 @@ export class ApiService {
     });
     return this.http.delete(`${this.api_url}/api/books/${bookId}`, { headers, withCredentials: true });
   }
+
+  getLoans() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    // On suppose que le backend retourne les loans avec les infos book et user peuplées
+    return this.http.get<any[]>(`${this.api_url}/api/loans`, { headers, withCredentials: true });
+  }
 }
