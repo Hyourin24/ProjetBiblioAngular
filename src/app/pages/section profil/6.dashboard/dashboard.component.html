@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <section class="banner">
+            <img src="/annonce.jpg" alt="Les lumières d'Ukraine" (click)="clickAccueil()">
+        </section>
+    </header>
+    <main class="admin-dashboard">
+        <h2>Gestion des utilisateurs</h2>
+    
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Adresse</th>
+                    <th>Ville</th>
+                    <th>Code Postal</th>
+                    <th>Téléphone</th>
+                    <th>Date d’inscription</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of userList">
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>{{ user.postalCode }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.addedAt | date: 'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button class="delete-btn" (click)="deleteUser(user._id)">Supprimer</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+    
+</body>

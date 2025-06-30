@@ -68,4 +68,10 @@ export class ProfilComponent implements OnInit {
   clickModifier() {
     this.router.navigate(['/profil/modifier']);
   }
+  clickDashboard() {
+    this.router.navigate(['/profil/dashboard']);
+  }
+  clickPostEvent() {
+    this.router.navigate(['/profil/post-event']);
+  }
 }

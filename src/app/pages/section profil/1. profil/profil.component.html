@@ -26,6 +26,8 @@
             <li (click)="clickMesLivres()"><i class="fas fa-book-reader"></i> Livres que je loue</li>
             <li (click)="clickModifier()"><i class="fas fa-user-edit"></i> Modifier mes informations</li>
             <li (click)="clickAccueil()"><i class="fas fa-home"></i> Retour à l'accueil</li>
+            <li *ngIf="user?.admin" (click)="clickDashboard()"><i class="fas fa-columns"></i>Tableau de bord (admin)</li>
+            <li *ngIf="user?.admin" (click)="clickPostEvent()"><i class="fas fa-columns"></i>Poster un évènement (admin)</li>
         </ul>
     </main>
 </body>

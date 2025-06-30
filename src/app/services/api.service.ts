@@ -52,7 +52,10 @@ export class ApiService {
     if (!token) {
       throw new Error('Token not found in localStorage');
     }
-    return this.http.post<CommentBook[]>(`${this.api_url}/api/comments/${bookId}`, body, { withCredentials: true })
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post<CommentBook[]>(`${this.api_url}/api/comments/${bookId}`, body, {headers, withCredentials: true })
   }
   postReservedBook(bookId: string, userId: string): Observable<any> {
     const token = localStorage.getItem('token');
@@ -77,7 +80,26 @@ export class ApiService {
   }
 
   postBook(body: any): Observable<any> {
-    return this.http.post<Book>(`${this.api_url}/api/books`, body, { withCredentials: true });
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token not found in localStorage');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    console.log('✅ Headers envoyés :', headers.get('Authorization'));
+    return this.http.post<Book>(`${this.api_url}/api/books`, body, { headers, withCredentials: true });
+  }
+
+  postEvent(body: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token not found in localStorage');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post<Event>(`${this.api_url}/api/events`, body, { headers, withCredentials: true });
   }
   
   updateUser(userId: string, body: any): Observable<any> {
@@ -89,6 +111,13 @@ export class ApiService {
       Authorization: `Bearer ${token}`
     });
     return this.http.put<any>(`${this.api_url}/api/users/${userId}`, body, { headers, withCredentials: true });
+  }
+
+  deleteUser(userId: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  
+    return this.http.delete(`${this.api_url}/api/users/${userId}`, { headers, withCredentials: true });
   }
 
   deleteBook(bookId: string) {

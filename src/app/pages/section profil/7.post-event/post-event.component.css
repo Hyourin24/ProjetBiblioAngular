@@ -1,0 +1,87 @@
+::ng-deep * {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    width: 100%;
+}
+
+.banner {
+    background: linear-gradient(to right, #f5f5dc, #d5d87c);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.banner img {
+    height: 50px;
+    cursor: pointer;
+}
+
+main {
+    max-width: 800px;
+    margin: 2rem auto;
+}
+
+.post-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.post-container h2 {
+    font-size: 1.8rem;
+    color: #37474f;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f1da36;
+    padding-bottom: 0.5rem;
+}
+
+form label {
+    display: block;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: #555;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="date"],
+form select,
+form textarea {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 0.3rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fafafa;
+    font-size: 1rem;
+}
+
+form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+form input[type="file"],
+form input[type="date"] {
+    margin-top: 0.5rem;
+}
+
+button[type="submit"]{
+    margin-top: 2rem;
+    padding: 0.8rem 2rem;
+    background-color: #f1da36;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #f7c700;
+}
