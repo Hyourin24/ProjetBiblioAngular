@@ -11,6 +11,7 @@ import { CommentWithUser } from '../../modules/CommentBook';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import { addDays } from 'date-fns'; // Si tu utilises date-fns, sinon utilise new Date()
 
 
 @Component({
@@ -54,17 +55,19 @@ export class BookIdComponent {
   idClick: string | null = null;
   isLoggedIn: boolean = false;
   lougoutVisible: boolean = false;
-  apiService: any;
+  // apiService: any; // Remove this line, will inject via constructor
 
   // Ajout pour la réservation
   isBookReservedByUser: boolean = false;
+  bookLoans: any[] = [];
 
   constructor(
     private bookService: BookServiceService,
     private router: Router,
     private route: ActivatedRoute,
     private httpTestService: ApiService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private apiService: ApiService // Inject ApiService here
   ) {}
 
   ngOnInit() {
@@ -141,6 +144,35 @@ export class BookIdComponent {
         user: userMap
       };
     });
+
+    // Après avoir récupéré le bookId :
+    this.httpTestService.getLoans().subscribe((loansRes: any) => {
+      const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
+      console.log('Loans reçus:', loans);
+      this.bookLoans = loans.filter((loan: any) => {
+        if (!loan.bookId) return false;
+        return String(loan.bookId) === String(this.bookId);
+      });
+      console.log('Loans filtrés:', this.bookLoans);
+    });
+
+    // Récupère tous les utilisateurs pour faire le lien avec les loans
+    this.httpTestService.getUser().subscribe((users: any[]) => {
+      this.httpTestService.getLoans().subscribe((loansRes: any) => {
+        const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
+        this.bookLoans = loans
+          .filter((loan: any) => loan.bookId && String(loan.bookId) === String(this.bookId))
+          .map((loan: any) => {
+            // Cherche l'utilisateur correspondant à userId
+            const user = users.find(u => String(u._id) === String(loan.userId));
+            return {
+              ...loan,
+              user: user || null
+            };
+          });
+        console.log('Loans filtrés avec user:', this.bookLoans);
+      });
+    });
   }
         
   clickLogin() {
@@ -187,16 +219,65 @@ export class BookIdComponent {
       alert("Vous avez déjà réservé ce livre.");
       return;
     }
-    this.httpTestService.postReservedBook(this.bookId, this.userId).subscribe({
-      next: () => {
-        this.isReserved = true;
-        this.popupVisible = true;
-        this.isBookReservedByUser = true;
-        this.cdRef.detectChanges();
-      },
-      error: err => {
-        alert(err.error?.message || "Erreur lors de la réservation.");
+
+    // 1. Cherche les loans existants pour ce livre
+    this.apiService.getLoans().subscribe((loansRes: any) => {
+      const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
+      // Filtre les loans de ce livre, triés par endDate décroissante
+      const bookLoans = loans
+        .filter((loan: any) => loan.book && loan.book._id === this.bookId)
+        .sort((a: any, b: any) => new Date(b.endDate).getTime() - new Date(a.endDate).getTime());
+
+      let startDate: Date;
+      let endDate: Date;
+
+      const today = new Date();
+      if (bookLoans.length > 0 && new Date(bookLoans[0].endDate) > today) {
+        // Le dernier prêt finit dans le futur, commence le lendemain
+        startDate = addDays(new Date(bookLoans[0].endDate), 1);
+      } else {
+        // Pas de prêt futur, commence aujourd'hui
+        startDate = today;
       }
+      endDate = addDays(startDate, 30);
+
+      // 2. Crée le loan côté backend
+      interface LoanPayload {
+        book: string;
+        user: string;
+        startDate: string;
+        endDate: string;
+      }
+
+      interface ApiError {
+        error?: {
+          message?: string;
+        };
+      }
+
+      this.apiService.createLoan(this.bookId, {
+        user: this.userId,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString()
+      }).subscribe({
+        next: (): void => {
+          // 3. Réserve le livre côté user (optionnel si tu veux garder la logique existante)
+          this.httpTestService.postReservedBook(this.bookId, this.userId).subscribe({
+            next: (): void => {
+              this.isReserved = true;
+              this.popupVisible = true;
+              this.isBookReservedByUser = true;
+              this.cdRef.detectChanges();
+            },
+            error: (err: ApiError): void => {
+              alert(err.error?.message || "Erreur lors de la réservation.");
+            }
+          });
+        },
+        error: (err: ApiError): void => {
+          alert(err.error?.message || "Erreur lors de la création du prêt.");
+        }
+      });
     });
   }
   

@@ -15,8 +15,8 @@ export class MesLivresComponent implements OnInit {
   userId: string = '';
   user: any = null;
   mesLivres: Book[] = [];
-  livresLoues: any[] = []; // Livres que je loue
-  demandesLocation: any[] = []; // Demandes de location reçues
+  livresLoues: Book[] = []; // Livres que je loue
+  demandesLocation: { book: Book, user: any }[] = []; // Demandes de location reçues
 
   constructor(private apiService: ApiService, public router: Router) {}
 
@@ -62,16 +62,19 @@ export class MesLivresComponent implements OnInit {
           });
 
           // Recherche dans les loans
-          this.apiService.getLoans().subscribe((loans: any[]) => {
+          this.apiService.getLoans().subscribe((loansRes: any) => {
+            // Si la réponse est { data: [...] }, prends loansRes.data, sinon loansRes
+            const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
+
             // Livres que je loue (où l'user est le demandeur)
             this.livresLoues = loans
-              .filter(loan => loan.user && (loan.user._id === this.userId || loan.user.name === this.user.name))
-              .map(loan => loan.book);
+              .filter((loan: any) => loan.user && loan.user._id === this.userId)
+              .map((loan: any) => loan.book);
 
             // Demandes de location reçues (où un de mes livres est demandé)
             this.demandesLocation = loans
-              .filter(loan => loan.book && loan.book.owner === this.userId)
-              .map(loan => ({
+              .filter((loan: any) => loan.book && loan.book.owner === this.userId)
+              .map((loan: any) => ({
                 book: loan.book,
                 user: loan.user
               }));

@@ -136,4 +136,12 @@ export class ApiService {
     // On suppose que le backend retourne les loans avec les infos book et user peuplées
     return this.http.get<any[]>(`${this.api_url}/api/loans`, { headers, withCredentials: true });
   }
+
+  createLoan(bookId: string, body: { user: string, startDate: string, endDate: string }) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.post(`${this.api_url}/api/loans/${bookId}`, body, { headers, withCredentials: true });
+  }
 }
