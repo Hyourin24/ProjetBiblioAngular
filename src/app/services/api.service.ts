@@ -144,4 +144,22 @@ export class ApiService {
     });
     return this.http.post(`${this.api_url}/api/loans/${bookId}`, body, { headers, withCredentials: true });
   }
+
+  updateLoanStatus(loanId: string, status: string) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.patch(`${this.api_url}/api/loans/${loanId}/status`, { status }, { headers, withCredentials: true });
+  }
+
+  confirmLoan(loanId: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.put(`${this.api_url}/api/loans/confirmed/${loanId}`, {}, { headers, withCredentials: true });
+  }
+
+  cancelLoan(loanId: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    return this.http.delete(`${this.api_url}/api/loans/canceled/${loanId}`, { headers, withCredentials: true });
+  }
 }
