@@ -36,6 +36,10 @@ export class ApiService {
     return this.http.get<Book[]>(`${this.api_url}/api/books/active`, { withCredentials: true });
   }
 
+  getBooks() {
+    return this.http.get<Book[]>(`${this.api_url}/api/books`, { withCredentials: true });
+  }
+
   getBooksById(bookId: any) {
     return this.http.get<Book>(`${this.api_url}/api/books/${bookId}`, { withCredentials: true });
   }
@@ -118,6 +122,17 @@ export class ApiService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
   
     return this.http.delete(`${this.api_url}/api/users/${userId}`, { headers, withCredentials: true });
+  }
+
+  updateIsActive(userId: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token not found in localStorage');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.put<any>(`${this.api_url}/api/users/${userId}/active`, {}, { headers, withCredentials: true });
   }
 
   deleteBook(bookId: string) {

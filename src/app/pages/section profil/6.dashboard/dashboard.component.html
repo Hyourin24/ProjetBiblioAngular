@@ -15,11 +15,13 @@
     </header>
     <main class="admin-dashboard">
         <h2>Gestion des utilisateurs</h2>
+        <input type="text" placeholder="Rechercher un utilisateur" [(ngModel)]="recherche" (input)="rechercheResult()">
     
         <table class="user-table">
             <thead>
                 <tr>
                     <th>Nom</th>
+                    <th>Id</th>
                     <th>Email</th>
                     <th>Adresse</th>
                     <th>Ville</th>
@@ -30,8 +32,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of userList">
+                <tr *ngFor="let user of resultatsFiltres">
+
                     <td>{{ user.name }}</td>
+                    <td>{{user._id}}</td>
                     <td>{{ user.email }}</td>
                     <td>{{ user.address }}</td>
                     <td>{{ user.city }}</td>
@@ -40,6 +44,43 @@
                     <td>{{ user.addedAt | date: 'dd/MM/yyyy' }}</td>
                     <td>
                         <button class="delete-btn" (click)="deleteUser(user._id)">Supprimer</button>
+                        <button class="update-inactive" *ngIf="user.isActive == true" (click)="updateActiveStatus(user._id)">Rendre Inactif</button>
+                        <button class="update-active" *ngIf="user.isActive == false" (click)="updateActiveStatus(user._id)">Rendre Actif</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Id</th>
+                    <th>Description</th>
+                    <th>Genre</th>
+                    <th>Auteur</th>
+                    <th>Année de publication</th>
+                    <th>Langage</th>
+                    <th>Etat</th>
+                    <th>Appartient à</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of resultatsFiltres">
+        
+                    <td>{{ user.name }}</td>
+                    <td>{{user._id}}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.address }}</td>
+                    <td>{{ user.city }}</td>
+                    <td>{{ user.postalCode }}</td>
+                    <td>{{ user.phone }}</td>
+                    <td>{{ user.addedAt | date: 'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button class="delete-btn" (click)="deleteUser(user._id)">Supprimer</button>
+                        <button class="update-inactive" *ngIf="user.isActive == true"
+                            (click)="updateActiveStatus(user._id)">Rendre Inactif</button>
+                        <button class="update-active" *ngIf="user.isActive == false"
+                            (click)="updateActiveStatus(user._id)">Rendre Actif</button>
                     </td>
                 </tr>
             </tbody>
