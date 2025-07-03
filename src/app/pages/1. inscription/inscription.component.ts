@@ -34,7 +34,6 @@ export class InscriptionComponent {
     // Récupère la liste des utilisateurs via le service et l'assigne à emailList
     this.httpTestService.getUser().subscribe(email => {
       this.emailList = email;
-      console.log(this.emailList); // Affiche la liste dans la console pour vérification
     });
   }
 
@@ -50,7 +49,6 @@ export class InscriptionComponent {
        city: this.city, 
        postalCode: this.postalCode 
      };
-     console.log("Body envoyé :", inscriptionBody); // Affiche l'objet envoyé
 
     // Appel du service d'inscription
     this.httpTestService.inscription(inscriptionBody).subscribe({

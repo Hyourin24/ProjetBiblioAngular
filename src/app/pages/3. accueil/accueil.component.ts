@@ -63,7 +63,7 @@ ngOnInit() {
   this.httpTestService.getBooksActive().subscribe(books => {
     this.bookList = books; // Stocke la liste complète des livres
     this.resultatsFiltres = books; // Initialise les résultats filtrés avec tous les livres
-    console.log(this.bookList); // Affiche la liste des livres dans la console pour vérification
+    // console.log(this.bookList); // Supprimé
   });
 
   // Charger les utilisateurs une seule fois
@@ -126,7 +126,7 @@ logout() {
 }
 
   clickBook(bookId: string) {
-    console.log("Book cliqué :", bookId);
+    // console.log("Book cliqué :", bookId); // Supprimé
     // this.bookService.setSelectedBook(book);
     this.router.navigate(['/book', bookId]);
   }

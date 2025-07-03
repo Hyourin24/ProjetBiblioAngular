@@ -28,7 +28,6 @@ export class LoginComponent {
     // Utile pour l'autocomplétion ou la vérification des emails existants
     this.httpTestService.getUser().subscribe(email =>{
       this.emailList = email;
-      console.log(this.emailList); // Affiche la liste dans la console pour vérification
     });
   }
 

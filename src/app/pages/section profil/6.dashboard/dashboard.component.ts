@@ -62,7 +62,7 @@ export class DashboardComponent {
         this.userList = users;
       },
       error: (err) => {
-        console.error("❌ Erreur lors du chargement des utilisateurs :", err);
+        
         alert("Impossible de charger les utilisateurs.");
       }
     });
@@ -75,7 +75,7 @@ export class DashboardComponent {
         this.bookList = books;
       },
       error: (err) => {
-        console.error("❌ Erreur lors du chargement des livres :", err);
+        
         alert("Impossible de charger les livres.");
       }
     });
@@ -88,7 +88,7 @@ export class DashboardComponent {
         this.eventList = events;
       },
       error: (err) => {
-        console.error("❌ Erreur lors du chargement des livres :", err);
+        
         alert("Impossible de charger les livres.");
       }
     });
@@ -129,7 +129,7 @@ export class DashboardComponent {
         alert("Utilisateur supprimé avec succès.");
       },
       error: (err) => {
-        console.error("❌ Erreur lors de la suppression :", err);
+       
         alert("Impossible de supprimer cet utilisateur.");
       }
     });
@@ -146,7 +146,7 @@ export class DashboardComponent {
         alert("Livre supprimé avec succès.");
       },
       error: (err) => {
-        console.error("❌ Erreur lors de la suppression :", err);
+      
         alert("Impossible de supprimer ce livre.");
       }
     });
@@ -163,7 +163,7 @@ export class DashboardComponent {
         alert("Livre supprimé avec succès.");
       },
       error: (err) => {
-        console.error("❌ Erreur lors de la suppression :", err);
+        
         alert("Impossible de supprimer ce livre.");
       }
     });
@@ -183,7 +183,7 @@ export class DashboardComponent {
         alert('Statut mis à jour avec succès.');
       },
       error: (err) => {
-        console.error("❌ Erreur lors de la mise à jour du statut :", err);
+        
         alert("Impossible de mettre à jour le statut de l'utilisateur.");
       }
     });
@@ -203,7 +203,7 @@ export class DashboardComponent {
         alert('Livre réactivé avec succès.');
       },
       error: (err) => {
-        console.error("❌ Erreur lors de la mise à jour du statut du livre :", err);
+        
         alert("Impossible de mettre à jour le statut du livre.");
       }
     });

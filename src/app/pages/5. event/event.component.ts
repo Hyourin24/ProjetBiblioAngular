@@ -53,7 +53,7 @@ export class EventComponent {
             this.user = null;
             this.userId = '';
           }
-          console.log('User utilisé:', this.user);
+         
         },
         error: () => {
           this.user = null;
@@ -80,7 +80,7 @@ export class EventComponent {
         this.resultatsFiltres = [];
         console.error('La réponse de getEvent() n\'est pas un tableau', events);
       }
-      console.log(this.eventList);
+      
     });
   }
 
@@ -150,8 +150,7 @@ export class EventComponent {
   }
 
   reserveEvent(eventId: string): void {
-    console.log("🆔 Event ID cliqué :", eventId);
-    console.log("👤 User ID :", this.userId);
+    
 
     if (!this.userId || !eventId) {
       console.error("❌ userId ou eventId manquant");
@@ -161,12 +160,11 @@ export class EventComponent {
 
     this.eventService.postEventBook(eventId, this.userId).subscribe({
       next: (res: any) => {
-        console.log("✅ Réservation réussie :", res);
         this.isReserved = true;
         this.popupVisible = true;
       },
       error: (err: any) => {
-        console.error("❌ Erreur réservation :", err);
+        
         alert(err.error?.message || "Erreur lors de la réservation.");
       }
     });
