@@ -29,7 +29,7 @@
         </section>
         <section class="listEvent">
             <div class="event" *ngFor="let event of resultatsFiltres">
-               <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
+                <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
                 <h2>{{event.title}}</h2>
                 <p>Description: {{event.description}}</p>
                 <p>Langue: {{ translateLanguage(event.language) }}</p>

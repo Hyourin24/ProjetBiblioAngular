@@ -42,8 +42,6 @@ departementList: string[] = Array.from({ length: 95 }, (_, i) =>
 
 selectedDepartement: string = '';
 
-
-
   bookList: Book[] = [];
   bookClick = ""
   book = new Array<Book>();
@@ -132,7 +130,6 @@ logout() {
     this.router.navigate(['/book', bookId]);
   }
   
-  
   rechercheResult(): void {
     const term = this.recherche?.toLowerCase().trim() || '';
     this.resultatsFiltres = this.bookList.filter(book =>
@@ -153,7 +150,6 @@ logout() {
     return code === this.selectedDepartement;
   });
 }
-
 
   filtrerParDate(): void {
     const date = this.date;
@@ -200,7 +196,6 @@ logout() {
     );
   }
   
-
 
   clickMenu() {
     const hamburger = document.getElementById("hamburger") as HTMLElement;

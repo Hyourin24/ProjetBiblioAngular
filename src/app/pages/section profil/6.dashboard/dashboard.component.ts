@@ -125,9 +125,6 @@ export class DashboardComponent {
     });
 }
 
-
-
-
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }

@@ -65,3 +65,15 @@ html {
     margin-bottom: 30px;
 }
 
+a{
+    font-size:  30px;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+
+}
+a:hover{
+    text-decoration: underline;
+    
+}
+
