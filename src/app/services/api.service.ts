@@ -135,12 +135,31 @@ export class ApiService {
     return this.http.put<any>(`${this.api_url}/api/users/${userId}/active`, {}, { headers, withCredentials: true });
   }
 
+  updateIsActiveBook(bookId: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('Token not found in localStorage');
+    }
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.put<any>(`${this.api_url}/api/books/${bookId}/reactivate`, {}, { headers, withCredentials: true });
+  }
+
   deleteBook(bookId: string) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
     return this.http.delete(`${this.api_url}/api/books/${bookId}`, { headers, withCredentials: true });
+  }
+
+  deleteEvent(eventId: string) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+    return this.http.delete(`${this.api_url}/api/events/${eventId}`, { headers, withCredentials: true });
   }
 
   getLoans() {

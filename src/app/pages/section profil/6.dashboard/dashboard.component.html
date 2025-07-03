@@ -50,6 +50,9 @@
                 </tr>
             </tbody>
         </table>
+
+        <h2>Gestion des livres</h2>
+        <input type="text" placeholder="Rechercher un livre" [(ngModel)]="rechercheBook" (input)="rechercheResultBook()">
         <table class="user-table">
             <thead>
                 <tr>
@@ -57,34 +60,63 @@
                     <th>Id</th>
                     <th>Description</th>
                     <th>Genre</th>
-                    <th>Auteur</th>
-                    <th>Année de publication</th>
-                    <th>Langage</th>
                     <th>Etat</th>
-                    <th>Appartient à</th>
+                    <th>Appartient à:</th>
+                    <th>Posté le:</th>
+                    <th>Status:</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let user of resultatsFiltres">
+                <tr *ngFor="let book of resultatBook">
         
-                    <td>{{ user.name }}</td>
-                    <td>{{user._id}}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.address }}</td>
-                    <td>{{ user.city }}</td>
-                    <td>{{ user.postalCode }}</td>
-                    <td>{{ user.phone }}</td>
-                    <td>{{ user.addedAt | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{book._id}}</td>
+                    <td>{{ book.description }}</td>
+                    <td>{{ book.genre }}</td>
+                    <td>{{book.state }}</td>
+                    <td>{{book.owner}}</td>
+                    <td>{{book.addedAt | date: 'dd/MM/yyyy' }}</td>
+                    <td>{{book.isActive}}</td>
                     <td>
-                        <button class="delete-btn" (click)="deleteUser(user._id)">Supprimer</button>
-                        <button class="update-inactive" *ngIf="user.isActive == true"
-                            (click)="updateActiveStatus(user._id)">Rendre Inactif</button>
-                        <button class="update-active" *ngIf="user.isActive == false"
-                            (click)="updateActiveStatus(user._id)">Rendre Actif</button>
+                        <button class="update-inactive" *ngIf="book.isActive == true" (click)="deleteBook(book._id)">Supprimer</button>
+                        <button class="update-active" *ngIf="book.isActive == false" (click)="updateActiveStatusBook(book._id)">Rendre Actif</button>      
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <h2>Gestion des évènements</h2>
+        <input type="text" placeholder="Rechercher un évènement" [(ngModel)]="rechercheEvent" (input)="rechercheResultEvent()">
+        <table class="user-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Id</th>
+                    <th>Langage</th>
+                    <th>Début</th>
+                    <th>Fin</th>
+                    <th>Posté le:</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let event of resultatEvent">
+        
+                    <td>{{ event.title }}</td>
+                    <td>{{event._id}}</td>
+                    <td>{{ event.language }}</td>
+                    <td>{{ event.eventStartDate }}</td>
+                    <td>{{ event.eventEndDate }}</td>
+                    <td>{{ event.addedAt | date: 'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button class="delete-btn" (click)="deleteEvent(event._id)">Supprimer</button>
+                        
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
     </main>
     
 </body>
