@@ -163,4 +163,12 @@ export class MesLivresComponent implements OnInit {
       // Optionnel : retirer la demande de la liste
     });
   }
+
+  // Marquer un livre comme rendu
+  marquerCommeRendu(livre: LoanDisplay) {
+    this.apiService.returnLoan(livre._id).subscribe(() => {
+      // Optionnel : retire le livre de la liste ou mets à jour son statut
+      this.livresLoues = this.livresLoues.filter(l => l._id !== livre._id);
+    });
+  }
 }

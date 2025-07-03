@@ -52,6 +52,9 @@
             Du <span>{{ livre.startDate | date:'dd/MM/yyyy' }}</span>
             au <span>{{ livre.endDate | date:'dd/MM/yyyy' }}</span>
           </p>
+          <div class="location-actions">
+            <button class="return-btn" (click)="marquerCommeRendu(livre)">Livre rendu</button>
+          </div>
         </div>
       </div>
     </section>

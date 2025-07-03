@@ -162,4 +162,10 @@ export class ApiService {
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
     return this.http.delete(`${this.api_url}/api/loans/canceled/${loanId}`, { headers, withCredentials: true });
   }
+
+  returnLoan(loanId: string) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this.api_url}/api/loans/returned/${loanId}`, {}, { headers, withCredentials: true });
+  }
 }
