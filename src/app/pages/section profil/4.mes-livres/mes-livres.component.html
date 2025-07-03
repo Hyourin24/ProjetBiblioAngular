@@ -18,9 +18,9 @@
       <div *ngIf="demandesLocation.length === 0">Aucune demande de location pour vos livres.</div>
       <div class="mes-livres-list">
         <div *ngFor="let demande of demandesLocation" class="book-card">
-          <img [src]="demande.book.imageCouverture" alt="Image du livre" />
-          <h3>{{ demande.book.title }}</h3>
-          <p>{{ demande.book.description }}</p>
+          <img [src]="demande.book?.imageCouverture" alt="Image du livre" />
+          <h3>{{ demande.book?.title }}</h3>
+          <p>{{ demande.book?.description }}</p>
           <p>Demandé par : {{ demande.user.name }} ({{ demande.user.email }})</p>
           <p>
             Du 
