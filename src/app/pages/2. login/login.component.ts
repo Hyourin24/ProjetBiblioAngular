@@ -17,6 +17,7 @@ export class LoginComponent {
   email: string = "";
   password: string = "";
   emailList: User[] = [];
+  showPassword: boolean = false;
       
   constructor(private router: Router, private httpTestService: ApiService) { }
 
