@@ -112,12 +112,16 @@ export class BookIdComponent implements OnInit {
       }));
     });
 
-    // 5. Récupère les loans pour ce livre avec infos utilisateur
+    // 5. Récupère les loans pour ce livre avec infos utilisateur, seulement status 'confirmed'
     this.httpTestService.getUser().subscribe((users: any[]) => {
       this.httpTestService.getLoans().subscribe((loansRes: any) => {
         const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
         this.bookLoans = loans
-          .filter((loan: any) => loan.bookId && String(loan.bookId) === String(this.bookId))
+          .filter((loan: any) =>
+            loan.bookId &&
+            String(loan.bookId) === String(this.bookId) &&
+            loan.status === 'confirmed'
+          )
           .map((loan: any) => ({
             ...loan,
             user: users.find((u: any) => String(u._id) === String(loan.userId)) || null

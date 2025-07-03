@@ -17,25 +17,27 @@
       <h2>Demandes de location reçues</h2>
       <div *ngIf="demandesLocation.length === 0">Aucune demande de location pour vos livres.</div>
       <div class="mes-livres-list">
-        <div *ngFor="let demande of demandesLocation" class="book-card">
-          <img [src]="demande.book?.imageCouverture" alt="Image du livre" />
-          <h3>{{ demande.book?.title }}</h3>
-          <p>{{ demande.book?.description }}</p>
-          <p>Demandé par : {{ demande.user.name }} ({{ demande.user.email }})</p>
-          <p>
-            Du 
-            <span>{{ demande.startDate | date:'dd/MM/yyyy' }}</span>
-            au 
-            <span>{{ demande.endDate | date:'dd/MM/yyyy' }}</span>
-            <span *ngIf="demande.startDate && demande.endDate">
-              ({{ getNbJours(demande.startDate, demande.endDate) }} jours)
-            </span>
-          </p>
-          <div class="location-actions">
-            <button class="accept-btn" (click)="accepterDemande(demande)">Accepter</button>
-            <button class="refuse-btn" (click)="refuserDemande(demande)">Refuser</button>
+        <ng-container *ngFor="let demande of demandesLocation">
+          <div *ngIf="demande.book?._id as bookId" class="book-card" (click)="clickBook(bookId)">
+            <img [src]="demande.book?.imageCouverture" alt="Image du livre" />
+            <h3>{{ demande.book?.title }}</h3>
+            <p>{{ demande.book?.description }}</p>
+            <p>Demandé par : {{ demande.user.name }} ({{ demande.user.email }})</p>
+            <p>
+              Du 
+              <span>{{ demande.startDate | date:'dd/MM/yyyy' }}</span>
+              au 
+              <span>{{ demande.endDate | date:'dd/MM/yyyy' }}</span>
+              <span *ngIf="demande.startDate && demande.endDate">
+                ({{ getNbJours(demande.startDate, demande.endDate) }} jours)
+              </span>
+            </p>
+            <div class="location-actions">
+              <button class="accept-btn" (click)="accepterDemande(demande)">Accepter</button>
+              <button class="refuse-btn" (click)="refuserDemande(demande)">Refuser</button>
+            </div>
           </div>
-        </div>
+        </ng-container>
       </div>
     </section>
 
@@ -43,17 +45,19 @@
       <h2>Livres que je loue</h2>
       <div *ngIf="livresLoues.length === 0">Vous ne louez aucun livre actuellement.</div>
       <div class="mes-livres-list">
-        <div *ngFor="let livre of livresLoues" class="book-card">
-          <img [src]="livre.book?.imageCouverture" alt="Image du livre" />
-          <h3>{{ livre.book?.title }}</h3>
-          <p>{{ livre.book?.description }}</p>
-          <p>Loué par : {{ livre.user?.name }} ({{ livre.user?.email }})</p>
-          <p>
-            Du <span>{{ livre.startDate | date:'dd/MM/yyyy' }}</span>
-            au <span>{{ livre.endDate | date:'dd/MM/yyyy' }}</span>
-          </p>
-          <div class="location-actions">
-            <button class="return-btn" (click)="marquerCommeRendu(livre)">Livre rendu</button>
+        <div *ngFor="let livre of livresLoues">
+          <div *ngIf="livre.book?._id as bookId" class="book-card" (click)="clickBook(bookId)">
+            <img [src]="livre.book?.imageCouverture" alt="Image du livre" />
+            <h3>{{ livre.book?.title }}</h3>
+            <p>{{ livre.book?.description }}</p>
+            <p>Loué par : {{ livre.user?.name }} ({{ livre.user?.email }})</p>
+            <p>
+              Du <span>{{ livre.startDate | date:'dd/MM/yyyy' }}</span>
+              au <span>{{ livre.endDate | date:'dd/MM/yyyy' }}</span>
+            </p>
+            <div class="location-actions">
+              <button class="return-btn" (click)="marquerCommeRendu(livre)">Livre rendu</button>
+            </div>
           </div>
         </div>
       </div>
@@ -63,7 +67,7 @@
       <h2>Mes livres</h2>
       <div *ngIf="mesLivres.length === 0">Vous n'avez pas encore de livres.</div>
       <div class="mes-livres-list">
-        <div *ngFor="let livre of mesLivres" class="book-card">
+        <div *ngFor="let livre of mesLivres" class="book-card" (click)="clickBook(livre._id)">
           <img [src]="livre.imageCouverture" alt="Image du livre" />
           <h3>{{ livre.title }}</h3>
           <p>{{ livre.description }}</p>
