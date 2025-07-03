@@ -48,8 +48,23 @@
                     <div class="passwordGroup">
                         <h4>Mot de passe*</h4>
                         <label for="password"></label>
-                        <input class="form-control" type="password" id="password" name="password"
-                            [(ngModel)]="password" />
+                        <div class="password-wrapper">
+                            <input
+                                class="form-control"
+                                [type]="showPassword ? 'text' : 'password'"
+                                id="password"
+                                name="password"
+                                [(ngModel)]="password"
+                            />
+                            <button
+                                type="button"
+                                class="toggle-password"
+                                (click)="showPassword = !showPassword"
+                                tabindex="-1"
+                                aria-label="Afficher ou masquer le mot de passe">
+                                <i class="fas" [ngClass]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit"> S'inscrire</button>
                 </form>
