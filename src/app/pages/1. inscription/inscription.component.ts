@@ -22,6 +22,7 @@ export class InscriptionComponent {
   city: string = "";
   postalCode: string = "";
   emailList: User[] = [];
+  showPassword: boolean = false;
   
  
   constructor(private router: Router, private httpTestService: ApiService) { }

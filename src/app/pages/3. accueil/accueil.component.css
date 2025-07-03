@@ -94,6 +94,15 @@ header {
 
 }
 
+.search input[type="text"] {
+    flex: none;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 15px;
+    width: 580px;
+}
+
 .tri select {
     padding: 8px;
     border-radius: 5px;
@@ -182,41 +191,51 @@ main {
 
 .listBook {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 30px;
-    padding: 40px 60px;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+    padding: 40px 30px;
     background-color: #f6f6f6;
 }
 
 .book {
-    background-color: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transition: transform 0.3s ease;
+    background-color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    padding: 22px 18px 18px 18px;
+    transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s;
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 340px;
+    cursor: pointer;
+    position: relative;
 }
 
 .book:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.13);
 }
 
 .book img {
     width: 100%;
-    max-width: 400px;
-    height: 300px;
+    max-width: 220px;
+    height: 180px;
     border-radius: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     object-fit: cover;
+    background: #f5f5dc;
 }
 
 .book h2 {
-    font-size: 20px;
-    margin: 10px 0 5px;
+    font-size: 19px;
+    margin: 8px 0 4px;
     color: #333;
     text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .book p {
@@ -224,6 +243,8 @@ main {
     font-size: 14px;
     color: #555;
     text-align: center;
+    line-height: 1.5;
+    word-break: break-word;
 }
 
 /* ---- Deconnexion ---- */
@@ -276,4 +297,117 @@ main {
 
 .validation button:hover {
     background-color: #0056b3;
+}
+
+/* ---- Pagination améliorée ---- */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 20px 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pagination button {
+  background: #f5f5dc;
+  border: 1.5px solid #d5d87c;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: 4px;
+}
+.pagination button.active,
+.pagination button:hover {
+  background: #d5d87c;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+
+/* ---- Grille de livres responsive et élégante ---- */
+.listBook {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 32px;
+    padding: 40px 30px;
+    background-color: #f6f6f6;
+}
+
+.book {
+    background-color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+    padding: 22px 18px 18px 18px;
+    transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 340px;
+    cursor: pointer;
+    position: relative;
+}
+
+.book:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+}
+
+.book img {
+    width: 100%;
+    max-width: 220px;
+    height: 180px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    object-fit: cover;
+    background: #f5f5dc;
+}
+
+.book h2 {
+    font-size: 19px;
+    margin: 8px 0 4px;
+    color: #333;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.book p {
+    margin: 2px 0;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    line-height: 1.5;
+    word-break: break-word;
+}
+
+/* Responsive pour mobile */
+@media (max-width: 900px) {
+    .listBook {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+        padding: 20px 5px;
+    }
+    .book img {
+        max-width: 100%;
+        height: 140px;
+    }
+}
+@media (max-width: 600px) {
+    .listBook {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 10px 2px;
+    }
+    .book {
+        padding: 12px 6px;
+        min-height: 200px;
+    }
+    .book img {
+        height: 100px;
+    }
 }

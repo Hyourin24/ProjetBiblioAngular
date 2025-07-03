@@ -42,8 +42,6 @@ departementList: string[] = Array.from({ length: 95 }, (_, i) =>
 
 selectedDepartement: string = '';
 
-
-
   bookList: Book[] = [];
   bookClick = ""
   book = new Array<Book>();
@@ -51,6 +49,7 @@ selectedDepartement: string = '';
   resultatsFiltres: Book[] = [];
   
   recherche: string = '';
+  rechercheVille: string = '';
   isLoggedIn: boolean = false;
   lougoutVisible: boolean = false;
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
@@ -131,7 +130,6 @@ logout() {
     this.router.navigate(['/book', bookId]);
   }
   
-  
   rechercheResult(): void {
     const term = this.recherche?.toLowerCase().trim() || '';
     this.resultatsFiltres = this.bookList.filter(book =>
@@ -152,7 +150,6 @@ logout() {
     return code === this.selectedDepartement;
   });
 }
-
 
   filtrerParDate(): void {
     const date = this.date;
@@ -199,7 +196,6 @@ logout() {
     );
   }
   
-
 
   clickMenu() {
     const hamburger = document.getElementById("hamburger") as HTMLElement;
@@ -298,12 +294,21 @@ translateGenre(genre: string): string {
 appliquerFiltres(): void {
   let result = this.bookList;
 
-  // Filtre recherche
+  // Filtre recherche titre
   const term = this.recherche?.toLowerCase().trim() || '';
   if (term) {
     result = result.filter(book =>
       book.title.toLowerCase().startsWith(term)
     );
+  }
+
+  // Filtre recherche ville
+  const ville = this.rechercheVille?.toLowerCase().trim() || '';
+  if (ville) {
+    result = result.filter(book => {
+      const user = this.usersById[book.owner];
+      return user && user.city && user.city.toLowerCase().includes(ville);
+    });
   }
 
   // Filtre département
@@ -341,5 +346,25 @@ appliquerFiltres(): void {
   }
 
   this.resultatsFiltres = result;
+}
+
+// Ajoute ces propriétés :
+currentPage: number = 1;
+pageSize: number = 25;
+
+// Calcul automatique du nombre de pages
+get totalPages(): number {
+  return Math.ceil(this.resultatsFiltres.length / this.pageSize);
+}
+
+// Pour changer de page
+setPage(page: number) {
+  this.currentPage = page;
+}
+
+// Pour afficher les livres de la page courante
+get livresPage(): any[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.resultatsFiltres.slice(start, start + this.pageSize);
 }
 }

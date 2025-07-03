@@ -270,3 +270,29 @@ footer {
 .validation button:hover {
     background-color: #0056b3;
 }
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 20px 0;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.pagination button {
+  background: #f5f5dc;
+  border: 1.5px solid #d5d87c;
+  border-radius: 8px;
+  padding: 9px 20px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  margin-bottom: 4px;
+}
+.pagination button.active,
+.pagination button:hover {
+  background: #d5d87c;
+  color: #222;
+  font-weight: bold;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}

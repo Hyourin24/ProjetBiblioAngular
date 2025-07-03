@@ -1,4 +1,4 @@
-<html lang="en">
+<html lang="fr">
 
 <head>
     <meta charset="UTF-8">
@@ -29,7 +29,7 @@
         </section>
         <section class="listEvent">
             <div class="event" *ngFor="let event of resultatsFiltres">
-               <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
+                <img [src]="event.images" alt="Image de l'event" style="width: 200px;">
                 <h2>{{event.title}}</h2>
                 <p>Description: {{event.description}}</p>
                 <p>Langue: {{ translateLanguage(event.language) }}</p>
@@ -39,6 +39,15 @@
                 <button (click)="reserveEvent(event._id)">M'y inscrire</button>
             </div>
         </section>
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="totalPages > 1">
+        <button
+            *ngFor="let page of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === (i+1)"
+            (click)="setPage(i+1)">
+            {{ i + 1 }}
+        </button>
+        </div>
         <div class="modal-overlay" *ngIf="popupVisible"></div>
         
         <section class="eventReserved" *ngIf="isReserved">

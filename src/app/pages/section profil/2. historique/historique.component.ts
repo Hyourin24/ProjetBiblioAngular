@@ -68,6 +68,9 @@ export class HistoriqueComponent {
   clickBook(bookId: string) {
     this.router.navigate(['/book', bookId]);
   }
+  clickAccueil() {
+    this.router.navigate(['/accueil']);
+  }
 
   checkAuth(): void {
     const token = localStorage.getItem('token');
@@ -77,10 +80,6 @@ export class HistoriqueComponent {
       this.router.navigate(['/login']);
       return;
     }
-  }
-
-  clickAccueil() {
-    this.router.navigate(['/accueil']);
   }
 }
 
