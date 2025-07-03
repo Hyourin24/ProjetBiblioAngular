@@ -94,6 +94,15 @@ export class BookIdComponent implements OnInit {
       this.imageInBook = book.imageInBook ?? '';
       this.addedAt = book.addedAt;
       this.book = book;
+
+      // Ajoute ce bloc pour peupler le propriétaire à partir de book.owner
+      if (book.owner && typeof book.owner === 'string') {
+        this.httpTestService.getUserById(book.owner).subscribe(owner => {
+          // On ajoute le champ user dans book pour le template
+          this.book = { ...book, user: owner };
+        });
+      }
+
       // Vérifie si le livre est déjà réservé par l'utilisateur
       if (this.user && this.user.bookReserved) {
         this.isBookReservedByUser = this.user.bookReserved.includes(this.bookId);

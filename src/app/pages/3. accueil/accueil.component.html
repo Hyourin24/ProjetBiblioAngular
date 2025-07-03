@@ -21,6 +21,7 @@
     <main>
         <section class="search">
             <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="appliquerFiltres()">
+            <input type="text" placeholder="Rechercher par ville" [(ngModel)]="rechercheVille" (input)="appliquerFiltres()" style="margin-left: 15px; width: 220px;">
             <div class="tri">
                 <select [(ngModel)]="selectedDepartement" (change)="appliquerFiltres()">
                     <option value="">Département</option>

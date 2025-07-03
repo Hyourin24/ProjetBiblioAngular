@@ -51,6 +51,7 @@ selectedDepartement: string = '';
   resultatsFiltres: Book[] = [];
   
   recherche: string = '';
+  rechercheVille: string = '';
   isLoggedIn: boolean = false;
   lougoutVisible: boolean = false;
    constructor(private router: Router, private bookService: BookServiceService, private httpTestService: ApiService) { }
@@ -298,12 +299,21 @@ translateGenre(genre: string): string {
 appliquerFiltres(): void {
   let result = this.bookList;
 
-  // Filtre recherche
+  // Filtre recherche titre
   const term = this.recherche?.toLowerCase().trim() || '';
   if (term) {
     result = result.filter(book =>
       book.title.toLowerCase().startsWith(term)
     );
+  }
+
+  // Filtre recherche ville
+  const ville = this.rechercheVille?.toLowerCase().trim() || '';
+  if (ville) {
+    result = result.filter(book => {
+      const user = this.usersById[book.owner];
+      return user && user.city && user.city.toLowerCase().includes(ville);
+    });
   }
 
   // Filtre département
