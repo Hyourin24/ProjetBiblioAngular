@@ -14,44 +14,52 @@ import { EventBook } from '../../../modules/Event';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
+  // Propriétés principales pour stocker les données
   user: any = null;
   bookList: Book[] = [];
   userList: User[] = [];
-  eventList: EventBook [] = []
+  eventList: EventBook [] = [];
   isActive: boolean = true;
+
+  // Résultats filtrés pour les recherches
   resultatsFiltres: User[] = [];
   resultatBook: Book[] = [];
-  resultatEvent: EventBook[] = []
+  resultatEvent: EventBook[] = [];
+
+  // Champs de recherche
   recherche: string = '';
   rechercheBook: string = '';
   rechercheEvent: string = '';
 
+  // Constructeur avec injection du Router et du service API
   constructor(private router: Router, private httpTestService: ApiService) { }
 
+  // Initialisation du composant
   ngOnInit() {
     this.loadUsers();
     this.loadBooks();
-    this.loadEvent()
+    this.loadEvent();
   
-      const userData = localStorage.getItem('user');
-      if (!userData) {
-        this.router.navigate(['/login']);
-        return;
-      }
+    // Vérifie l'utilisateur connecté et ses droits admin
+    const userData = localStorage.getItem('user');
+    if (!userData) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
-      let userParsed = JSON.parse(userData);
-      this.user = userParsed;
-      if (!this.user.admin) {
-        this.router.navigate(['/**']); 
-        return;
-      }
+    let userParsed = JSON.parse(userData);
+    this.user = userParsed;
+    if (!this.user.admin) {
+      this.router.navigate(['/**']); 
+      return;
+    }
   }
 
+  // Charge la liste des utilisateurs
   loadUsers() {
     this.httpTestService.getUser().subscribe({
       next: (users) => {
         this.userList = users;
-       
       },
       error: (err) => {
         console.error("❌ Erreur lors du chargement des utilisateurs :", err);
@@ -60,6 +68,7 @@ export class DashboardComponent {
     });
   }
 
+  // Charge la liste des livres
   loadBooks() {
     this.httpTestService.getBooks().subscribe({
       next: (books) => {
@@ -72,6 +81,7 @@ export class DashboardComponent {
     });
   }
 
+  // Charge la liste des événements
   loadEvent() {
     this.httpTestService.getEvent().subscribe({
       next: (events) => {
@@ -84,20 +94,23 @@ export class DashboardComponent {
     });
   }
   
-
+  // Recherche utilisateur par nom
   rechercheResult(): void {
     const term = this.recherche?.toLowerCase().trim() || '';
     this.resultatsFiltres = this.userList.filter(user =>
       user.name && user.name.toLowerCase().startsWith(term)
     );
-    
   }
+
+  // Recherche livre par titre
   rechercheResultBook(): void {
     const termBook = this.rechercheBook?.toLowerCase().trim() || '';
     this.resultatBook = this.bookList.filter(book =>
       book.title && book.title.toLowerCase().startsWith(termBook)
     );
   }
+
+  // Recherche événement par titre
   rechercheResultEvent(): void {
     const termEvent = this.rechercheEvent?.toLowerCase().trim() || '';
     this.resultatEvent = this.eventList.filter(event =>
@@ -105,7 +118,7 @@ export class DashboardComponent {
     );
   }
   
-
+  // Suppression d'un utilisateur
   deleteUser(userId: string) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer cet utilisateur ?");
     if (!confirmation) return;
@@ -122,6 +135,7 @@ export class DashboardComponent {
     });
   }
 
+  // Suppression d'un livre
   deleteBook(bookId: string) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer / rendre inactif ce livre ?");
     if (!confirmation) return;
@@ -138,6 +152,7 @@ export class DashboardComponent {
     });
   }
 
+  // Suppression d'un événement
   deleteEvent(eventId: string) {
     const confirmation = confirm("Êtes-vous sûr de vouloir supprimer / rendre inactif ce livre ?");
     if (!confirmation) return;
@@ -154,7 +169,7 @@ export class DashboardComponent {
     });
   }
 
-
+  // Mise à jour du statut actif d'un utilisateur
   updateActiveStatus(userId: string) {
     const confirmation = confirm('Êtes-vous sûr de vouloir changer le statut de cet utilisateur ?');
     if (!confirmation) return;
@@ -174,6 +189,7 @@ export class DashboardComponent {
     });
    }
 
+   // Réactivation d'un livre
    updateActiveStatusBook(bookId: string) {
     const confirmation = confirm('Êtes-vous sûr de vouloir réactiver ce livre ?');
     if (!confirmation) return;
@@ -193,7 +209,7 @@ export class DashboardComponent {
     });
   }
   
-
+  // Navigation vers la page d'accueil
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }

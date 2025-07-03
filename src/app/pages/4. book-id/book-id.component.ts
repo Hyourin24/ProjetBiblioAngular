@@ -17,13 +17,13 @@ import { addDays } from 'date-fns';
   styleUrl: './book-id.component.css'
 })
 export class BookIdComponent implements OnInit {
-  // --- Book & User Info ---
-  book: BookWithUser | null = null;
-  user: User | null = null;
-  userId: string = '';
-  bookId: string = '';
+  // --- Informations sur le livre et l'utilisateur ---
+  book: BookWithUser | null = null; // Livre courant avec infos propriétaire
+  user: User | null = null;         // Utilisateur connecté
+  userId: string = '';              // ID de l'utilisateur connecté
+  bookId: string = '';              // ID du livre affiché
 
-  // --- Book Details ---
+  // --- Détails du livre ---
   title: string = '';
   description: string = '';
   genre: string = 'fantasy';
@@ -36,21 +36,22 @@ export class BookIdComponent implements OnInit {
   imageBack: string = '';
   imageInBook: string = '';
 
-  // --- Comments ---
-  nouveauComment = { title: '', comment: '' };
-  commentList: CommentWithUser[] = [];
-  userList: User[] = [];
+  // --- Commentaires ---
+  nouveauComment = { title: '', comment: '' }; // Nouveau commentaire à poster
+  commentList: CommentWithUser[] = [];         // Liste des commentaires enrichis
+  userList: User[] = [];                       // Liste de tous les utilisateurs
 
-  // --- UI State ---
-  popupVisible: boolean = false;
-  isReserved: boolean = false;
-  isBookReservedByUser: boolean = false;
-  isLoggedIn: boolean = false;
-  lougoutVisible: boolean = false;
+  // --- État de l'interface ---
+  popupVisible: boolean = false;           // Affichage des popups
+  isReserved: boolean = false;             // Livre réservé ?
+  isBookReservedByUser: boolean = false;   // Livre réservé par l'utilisateur ?
+  isLoggedIn: boolean = false;             // Utilisateur connecté ?
+  lougoutVisible: boolean = false;         // Popup de déconnexion visible ?
 
-  // --- Loans for this book ---
-  bookLoans: any[] = [];
+  // --- Prêts pour ce livre ---
+  bookLoans: any[] = []; // Liste des prêts confirmés pour ce livre
 
+  // Constructeur avec injection des services nécessaires
   constructor(
     private bookService: BookServiceService,
     private router: Router,
@@ -60,8 +61,9 @@ export class BookIdComponent implements OnInit {
     private apiService: ApiService
   ) {}
 
+  // Initialisation du composant
   ngOnInit() {
-    // 1. Récupère l'utilisateur connecté
+    // 1. Récupère l'utilisateur connecté depuis le localStorage
     const userData = localStorage.getItem('user');
     let userParsed: any = null;
     if (userData && userData.trim().startsWith('{')) {
@@ -73,14 +75,14 @@ export class BookIdComponent implements OnInit {
     this.bookId = this.route.snapshot.paramMap.get('id') || '';
     this.checkAuth();
 
-    // 2. Récupère les infos utilisateur
+    // 2. Récupère les infos utilisateur si connecté
     if (this.userId) {
       this.httpTestService.getUserById(this.userId).subscribe(user => {
         this.user = user;
       });
     }
 
-    // 3. Récupère les infos du livre
+    // 3. Récupère les infos du livre à partir de son ID
     this.httpTestService.getBooksById(this.bookId).subscribe(book => {
       this.title = book.title;
       this.description = book.description;
@@ -95,10 +97,10 @@ export class BookIdComponent implements OnInit {
       this.addedAt = book.addedAt;
       this.book = book;
 
-      // Ajoute ce bloc pour peupler le propriétaire à partir de book.owner
+      // Récupère le propriétaire du livre si owner est un ID
       if (book.owner && typeof book.owner === 'string') {
         this.httpTestService.getUserById(book.owner).subscribe(owner => {
-          // On ajoute le champ user dans book pour le template
+          // Ajoute le champ user dans book pour le template
           this.book = { ...book, user: owner };
         });
       }
@@ -109,7 +111,7 @@ export class BookIdComponent implements OnInit {
       }
     });
 
-    // 4. Récupère les commentaires et utilisateurs pour affichage enrichi
+    // 4. Récupère les commentaires du livre et enrichit avec les infos utilisateurs
     forkJoin({
       commentJoin: this.httpTestService.getCommentsByBook(this.bookId),
       userJoin: this.httpTestService.getUser()
@@ -121,7 +123,7 @@ export class BookIdComponent implements OnInit {
       }));
     });
 
-    // 5. Récupère les loans pour ce livre avec infos utilisateur, seulement status 'confirmed'
+    // 5. Récupère les prêts confirmés pour ce livre avec infos utilisateur
     this.httpTestService.getUser().subscribe((users: any[]) => {
       this.httpTestService.getLoans().subscribe((loansRes: any) => {
         const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
@@ -139,20 +141,20 @@ export class BookIdComponent implements OnInit {
     });
   }
 
-  // --- Navigation ---
+  // --- Navigation entre pages ---
   clickLogin() { this.router.navigate(['/login']); }
   clickRegister() { this.router.navigate(['/inscription']); }
   clickProfil() { this.router.navigate(['/profil']); }
   clickAccueil() { this.router.navigate(['/accueil']); }
 
-  // --- Commentaires ---
+  // --- Création d'un commentaire ---
   createComment() {
     const newComment = { title: this.nouveauComment.title, comment: this.nouveauComment.comment };
     this.httpTestService.postCommentBook(this.bookId, newComment).subscribe({
       next: () => {
         this.nouveauComment.title = '';
         this.nouveauComment.comment = '';
-        window.location.reload();
+        window.location.reload(); // Recharge la page pour afficher le nouveau commentaire
       },
       error: () => alert("Le titre et la description du commentaire sont requis.")
     });
@@ -201,7 +203,7 @@ export class BookIdComponent implements OnInit {
     });
   }
 
-  // --- UI Popups ---
+  // --- Gestion des popups UI ---
   clickComment() {
     const postComment = document.querySelector(".postComment") as HTMLElement;
     if (postComment) postComment.style.display = "block";
@@ -247,7 +249,7 @@ export class BookIdComponent implements OnInit {
     });
   }
 
-  // --- Traductions ---
+  // --- Traductions pour l'affichage ---
   translateLanguage(lang: string): string {
     switch (lang?.toLowerCase()) {
       case 'french': return 'Français';
@@ -291,7 +293,7 @@ export class BookIdComponent implements OnInit {
     }
   }
 
-  // --- Auth ---
+  // --- Vérifie l'authentification utilisateur ---
   checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;

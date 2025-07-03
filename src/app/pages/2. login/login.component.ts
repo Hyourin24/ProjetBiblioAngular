@@ -19,32 +19,40 @@ export class LoginComponent {
   emailList: User[] = [];
   showPassword: boolean = false;
       
+  // Constructeur du composant, injection du Router et du service ApiService
   constructor(private router: Router, private httpTestService: ApiService) { }
 
+  // Méthode appelée à l'initialisation du composant
   ngOnInit() {
-    //On reprend la liste des pseudos 
+    // Récupère la liste des utilisateurs via le service et l'assigne à emailList
+    // Utile pour l'autocomplétion ou la vérification des emails existants
     this.httpTestService.getUser().subscribe(email =>{
-      this.emailList = email
-      console.log(this.emailList);
+      this.emailList = email;
+      console.log(this.emailList); // Affiche la liste dans la console pour vérification
     });
   }
 
+  // Méthode appelée lors de la soumission du formulaire de connexion
   login() {
+    // Création de l'objet d'authentification avec l'email et le mot de passe saisis
     const authBody = { email: this.email, password: this.password };
 
+    // Appel du service de connexion
     this.httpTestService.connexion(authBody).subscribe({
       next: response => {
-        // Stocke l'objet utilisateur complet, pas juste l'id
+        // En cas de succès, stocke l'utilisateur complet et le token dans le localStorage
         localStorage.setItem('user',  JSON.stringify(response.user));
         localStorage.setItem('token', response.token); 
-        this.router.navigate(['/accueil']);
+        this.router.navigate(['/accueil']); // Redirige vers la page d'accueil
       },
       error: () => {
+        // En cas d'erreur, affiche une alerte à l'utilisateur
         alert('Pseudo ou mot de passe invalide');
       }
     });
   }
 
+  // Méthode pour rediriger vers la page d'inscription
   inscription() {
     this.router.navigate(['/inscription']);
   }

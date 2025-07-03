@@ -5,6 +5,7 @@ import { Book } from '../../../modules/Book';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+// Interface pour l'affichage des prêts
 interface LoanDisplay {
   _id: string;
   book: Book | null;
@@ -21,26 +22,36 @@ interface LoanDisplay {
   styleUrl: './mes-livres.component.css'
 })
 export class MesLivresComponent implements OnInit {
+  // ID de l'utilisateur connecté
   userId: string = '';
+  // Objet utilisateur connecté
   user: any = null;
+  // Livres dont je suis propriétaire
   mesLivres: Book[] = [];
-  livresLoues: LoanDisplay[] = []; // Livres que je possède et que j'ai acceptés en location
-  demandesLocation: LoanDisplay[] = []; // Demandes de location reçues (en attente)
+  // Livres que je possède et que j'ai acceptés en location (confirmés)
+  livresLoues: LoanDisplay[] = [];
+  // Demandes de location reçues (en attente)
+  demandesLocation: LoanDisplay[] = [];
 
+  // Constructeur avec injection du service API et du Router
   constructor(private apiService: ApiService, public router: Router) {}
 
+  // Initialisation du composant
   ngOnInit(): void {
     // Récupère l'utilisateur connecté depuis le localStorage
     const userData = localStorage.getItem('user');
     let userParsed: any = null;
     if (!userData) {
+      // Si aucune donnée utilisateur, redirige vers la page de login
       this.router.navigate(['/login']);
       return;
     }
+    // Si userData commence par {, c'est un objet JSON, sinon c'est un id
     if (userData.trim().startsWith('{')) {
       try {
         userParsed = JSON.parse(userData);
       } catch (e) {
+        // Si parsing échoue, supprime le localStorage et redirige vers login
         localStorage.removeItem('user');
         this.router.navigate(['/login']);
         return;
@@ -65,6 +76,7 @@ export class MesLivresComponent implements OnInit {
           // Charge tous les livres pour faire les correspondances
           this.apiService.getBooksActive().subscribe((booksRes: Book[]) => {
             const books = booksRes;
+            // Filtre les livres dont je suis propriétaire
             this.mesLivres = books.filter(book => book.owner === this.userId);
 
             // Recherche dans les loans
@@ -120,11 +132,12 @@ export class MesLivresComponent implements OnInit {
     });
   }
 
-  // Navigation
+  // Navigation vers la page d'accueil
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }
 
+  // Navigation vers la page d'un livre
   clickBook(bookId: string) {
     this.router.navigate(['/book', bookId]);
   }
@@ -133,6 +146,7 @@ export class MesLivresComponent implements OnInit {
   retirerLivre(bookId: string) {
     this.apiService.deleteBook(bookId).subscribe({
       next: () => {
+        // Retire le livre de la liste après suppression
         this.mesLivres = this.mesLivres.filter(livre => livre._id !== bookId);
       },
       error: () => {

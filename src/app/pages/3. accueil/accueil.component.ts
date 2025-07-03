@@ -59,10 +59,11 @@ cityList: any[] = [];
 
 ngOnInit() {
   this.checkAuth();
+  // Récupère la liste des livres actifs via le service
   this.httpTestService.getBooksActive().subscribe(books => {
-    this.bookList = books;
-    this.resultatsFiltres = books;
-    console.log(this.bookList);
+    this.bookList = books; // Stocke la liste complète des livres
+    this.resultatsFiltres = books; // Initialise les résultats filtrés avec tous les livres
+    console.log(this.bookList); // Affiche la liste des livres dans la console pour vérification
   });
 
   // Charger les utilisateurs une seule fois

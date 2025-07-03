@@ -12,23 +12,30 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './modif-profil.component.css'
 })
 export class ModifProfilComponent implements OnInit {
+  // Propriété pour stocker les informations de l'utilisateur connecté
   user: any = null;
+  // Indique si le formulaire est en cours de soumission
   isSubmitting = false;
 
+  // Constructeur avec injection du service API et du Router
   constructor(private apiService: ApiService, private router: Router) {}
 
+  // Initialisation du composant
   ngOnInit(): void {
+    // Récupère les données utilisateur depuis le localStorage
     const userData = localStorage.getItem('user');
     let userParsed: any = null;
     if (!userData) {
+      // Si aucune donnée utilisateur, redirige vers la page de login
       this.router.navigate(['/login']);
       return;
     }
-    // Si userData commence par {, c'est un objet, sinon c'est un id
+    // Si userData commence par {, c'est un objet JSON, sinon c'est un id
     if (userData.trim().startsWith('{')) {
       try {
         userParsed = JSON.parse(userData);
       } catch (e) {
+        // Si parsing échoue, supprime le localStorage et redirige vers login
         localStorage.removeItem('user');
         this.router.navigate(['/login']);
         return;
@@ -37,8 +44,10 @@ export class ModifProfilComponent implements OnInit {
       userParsed = { _id: userData };
     }
 
+    // Récupère les informations utilisateur depuis l'API
     this.apiService.getUserById(userParsed._id).subscribe({
       next: (res) => {
+        // Si la réponse contient un objet data, on l'utilise, sinon on prend la réponse brute
         if (res && typeof res === 'object') {
           if ('data' in res && res.data) {
             this.user = res.data;
@@ -55,6 +64,7 @@ export class ModifProfilComponent implements OnInit {
     });
   }
 
+  // Soumission du formulaire de modification du profil
   onSubmit() {
     if (!this.user) return;
     this.isSubmitting = true;
@@ -79,10 +89,12 @@ export class ModifProfilComponent implements OnInit {
     });
   }
 
+  // Annule la modification et retourne au profil
   annuler() {
     this.router.navigate(['/profil']);
   }
 
+  // Navigation vers la page d'accueil
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }
