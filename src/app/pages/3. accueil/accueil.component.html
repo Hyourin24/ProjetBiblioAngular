@@ -1,5 +1,5 @@
+<!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,8 +20,19 @@
     </header>
     <main>
         <section class="search">
-            <input type="text" placeholder="Rechercher un produit" [(ngModel)]="recherche" (input)="appliquerFiltres()">
-            <input type="text" placeholder="Rechercher par ville" [(ngModel)]="rechercheVille" (input)="appliquerFiltres()" style="margin-left: 15px; width: 220px;">
+            <input
+                type="text"
+                placeholder="Rechercher un produit"
+                [(ngModel)]="recherche"
+                (input)="appliquerFiltres()"
+            >
+            <input
+                type="text"
+                placeholder="Rechercher par ville"
+                [(ngModel)]="rechercheVille"
+                (input)="appliquerFiltres()"
+                style="margin-left: 15px; width: 220px;"
+            >
             <div class="tri">
                 <select [(ngModel)]="selectedDepartement" (change)="appliquerFiltres()">
                     <option value="">Département</option>
@@ -59,13 +70,22 @@
             </div>
         </section>
         <section class="listBook">
-            <div class="book" *ngFor="let book of resultatsFiltres" (click)="clickBook(book._id)">
+            <div class="book" *ngFor="let book of livresPage" (click)="clickBook(book._id)">
                 <img [src]="book.imageCouverture" alt="Image du livre">
                 <h2>{{book.title}}</h2>
                 <p>{{book.description}}</p>
                 <p>{{book.author}}</p>
             </div>
         </section>
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="totalPages > 1">
+            <button
+                *ngFor="let page of [].constructor(totalPages); let i = index"
+                [class.active]="currentPage === (i+1)"
+                (click)="setPage(i+1)">
+                {{ i + 1 }}
+            </button>
+        </div>
         <div class="modal-overlay" *ngIf="lougoutVisible"></div>
         <section class="deconnexion">
             <h2>Souhaitez-vous vous déconnecter ?</h2>

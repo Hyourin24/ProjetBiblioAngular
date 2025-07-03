@@ -347,4 +347,24 @@ appliquerFiltres(): void {
 
   this.resultatsFiltres = result;
 }
+
+// Ajoute ces propriétés :
+currentPage: number = 1;
+pageSize: number = 2;
+
+// Calcul automatique du nombre de pages
+get totalPages(): number {
+  return Math.ceil(this.resultatsFiltres.length / this.pageSize);
+}
+
+// Pour changer de page
+setPage(page: number) {
+  this.currentPage = page;
+}
+
+// Pour afficher les livres de la page courante
+get livresPage(): any[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.resultatsFiltres.slice(start, start + this.pageSize);
+}
 }
