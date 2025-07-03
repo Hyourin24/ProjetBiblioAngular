@@ -387,5 +387,24 @@ footer {
     background-color: #0056b3;
 }
 
+.book-loans {
+    min-width: 260px;
+    max-width: 320px;
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    height: fit-content;
+}
+.loan-card {
+    background: #fffbe6;
+    border: 1px solid #e3e3c9;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
 
 

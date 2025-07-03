@@ -94,6 +94,9 @@ clickAccueil() {
 clickEvent() {
   this.router.navigate(['/event']);
 }
+clickPoster() {
+  this.router.navigate(['/profil/poster']);
+}
 
 clickLougout() {
   const deconnexion = document.querySelector(".deconnexion") as HTMLElement;

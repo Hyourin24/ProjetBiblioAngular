@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-
     <title>Connexion/Inscription</title>
 </head>
 
@@ -15,91 +14,91 @@
             <div class="userParam">
                 <button class="login" *ngIf="!isLoggedIn" (click)="clickLogin()">Se connecter</button>
                 <button class="register" *ngIf="!isLoggedIn" (click)="clickRegister()">S'inscrire</button>
-                
                 <button class="logout" *ngIf="isLoggedIn" (click)="clickLougout()">Se déconnecter</button>
                 <button class="userProfile" *ngIf="isLoggedIn" (click)="clickProfil()"><i class="fas fa-user"></i></button>
             </div>
         </section>
-        
     </header>
-    <main>
-        <section class="UniqueBook" >
-            <h3>Détails du livre:</h3>
-            <div class="image">
-                <img [src]="imageCouverture" alt="Image du livre de couverture" style="width: 350px;" height="200px">
-                <div class="secondaryImage">
-                    <img [src]="imageBack" alt="Image du livre" style="width: 150px;" height="100px">
-                    <img [src]="imageInBook" alt="Image du livre" style="width: 150px;" height="100px">
+    <main style="display: flex; gap: 30px;">
+        <!-- Espace à gauche pour les locations -->
+        <aside class="book-loans">
+            <h3>Locations de ce livre</h3>
+            <div *ngIf="bookLoans?.length === 0">Aucune location pour ce livre.</div>
+            <div *ngFor="let loan of bookLoans" class="loan-card">
+                <p><strong>Loué par :</strong> {{ loan.user?.name || 'Utilisateur inconnu' }}</p>
+                <p><strong>Email :</strong> {{ loan.user?.email }}</p>
+                <p><strong>Date de début :</strong> {{ loan.startDate | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Date de fin :</strong> {{ loan.endDate | date:'dd/MM/yyyy' }}</p>
+                <hr>
+            </div>
+        </aside>
+        <div style="flex: 1;">
+            <section class="UniqueBook">
+                <h3>Détails du livre:</h3>
+                <div class="image">
+                    <img [src]="imageCouverture" alt="Image du livre de couverture" style="width: 350px;" height="200px">
+                    <div class="secondaryImage">
+                        <img [src]="imageBack" alt="Image du livre" style="width: 150px;" height="100px">
+                        <img [src]="imageInBook" alt="Image du livre" style="width: 150px;" height="100px">
+                    </div>
                 </div>
-            </div>
-            
-
-            <h2>Titre: {{title}}</h2>
-            <p>Appartient à : {{ book?.user?.name || 'Inconnu' }}</p>
-
-            <p>Description: {{description}}</p>
-            <p>Genre: {{translateGenre(genre)}}</p>
-            <p>Auteur: {{author}}</p>
-            <p>Année de publication: {{publishedYear}}</p>
-            <p>Langue: {{translateLanguage(language)}}</p>
-            <p>Etat: {{translateState(state)}}</p>
-            <p>Posté le: {{addedAt | date:'dd/MM/yyyy'}}</p>
-            <button *ngIf="!isReserved" (click)="clickDemandReserve()">Réserver le livre</button>
-            <button *ngIf="isReserved" class="reservedButton"><i class="fas fa-check"></i> Livre réservé</button>
-        </section>
-        <section class="commentsSection">
-            <h2 class="commentTitle">Commentaires</h2>
-            <div *ngIf="commentList.length === 0" class="noComment">
-                <p>Aucun commentaire.</p>     
-            </div>
-        
-            <div class="commentCard" *ngFor="let com of commentList">
-                <div class="commentHeader">
-                    <span class="commentAuthor">{{ com.user?.name || 'Utilisateur inconnu' }}</span>
-                    <span class="commentTitleText">{{ com.title }}</span>
+                <h2>Titre: {{title}}</h2>
+                <p>Appartient à : {{ book?.user?.name || 'Inconnu' }}</p>
+                <p>Description: {{description}}</p>
+                <p>Genre: {{translateGenre(genre)}}</p>
+                <p>Auteur: {{author}}</p>
+                <p>Année de publication: {{publishedYear}}</p>
+                <p>Langue: {{translateLanguage(language)}}</p>
+                <p>Etat: {{translateState(state)}}</p>
+                <p>Posté le: {{addedAt | date:'dd/MM/yyyy'}}</p>
+                <button *ngIf="!isReserved" (click)="clickDemandReserve()">Réserver le livre</button>
+                <button *ngIf="isReserved" class="reservedButton"><i class="fas fa-check"></i> Livre réservé</button>
+            </section>
+            <section class="commentsSection">
+                <h2 class="commentTitle">Commentaires</h2>
+                <div *ngIf="commentList.length === 0" class="noComment">
+                    <p>Aucun commentaire.</p>     
                 </div>
-                <p class="commentBody">{{ com.comment }}</p>
-                
-            </div>
-            <button class="postButton" (click)="clickComment()">Poster un commentaire</button>
-        </section>
-        <div class="modal-overlay" *ngIf="popupVisible"></div>
-        <section class="demandReserve">
-            <i class="fas fa-times" (click)="clickCrossDemandReserve()"></i>
-            <h2>Souhaitez-vous réserver ce livre ?</h2>
-            <button (click)="reserveBook()" *ngIf="!isReserved">Réserver le livre</button>
-            <button *ngIf="isReserved == true"><i class="fas fa-check"></i></button>
-        </section>
-
-        <section class="bookReserved" *ngIf="isReserved">
-            <h2>Réservation réussie !</h2>
-            <p>Vous avez réservé le livre avec succès. La demande a bien été envoyée au loueur.</p>
-            <button (click)="clickCrossDemandReserve()">Fermer</button>
-        </section>
-
-        <section class="postComment">
-            <i class="fas fa-times" (click)="clickCrossComment()"></i>
-            <h2>Poster un commentaire</h2>
-            <form (ngSubmit)="createComment()">
-                <label for="commentTitle">Titre:</label>
-                <input type="text" id="commentTitle" [(ngModel)]="nouveauComment.title" name="title" required placeholder="Titre...">
-                
-                
-                <label for="commentBody">Commentaire:</label>
-                <textarea id="commentBody" [(ngModel)]="nouveauComment.comment" name="comment" required placeholder="Votre commentaire..."></textarea>
-                
-                <button type="submit">Envoyer</button>
-            </form>
-        </section>
-        <div class="modal-overlay" *ngIf="lougoutVisible"></div>
-        <section class="deconnexion">
-            <h2>Souhaitez-vous vous déconnecter ?</h2>
-            <div class="validation">
-                <button (click)="logout()">Oui</button>
-                <button (click)="clickCrossLougout()">Non</button>
-            </div>
-        </section>
-          
+                <div class="commentCard" *ngFor="let com of commentList">
+                    <div class="commentHeader">
+                        <span class="commentAuthor">{{ com.user?.name || 'Utilisateur inconnu' }}</span>
+                        <span class="commentTitleText">{{ com.title }}</span>
+                    </div>
+                    <p class="commentBody">{{ com.comment }}</p>
+                </div>
+                <button class="postButton" (click)="clickComment()">Poster un commentaire</button>
+            </section>
+            <div class="modal-overlay" *ngIf="popupVisible"></div>
+            <section class="demandReserve">
+                <i class="fas fa-times" (click)="clickCrossDemandReserve()"></i>
+                <h2>Souhaitez-vous réserver ce livre ?</h2>
+                <button (click)="reserveBook()" *ngIf="!isReserved">Réserver le livre</button>
+                <button *ngIf="isReserved == true"><i class="fas fa-check"></i></button>
+            </section>
+            <section class="bookReserved" *ngIf="isReserved">
+                <h2>Réservation réussie !</h2>
+                <p>Vous avez réservé le livre avec succès. La demande a bien été envoyée au loueur.</p>
+                <button (click)="clickCrossDemandReserve()">Fermer</button>
+            </section>
+            <section class="postComment">
+                <i class="fas fa-times" (click)="clickCrossComment()"></i>
+                <h2>Poster un commentaire</h2>
+                <form (ngSubmit)="createComment()">
+                    <label for="commentTitle">Titre:</label>
+                    <input type="text" id="commentTitle" [(ngModel)]="nouveauComment.title" name="title" required placeholder="Titre...">
+                    <label for="commentBody">Commentaire:</label>
+                    <textarea id="commentBody" [(ngModel)]="nouveauComment.comment" name="comment" required placeholder="Votre commentaire..."></textarea>
+                    <button type="submit">Envoyer</button>
+                </form>
+            </section>
+            <div class="modal-overlay" *ngIf="lougoutVisible"></div>
+            <section class="deconnexion">
+                <h2>Souhaitez-vous vous déconnecter ?</h2>
+                <div class="validation">
+                    <button (click)="logout()">Oui</button>
+                    <button (click)="clickCrossLougout()">Non</button>
+                </div>
+            </section>
+        </div>
     </main>
-    
 </body>

@@ -5,6 +5,15 @@ import { Book } from '../../../modules/Book';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
+interface LoanDisplay {
+  _id: string;
+  book: Book | null;
+  user: any;
+  startDate: string;
+  endDate: string;
+  status: string;
+}
+
 @Component({
   selector: 'app-mes-livres',
   imports: [CommonModule, FormsModule],
@@ -15,17 +24,19 @@ export class MesLivresComponent implements OnInit {
   userId: string = '';
   user: any = null;
   mesLivres: Book[] = [];
+  livresLoues: LoanDisplay[] = []; // Livres que je possède et que j'ai acceptés en location
+  demandesLocation: LoanDisplay[] = []; // Demandes de location reçues (en attente)
 
   constructor(private apiService: ApiService, public router: Router) {}
 
   ngOnInit(): void {
+    // Récupère l'utilisateur connecté depuis le localStorage
     const userData = localStorage.getItem('user');
     let userParsed: any = null;
     if (!userData) {
       this.router.navigate(['/login']);
       return;
     }
-    // Si userData commence par {, c'est un objet, sinon c'est un id
     if (userData.trim().startsWith('{')) {
       try {
         userParsed = JSON.parse(userData);
@@ -35,37 +46,81 @@ export class MesLivresComponent implements OnInit {
         return;
       }
     } else {
-      // userData est juste l'id
       userParsed = { _id: userData };
     }
 
-    // Récupère l'utilisateur puis les livres
-    this.apiService.getUserById(userParsed._id).subscribe({
-      next: (res) => {
-        if (res && typeof res === 'object') {
-          if ('data' in res && res.data) {
-            this.user = res.data;
-          } else {
-            this.user = res;
+    // Récupère tous les utilisateurs pour lier avec les loans
+    this.apiService.getUser().subscribe((users: any[]) => {
+      // Récupère l'utilisateur connecté
+      this.apiService.getUserById(userParsed._id).subscribe({
+        next: (res) => {
+          // Gestion du format de retour de l'API
+          this.user = (res && typeof res === 'object' && 'data' in res && res.data) ? res.data : res;
+          if (!this.user || !this.user._id) {
+            this.user = null;
+            return;
           }
-        } else {
+          this.userId = this.user._id;
+
+          // Charge tous les livres pour faire les correspondances
+          this.apiService.getBooksActive().subscribe((booksRes: Book[]) => {
+            const books = booksRes;
+            this.mesLivres = books.filter(book => book.owner === this.userId);
+
+            // Recherche dans les loans
+            this.apiService.getLoans().subscribe((loansRes: any) => {
+              const loans = Array.isArray(loansRes) ? loansRes : loansRes.data;
+
+              // Demandes de location reçues (en attente)
+              this.demandesLocation = loans
+                .filter((loan: any) => {
+                  const bookObj = books.find(b => String(b._id) === String(loan.bookId));
+                  // Je suis propriétaire ET le prêt est en attente
+                  return bookObj && String(bookObj.owner) === String(this.userId) && loan.status === 'pending';
+                })
+                .map((loan: any) => {
+                  const bookObj = books.find(b => String(b._id) === String(loan.bookId)) || null;
+                  const userObj = users.find(u => String(u._id) === String(loan.userId)) || null;
+                  return {
+                    _id: loan._id,
+                    book: bookObj,
+                    user: userObj,
+                    startDate: loan.startDate,
+                    endDate: loan.endDate,
+                    status: loan.status
+                  };
+                });
+
+              // Livres que je possède et que j'ai acceptés en location (confirmés)
+              this.livresLoues = loans
+                .filter((loan: any) => {
+                  const bookObj = books.find(b => String(b._id) === String(loan.bookId));
+                  // Je suis propriétaire ET le prêt est confirmé
+                  return bookObj && String(bookObj.owner) === String(this.userId) && loan.status === 'confirmed';
+                })
+                .map((loan: any) => {
+                  const bookObj = books.find(b => String(b._id) === String(loan.bookId)) || null;
+                  const userObj = users.find(u => String(u._id) === String(loan.userId)) || null;
+                  return {
+                    _id: loan._id,
+                    book: bookObj,
+                    user: userObj,
+                    startDate: loan.startDate,
+                    endDate: loan.endDate,
+                    status: loan.status
+                  };
+                });
+            });
+          });
+        },
+        error: () => {
           this.user = null;
         }
-
-        if (this.user && this.user._id) {
-          this.userId = this.user._id;
-          // Maintenant qu'on a l'userId, on peut charger les livres
-          this.apiService.getBooksActive().subscribe((books: Book[]) => {
-            this.mesLivres = books.filter(book => book.owner === this.userId);
-          });
-        }
-      },
-      error: () => {
-        this.user = null;
-      }
+      });
     });
   }
 
+  // Navigation
   clickAccueil() {
     this.router.navigate(['/accueil']);
   }
@@ -74,6 +129,7 @@ export class MesLivresComponent implements OnInit {
     this.router.navigate(['/book', bookId]);
   }
 
+  // Suppression d'un livre
   retirerLivre(bookId: string) {
     this.apiService.deleteBook(bookId).subscribe({
       next: () => {
@@ -82,6 +138,37 @@ export class MesLivresComponent implements OnInit {
       error: () => {
         alert("Erreur lors de la suppression du livre.");
       }
+    });
+  }
+
+  // Calcul du nombre de jours entre deux dates
+  getNbJours(start: string | Date, end: string | Date): number {
+    const d1 = new Date(start);
+    const d2 = new Date(end);
+    return Math.ceil((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+  }
+
+  // Accepter une demande de location
+  accepterDemande(demande: LoanDisplay) {
+    this.apiService.confirmLoan(demande._id).subscribe(() => {
+      demande.status = 'confirmed';
+      // Optionnel : rafraîchir la liste ou déplacer la demande dans livresLoues
+    });
+  }
+
+  // Refuser une demande de location
+  refuserDemande(demande: LoanDisplay) {
+    this.apiService.cancelLoan(demande._id).subscribe(() => {
+      demande.status = 'refused';
+      // Optionnel : retirer la demande de la liste
+    });
+  }
+
+  // Marquer un livre comme rendu
+  marquerCommeRendu(livre: LoanDisplay) {
+    this.apiService.returnLoan(livre._id).subscribe(() => {
+      // Optionnel : retire le livre de la liste ou mets à jour son statut
+      this.livresLoues = this.livresLoues.filter(l => l._id !== livre._id);
     });
   }
 }

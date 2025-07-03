@@ -1,6 +1,13 @@
+/* Reset & base */
 ::ng-deep * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #f7f7f7;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 header {
@@ -20,81 +27,169 @@ header {
     cursor: pointer;
 }
 
-.mes-livres {
-    padding: 40px;
-    background-color: #fff;
-    overflow-y: auto;
+section {
+    margin-bottom: 40px;
 }
 
-.mes-livres h2 {
+.mes-livres,
+.mes-locations,
+.demandes-location {
+    padding: 40px 30px 30px 30px;
+    background-color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    margin: 30px auto;
+    max-width: 1200px;
+}
+
+.mes-livres h2,
+.mes-locations h2,
+.demandes-location h2 {
     font-size: 24px;
     color: #444;
     margin-bottom: 20px;
     border-bottom: 2px solid #d5d87c;
     padding-bottom: 10px;
+    letter-spacing: 1px;
 }
 
-/* Affichage en ligne (grille responsive) */
 .mes-livres-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 32px;
     margin-top: 10px;
+    justify-content: flex-start;
 }
 
 /* Carte livre */
 .book-card {
-    background-color: #fdfdf2;
-    border: 1px solid #e3e3c9;
-    border-radius: 10px;
-    width: 280px;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(135deg, #fdfdf2 70%, #f5f5dc 100%);
+    border: 1.5px solid #e3e3c9;
+    border-radius: 18px;
+    width: 340px;
+    min-height: 440px;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.10);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease;
-    margin-bottom: 20px;
+    transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s;
+    margin-bottom: 28px;
     cursor: pointer;
     position: relative;
 }
 
 .book-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px) scale(1.04);
+    box-shadow: 0 12px 36px rgba(0,0,0,0.16);
+    border-color: #d5d87c;
 }
 
 .book-card img {
     width: 100%;
-    height: 180px;
+    height: 190px;
     object-fit: cover;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1.5px solid #e3e3c9;
+    background: #f5f5dc;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
 }
 
 .book-card h3 {
-    font-size: 18px;
+    font-size: 22px;
     color: #222;
-    margin: 15px 15px 5px 15px;
+    margin: 18px 18px 8px 18px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .book-card p {
-    font-size: 14px;
-    color: #666;
-    margin: 0 15px 10px 15px;
+    font-size: 15.5px;
+    color: #555;
+    margin: 0 18px 10px 18px;
+    line-height: 1.7;
+    word-break: break-word;
 }
 
-/* Bouton retirer */
-.remove-btn {
-    background-color: #e74c3c;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    padding: 8px 16px;
+.book-card .location-actions {
+    margin: 0 18px 18px 18px;
+    margin-top: auto;
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.accept-btn,
+.refuse-btn,
+.return-btn,
+.remove-btn  {
+    min-width: 90px;
     font-size: 15px;
+    font-weight: 600;
+    border-radius: 7px;
+    padding: 8px 0;
+    border: none;
     cursor: pointer;
-    margin: 15px;
-    align-self: flex-end;
-    transition: background 0.2s;
+    transition: background 0.18s, color 0.18s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
 }
 
+.accept-btn {
+    background: #4caf50;
+    color: #fff;
+}
+.accept-btn:hover {
+    background: #388e3c;
+}
+
+.refuse-btn {
+    background: #e74c3c;
+    color: #fff;
+}
+.refuse-btn:hover {
+    background: #c0392b;
+}
+
+.return-btn {
+    background: #1976d2;
+    color: #fff;
+}
+.return-btn:hover {
+    background: #125ea2;
+}
+.remove-btn {
+    background-color: #e67e22;
+    color: #fff;
+    margin-top: 10px;
+}
 .remove-btn:hover {
-    background-color: #c0392b;
+    background-color: #b95c0b;
+}
+/* Responsive */
+@media (max-width: 1100px) {
+    .mes-livres-list {
+        gap: 18px;
+    }
+    .book-card {
+        width: 90vw;
+        max-width: 370px;
+    }
+}
+@media (max-width: 700px) {
+    .mes-livres-list {
+        flex-direction: column;
+        gap: 14px;
+        align-items: center;
+    }
+    .book-card {
+        width: 98vw;
+        max-width: 98vw;
+        min-height: 340px;
+    }
+    .book-card h3, .book-card p, .book-card .location-actions {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
 }
