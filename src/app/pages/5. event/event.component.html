@@ -39,6 +39,15 @@
                 <button (click)="reserveEvent(event._id)">M'y inscrire</button>
             </div>
         </section>
+        <!-- Pagination -->
+        <div class="pagination" *ngIf="totalPages > 1">
+        <button
+            *ngFor="let page of [].constructor(totalPages); let i = index"
+            [class.active]="currentPage === (i+1)"
+            (click)="setPage(i+1)">
+            {{ i + 1 }}
+        </button>
+        </div>
         <div class="modal-overlay" *ngIf="popupVisible"></div>
         
         <section class="eventReserved" *ngIf="isReserved">

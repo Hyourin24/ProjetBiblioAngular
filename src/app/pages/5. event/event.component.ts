@@ -24,6 +24,8 @@ export class EventComponent {
   isLoggedIn: boolean = false;
   lougoutVisible: boolean = false;
   user: any = null;
+  currentPage: number = 1;
+  pageSize: number = 4;
 
   constructor(
     private router: Router,
@@ -201,5 +203,18 @@ export class EventComponent {
   checkAuth(): void {
     const token = localStorage.getItem('token');
     this.isLoggedIn = !!token;
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.resultatsFiltres.length / this.pageSize);
+  }
+
+  setPage(page: number) {
+    this.currentPage = page;
+  }
+
+  get eventsPage(): any[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.resultatsFiltres.slice(start, start + this.pageSize);
   }
 }

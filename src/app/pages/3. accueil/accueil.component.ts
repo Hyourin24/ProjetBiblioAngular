@@ -350,7 +350,7 @@ appliquerFiltres(): void {
 
 // Ajoute ces propriétés :
 currentPage: number = 1;
-pageSize: number = 2;
+pageSize: number = 25;
 
 // Calcul automatique du nombre de pages
 get totalPages(): number {
